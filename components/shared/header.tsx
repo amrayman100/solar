@@ -19,46 +19,48 @@ import { ModeToggle } from "./theme-button";
 
 export default function Header() {
   return (
-    <div className="flex justify-between p-4 lg:mx-12">
-      <div className="flex place-items-center gap-2">
-        <ModeToggle />
-        <Icons.logo className="h-6 w-6" />
-      </div>
-      <div className="flex">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                Products and Services
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                  <ListItem href="/dashboard" title="Products">
-                    Products
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                  <ListItem href="/dashboard" title="Components">
-                    Components
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/dashboard" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Contact
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <Button variant="default">Calculate Your Savings</Button>
+    <div className="">
+      <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
+        <div className="flex place-items-center gap-2">
+          <ModeToggle />
+          <Icons.logo className="h-6 w-6" />
+        </div>
+        <div className="flex">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>
+                  Products and Services
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                    <ListItem href="/dashboard" title="Products">
+                      Products
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                    <ListItem href="/dashboard" title="Components">
+                      Components
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/dashboard" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Contact
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <Button variant="default">Calculate Your Savings</Button>
+        </div>
       </div>
     </div>
   );
