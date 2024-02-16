@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { Menu, Zap } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -16,14 +17,25 @@ import {
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./theme-button";
+import { TypographyH2 } from "./typography";
 
 export default function Header() {
   return (
     <div className="">
+      {/* mobile nav menu */}
+
+      <div className="flex lg:hidden md:hidden justify-between">
+        <div className="flex">
+          <TypographyH2 text={"Bolt Energy"} />
+          <Zap className="h-6 w-6 self-center" />
+        </div>
+        <Menu size={32} className="" cursor={"pointer"} />
+      </div>
+      {/* desktop nav menu */}
       <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
         <div className="flex place-items-center gap-2">
           <ModeToggle />
-          <Icons.logo className="h-6 w-6" />
+          <Zap className="h-6 w-6" />
         </div>
         <div className="flex">
           <NavigationMenu>

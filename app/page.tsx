@@ -1,6 +1,6 @@
 import Background from "@/components/shared/background";
 import Header from "@/components/shared/header";
-import { TypographyH1 } from "@/components/shared/typography-h1";
+import { TypographyH1 } from "@/components/shared/typography";
 import Image from "next/image";
 
 export default function Home() {
