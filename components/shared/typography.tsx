@@ -23,3 +23,9 @@ export function TypographyH3({ text }: TypographyProps) {
     </h3>
   );
 }
+
+export function TypographyH4({ text }: TypographyProps) {
+  return (
+    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">{text}</h4>
+  );
+}

@@ -17,25 +17,25 @@ import {
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./theme-button";
-import { TypographyH2 } from "./typography";
+import { TypographyH2, TypographyH4 } from "./typography";
 
 export default function Header() {
   return (
     <div className="">
       {/* mobile nav menu */}
-
       <div className="flex lg:hidden md:hidden justify-between">
-        <div className="flex">
+        <div className="flex mt-2">
           <TypographyH2 text={"Bolt Energy"} />
           <Zap className="h-6 w-6 self-center" />
         </div>
-        <Menu size={32} className="" cursor={"pointer"} />
+        <Menu size={32} className="self-center" cursor={"pointer"} />
       </div>
       {/* desktop nav menu */}
       <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
         <div className="flex place-items-center gap-2">
-          <ModeToggle />
+          <TypographyH4 text="Bolt Energy" />
           <Zap className="h-6 w-6" />
+          <ModeToggle />
         </div>
         <div className="flex">
           <NavigationMenu>
