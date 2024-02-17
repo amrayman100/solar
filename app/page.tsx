@@ -9,7 +9,7 @@ export default function Home() {
       <Header />
       <div
         style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
-        className="bg-cover bg-center w-screen h-96 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
+        className="bg-cover bg-center w-screen h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
       >
         <div className="flex justify-center h-full">
           <div className="mt-6 flex flex-col">
