@@ -1,16 +1,25 @@
 import Background from "@/components/shared/background";
 import Header from "@/components/shared/header";
 import { TypographyH1 } from "@/components/shared/typography";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   return (
     <main>
       <Header />
       <div className="w-screen h-96 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary">
-        <div className="flex justify-center">
-          <div className="mt-6">
+        <div className="flex justify-center h-full">
+          <div className="mt-6 flex flex-col">
             <TypographyH1 text="Get Your Free Solar Quote Instantly" />
+            <div className="m-auto h-full mt-12 flex flex-col lg:flex-row md:flex:row gap-2">
+              <Input
+                type="text"
+                placeholder="Enter Your Address"
+                className="bg-background"
+              />
+              <Button variant="default">Calculate My Fee</Button>
+            </div>
           </div>
         </div>
       </div>
