@@ -33,8 +33,11 @@ export default function Header() {
       <div className="flex lg:hidden md:hidden">
         <Sheet>
           <div className="flex mt-2 justify-between w-full">
-            <div className="flex">
-              <TypographyH2 text={"Bolt Energy"} />
+            <div className="flex gap-2">
+              <TypographyH2
+                text={"Bolt Energy"}
+                className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
+              />
               <Zap className="h-6 w-6 self-center" />
             </div>
             <SheetTrigger>
@@ -44,17 +47,23 @@ export default function Header() {
           <SheetContent>
             <SheetHeader>
               <SheetTitle>
-                <div className="flex justify-between">Menu</div>
+                <div className="flex justify-between mt-8">
+                  <TypographyH4 text={"Menu"} className="self-center" />
+                  <ModeToggle />
+                </div>
               </SheetTitle>
-              <SheetDescription></SheetDescription>
             </SheetHeader>
+            <div className="flex flex-col"></div>
           </SheetContent>
         </Sheet>
       </div>
       {/* desktop nav menu */}
       <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
         <div className="flex place-items-center gap-2">
-          <TypographyH4 text="Bolt Energy" />
+          <TypographyH4
+            text="Bolt Energy"
+            className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
+          />
           <Zap className="h-6 w-6" />
           <ModeToggle />
         </div>

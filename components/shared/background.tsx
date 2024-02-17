@@ -1,5 +1,4 @@
 import Image from "next/image";
-import mountains from "../public/mountains.jpg";
 
 export default function Background({ imageSrc }: { imageSrc: string }) {
   return (
