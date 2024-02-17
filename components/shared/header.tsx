@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Zap } from "lucide-react";
+import { Menu, Zap, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -14,21 +14,42 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./theme-button";
 import { TypographyH2, TypographyH4 } from "./typography";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export default function Header() {
   return (
     <div className="">
       {/* mobile nav menu */}
-      <div className="flex lg:hidden md:hidden justify-between">
-        <div className="flex mt-2">
-          <TypographyH2 text={"Bolt Energy"} />
-          <Zap className="h-6 w-6 self-center" />
-        </div>
-        <Menu size={32} className="self-center" cursor={"pointer"} />
+      <div className="flex lg:hidden md:hidden">
+        <Sheet>
+          <div className="flex mt-2 justify-between w-full">
+            <div className="flex">
+              <TypographyH2 text={"Bolt Energy"} />
+              <Zap className="h-6 w-6 self-center" />
+            </div>
+            <SheetTrigger>
+              <Menu size={32} className="self-center" cursor={"pointer"} />
+            </SheetTrigger>
+          </div>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>
+                <div className="flex justify-between">Menu</div>
+              </SheetTitle>
+              <SheetDescription></SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
       </div>
       {/* desktop nav menu */}
       <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
