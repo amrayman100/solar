@@ -12,6 +12,8 @@ export type Product<T> = {
   parameters: T;
 };
 
+export type Invertor = { price: number; capacity: number };
+
 export type GridTier = Product<{
   sunHours: number;
   bosRate: number;
@@ -21,40 +23,82 @@ export type GridTier = Product<{
   panelWatt: number;
   mountingPrice: number;
   panelDegradation: number;
-  invertors: { price: number; capacity: number }[];
+  firstYearSpecificProd: number;
+  invertors: Invertor[];
 }>;
 
-/*
-4.5 => sunHours 
-0.3 => bosRate
-13LE => cost per wattage
-25 => markup
-1600 kwh per kwp per year => specific prod
-panel degredation => 80%
-cost of panels = # number of panels * panel watt *
+export function calculateKWH(monthlyConsumption: number) {
+  return monthlyConsumption / 1.65;
+}
 
-cost of wattage = cost of panels * cost per watt
+export function calculateKWP(sunHours: number, kwh: number) {
+  return kwh / (sunHours * 30);
+}
 
-cost of panels =  number of panels * panel wattage * cost per watt
+export function calculateNumberOfPanels(kwp: number, panelWatt: number) {
+  return Math.round(kwp / panelWatt);
+}
 
-invertor capacities = (0.8 * kwp ) >= (invBound) <= 1.2 * kwp
+export function calculateCostOfPanels(
+  numberOfPanels: number,
+  panelWattage: number,
+  cosPerWatt: number
+) {
+  return numberOfPanels * panelWattage * cosPerWatt;
+}
 
-(20 , 20) diff up or down take
+export function getInvertor(invertors: Invertor[], kwp: number) {
+  invertors.forEach((invertor) => {
+    const lowerBound = 0.8 * kwp;
+    const upperBound = 1.2 * kwp;
 
-invertor capacity, price
+    if (lowerBound >= invertor.capacity || invertor.capacity <= upperBound) {
+      return invertor;
+    }
+  });
+  return null;
+}
 
-5 -> # of panels * panel wattage * mounting price
+export function calculateMountingStructureCost(
+  mountingPrice: number,
+  kwp: number
+) {
+  return kwp * 1000 * mountingPrice;
+}
 
-6- labor rate * # of panels * panel wattage
+export function calculateLabourCost(labourRate: number, kwp: number) {
+  return labourRate * kwp * 1000;
+}
 
-7- bos = bosRate * (mounting struct + invertor + cost of panels)
+export function calculateBosCost(
+  bosRate: number,
+  mountingStructureCost: number,
+  invertorCost: number,
+  costOfPanels: number
+) {
+  return bosRate * (mountingStructureCost + invertorCost + costOfPanels);
+}
 
+export function calculateTotalCost(
+  bosCost: number,
+  invertorCost: number,
+  labourCost: number,
+  mountingCost: number
+) {
+  return bosCost + invertorCost + labourCost + mountingCost;
+}
 
-8- Total cost = bos + invertor + panels + labour + mounting
+export function calculateSellingCost(totalCost: number, markup: number) {
+  return totalCost * markup;
+}
 
+export function calculateFirstYearSavings(
+  firstYearSpecificProd: number,
+  kwp: number
+) {
+  return firstYearSpecificProd * kwp;
+}
 
-9- selling price = total cost * markup
-
-10- savings -> 1st year specific prod * kwp
-25 year ((1st year savings) * 25 ) * 80%
-*/
+export function calculateTwentyFifthSavings(firstYearSavings: number) {
+  return firstYearSavings * 25 * 0.8;
+}
