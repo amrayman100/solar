@@ -2,6 +2,9 @@ import Header from "@/components/shared/header";
 import { TypographyH1 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { db } from "@/lib/db";
+
+async function getProducts() {}
 
 export default function Home() {
   return (
