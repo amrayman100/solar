@@ -1,11 +1,3 @@
-import {
-  boolean,
-  date,
-  jsonb,
-  pgSchema,
-  serial,
-  text,
-} from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
