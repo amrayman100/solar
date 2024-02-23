@@ -4,9 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 
-async function getProducts() {}
+async function getProducts() {
+  const res = await db.query.productTable.findMany();
+  return res;
+}
 
-export default function Home() {
+export default async function Home() {
+  const data = await getProducts();
+
+  console.log(data);
   return (
     <main>
       <Header />
