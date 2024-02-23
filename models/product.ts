@@ -24,7 +24,7 @@ export type GridTied = Product<{
   panelWatt: number;
   mountingPrice: number;
   panelDegradation: number;
-  sepcificProd: number;
+  specificProd: number;
   invertors: Invertor[];
 }>;
 
@@ -94,10 +94,13 @@ export function calculateSellingCost(totalCost: number, markup: number) {
   return totalCost * markup;
 }
 
-export function calculateFirstYearSavings(sepcificProd: number, kwp: number) {
-  return sepcificProd * kwp;
+export function calculateFirstYearSavings(specificProd: number, kwp: number) {
+  return specificProd * kwp;
 }
 
-export function calculateTwentyFifthSavings(firstYearSavings: number) {
-  return firstYearSavings * 25 * 0.8;
+export function calculateTwentyFifthSavings(
+  firstYearSavings: number,
+  panelDegradation: number
+) {
+  return firstYearSavings * 25 * panelDegradation;
 }

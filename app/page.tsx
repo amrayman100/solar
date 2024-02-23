@@ -1,7 +1,6 @@
+import { MonthlyConsumptionForm } from "@/components/product/grid-tied/monthly-consumption-form";
 import Header from "@/components/shared/header";
 import { TypographyH1 } from "@/components/shared/typography";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 
 async function getProducts() {
@@ -26,14 +25,7 @@ export default async function Home() {
               text="Get Your Free Solar Quote Instantly"
               className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
             />
-            <div className="m-auto h-full mt-12 flex flex-col lg:flex-row md:flex:row gap-2">
-              <Input
-                type="text"
-                placeholder="Enter Your Address"
-                className="bg-background"
-              />
-              <Button variant="default">Calculate My Fee</Button>
-            </div>
+            <MonthlyConsumptionForm />
           </div>
         </div>
       </div>
