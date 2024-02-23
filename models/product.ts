@@ -14,21 +14,22 @@ export type Product<T> = {
 
 export type Invertor = { price: number; capacity: number };
 
-export type GridTier = Product<{
+export type GridTied = Product<{
+  tarif: number;
   sunHours: number;
   bosRate: number;
   markup: number;
   labourRate: number;
-  cosPerWatt: number;
+  panelCostPerWatt: number;
   panelWatt: number;
   mountingPrice: number;
   panelDegradation: number;
-  firstYearSpecificProd: number;
+  sepcificProd: number;
   invertors: Invertor[];
 }>;
 
-export function calculateKWH(monthlyConsumption: number) {
-  return monthlyConsumption / 1.65;
+export function calculateKWH(monthlyConsumption: number, tarif: number) {
+  return monthlyConsumption / tarif;
 }
 
 export function calculateKWP(sunHours: number, kwh: number) {
@@ -36,15 +37,15 @@ export function calculateKWP(sunHours: number, kwh: number) {
 }
 
 export function calculateNumberOfPanels(kwp: number, panelWatt: number) {
-  return Math.round(kwp / panelWatt);
+  return Math.round((kwp * 1000) / panelWatt);
 }
 
 export function calculateCostOfPanels(
   numberOfPanels: number,
   panelWattage: number,
-  cosPerWatt: number
+  panelCostPerWatt: number
 ) {
-  return numberOfPanels * panelWattage * cosPerWatt;
+  return numberOfPanels * panelWattage * panelCostPerWatt;
 }
 
 export function getInvertor(invertors: Invertor[], kwp: number) {
@@ -83,20 +84,18 @@ export function calculateTotalCost(
   bosCost: number,
   invertorCost: number,
   labourCost: number,
-  mountingCost: number
+  mountingCost: number,
+  costOfPanels: number
 ) {
-  return bosCost + invertorCost + labourCost + mountingCost;
+  return bosCost + invertorCost + labourCost + mountingCost + costOfPanels;
 }
 
 export function calculateSellingCost(totalCost: number, markup: number) {
   return totalCost * markup;
 }
 
-export function calculateFirstYearSavings(
-  firstYearSpecificProd: number,
-  kwp: number
-) {
-  return firstYearSpecificProd * kwp;
+export function calculateFirstYearSavings(sepcificProd: number, kwp: number) {
+  return sepcificProd * kwp;
 }
 
 export function calculateTwentyFifthSavings(firstYearSavings: number) {
