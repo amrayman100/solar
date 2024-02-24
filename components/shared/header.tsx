@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Zap, XIcon } from "lucide-react";
+import { Menu, Zap } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {

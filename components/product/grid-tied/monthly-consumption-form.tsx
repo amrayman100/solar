@@ -1,13 +1,44 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useMemo, useRef } from "react";
-import { useScript } from "usehooks-ts";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocalStorage, useScript } from "usehooks-ts";
+import { createFormFactory, useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
+
+type Form = {
+  monthlyConsumption: number | string;
+};
+
+const formFactory = createFormFactory<Form>({
+  defaultValues: {
+    monthlyConsumption: "",
+  },
+});
 
 export function MonthlyConsumptionForm() {
+  const [address, setAddress] = useState<google.maps.places.PlaceResult>();
+  const [, setValue] = useLocalStorage("consumption-details", {});
+
+  const router = useRouter();
+
   const scriptStatus = useScript(
     `https://maps.googleapis.com/maps/api/js?language=en&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}&libraries=places`
   );
+
+  const form = formFactory.useForm({
+    onSubmit: async ({ value }) => {
+      debugger;
+      if (address) {
+        setValue({
+          address,
+          monthlyConsumption: value.monthlyConsumption,
+        });
+
+        router.push("/solar-quote");
+      }
+    },
+  });
 
   const autoCompleteRef = useRef<google.maps.places.Autocomplete>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -20,6 +51,7 @@ export function MonthlyConsumptionForm() {
     }),
     []
   );
+
   useEffect(() => {
     if (
       autoCompleteRef.current ||
@@ -43,23 +75,52 @@ export function MonthlyConsumptionForm() {
       if (!autoCompleteRef.current) {
         return;
       }
-      console.log(autoCompleteRef.current.getPlace());
+
+      setAddress(autoCompleteRef.current.getPlace());
     });
   }, [scriptStatus, options]);
 
   return (
-    <div className="m-auto h-full mt-12 flex flex-col lg:flex-row md:flex:row gap-2">
-      <Input
-        ref={inputRef}
-        type="text"
-        // onChange={() => onChange(null)}
-        placeholder="Enter Your Address"
-        className="bg-background"
-      />
-      <Input className="bg-background" placeholder="Monthly Consumption" />
-      <Button variant="default" onClick={() => console.log("hello")}>
-        Calculate My Fee
-      </Button>
+    <div className="m-auto h-full mt-12">
+      <form.Provider>
+        <form
+          className="flex flex-col lg:flex-row md:flex:row gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            void form.handleSubmit();
+          }}
+        >
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Enter Your Address"
+            className="bg-background"
+          />
+          <form.Field
+            name="monthlyConsumption"
+            validators={{
+              onChange: ({ value }) =>
+                !value ? "address is required" : undefined,
+            }}
+            children={(field) => (
+              <>
+                <Input
+                  type="number"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                  className="bg-background"
+                  placeholder="Monthly Consumption"
+                />
+              </>
+            )}
+          />
+          <Button variant="default" type="submit">
+            Calculate My Fee
+          </Button>
+        </form>
+      </form.Provider>
     </div>
   );
 }

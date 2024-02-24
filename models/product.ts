@@ -1,20 +1,20 @@
 export type Signature = {
   by: string;
-  at: EpochTimeStamp;
+  at: string;
 };
 
 export type Product<T> = {
   name: string;
   currency: string;
   isEnabled: boolean;
-  created: Signature;
-  updated: Signature;
+  created?: Signature;
+  updated?: Signature;
   parameters: T;
 };
 
 export type Invertor = { price: number; capacity: number };
 
-export type GridTied = Product<{
+export type GridTiedParams = {
   tarif: number;
   sunHours: number;
   bosRate: number;
@@ -26,7 +26,9 @@ export type GridTied = Product<{
   panelDegradation: number;
   specificProd: number;
   invertors: Invertor[];
-}>;
+};
+
+export type GridTied = Product<GridTiedParams>;
 
 export function calculateKWH(monthlyConsumption: number, tarif: number) {
   return monthlyConsumption / tarif;

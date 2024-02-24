@@ -3,15 +3,7 @@ import Header from "@/components/shared/header";
 import { TypographyH1 } from "@/components/shared/typography";
 import { db } from "@/lib/db";
 
-async function getProducts() {
-  const res = await db.query.productTable.findMany();
-  return res;
-}
-
 export default async function Home() {
-  const data = await getProducts();
-
-  console.log(data);
   return (
     <main>
       <Header />
