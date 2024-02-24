@@ -23,7 +23,7 @@ const formFactory = createFormFactory<ContactForm>({
 
 export function GridTiedQuote() {
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
-  const [formStage, setFormStage] = useState<"housing" | "contact">("contact");
+  const [formStage, setFormStage] = useState<"housing" | "contact">("housing");
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {},
