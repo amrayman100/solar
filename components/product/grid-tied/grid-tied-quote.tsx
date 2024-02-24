@@ -1,8 +1,8 @@
 "use client";
-import { TypographyH3 } from "@/components/shared/typography";
+import { TypographyH3, TypographyH4 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { GridTied } from "@/models/product";
-import { Home } from "lucide-react";
+import { Building, Home } from "lucide-react";
 
 export function GridTiedQuote({ gridTied }: { gridTied: GridTied }) {
   return (
@@ -21,9 +21,15 @@ export function GridTiedQuote({ gridTied }: { gridTied: GridTied }) {
               className="font-semibold"
               text="What type of housing do you live in?"
             />
-            <div className="flex gap-4">
-              <Home size={100} />
-              <Home size={100} />
+            <div className="flex gap-10 place-content-center w-100 py-12">
+              <div className="flex flex-col text-center items-center cursor-pointer">
+                <Home size={100} />
+                <TypographyH4 text="Single-familly" />
+              </div>
+              <div className="flex flex-col text-center items-center cursor-pointer">
+                <Building size={100} />
+                <TypographyH4 text="Multi-familly" />
+              </div>
             </div>
           </div>
         </div>
