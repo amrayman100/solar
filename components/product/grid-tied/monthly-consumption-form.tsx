@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocalStorage, useScript } from "usehooks-ts";
-import { createFormFactory, useForm } from "@tanstack/react-form";
+import { createFormFactory } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
 
 type Form = {
