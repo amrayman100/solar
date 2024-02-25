@@ -1,9 +1,10 @@
 "use client";
+import { createProposal } from "@/actions/proposal";
 import { TypographyH3, TypographyH4 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GridTied } from "@/models/product";
 import { createFormFactory } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import { Building, Home } from "lucide-react";
 import { useState } from "react";
 
@@ -25,8 +26,17 @@ export function GridTiedQuote() {
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact">("housing");
 
+  const mutation = useMutation({
+    mutationFn: () => {
+      return createProposal();
+    },
+  });
+
   const form = formFactory.useForm({
-    onSubmit: async ({ value }) => {},
+    onSubmit: async ({ value }) => {
+      debugger;
+      mutation.mutateAsync();
+    },
   });
 
   return (
@@ -92,7 +102,7 @@ export function GridTiedQuote() {
               onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                //   void queryform.handleSubmit();
+                void form.handleSubmit();
               }}
             >
               <div className="flex flex-col space-y-2 mb-4">
