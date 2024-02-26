@@ -30,12 +30,16 @@ export type GridTiedParams = {
 
 export type GridTied = Product<GridTiedParams>;
 
-export function calculateKWH(monthlyConsumption: number, tarif: number) {
-  return monthlyConsumption / tarif;
+function roundToDec(number: number) {
+  return Math.round(number * 10) / 10;
 }
 
-export function calculateKWP(sunHours: number, kwh: number) {
-  return kwh / (sunHours * 30);
+export function calculateKWH(monthlyConsumption: number, tarif: number) {
+  return roundToDec(monthlyConsumption / tarif);
+}
+
+export function calculateKWP(kwh: number, sunHours: number) {
+  return roundToDec(kwh / (sunHours * 30));
 }
 
 export function calculateNumberOfPanels(kwp: number, panelWatt: number) {
@@ -47,18 +51,21 @@ export function calculateCostOfPanels(
   panelWattage: number,
   panelCostPerWatt: number
 ) {
-  return numberOfPanels * panelWattage * panelCostPerWatt;
+  return roundToDec(numberOfPanels * panelWattage * panelCostPerWatt);
 }
 
-export function getInvertor(invertors: Invertor[], kwp: number) {
-  invertors.forEach((invertor) => {
+export function getInvertor(
+  kwp: number,
+  invertors: Invertor[]
+): Invertor | null {
+  for (const invertor of invertors) {
     const lowerBound = 0.8 * kwp;
     const upperBound = 1.2 * kwp;
-
-    if (lowerBound >= invertor.capacity || invertor.capacity <= upperBound) {
+    if (lowerBound <= invertor.capacity && invertor.capacity >= upperBound) {
       return invertor;
     }
-  });
+  }
+
   return null;
 }
 
@@ -66,11 +73,11 @@ export function calculateMountingStructureCost(
   mountingPrice: number,
   kwp: number
 ) {
-  return kwp * 1000 * mountingPrice;
+  return roundToDec(kwp * 1000 * mountingPrice);
 }
 
 export function calculateLabourCost(labourRate: number, kwp: number) {
-  return labourRate * kwp * 1000;
+  return roundToDec(labourRate * kwp * 1000);
 }
 
 export function calculateBosCost(
@@ -79,7 +86,9 @@ export function calculateBosCost(
   invertorCost: number,
   costOfPanels: number
 ) {
-  return bosRate * (mountingStructureCost + invertorCost + costOfPanels);
+  return roundToDec(
+    bosRate * (mountingStructureCost + invertorCost + costOfPanels)
+  );
 }
 
 export function calculateTotalCost(
@@ -93,16 +102,16 @@ export function calculateTotalCost(
 }
 
 export function calculateSellingCost(totalCost: number, markup: number) {
-  return totalCost * markup;
+  return roundToDec(totalCost + totalCost * markup);
 }
 
 export function calculateFirstYearSavings(specificProd: number, kwp: number) {
-  return specificProd * kwp;
+  return roundToDec(specificProd * kwp);
 }
 
 export function calculateTwentyFifthSavings(
   firstYearSavings: number,
   panelDegradation: number
 ) {
-  return firstYearSavings * 25 * panelDegradation;
+  return roundToDec(firstYearSavings * 25 * panelDegradation);
 }

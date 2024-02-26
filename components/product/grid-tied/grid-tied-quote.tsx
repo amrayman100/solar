@@ -3,10 +3,13 @@ import { createProposal } from "@/actions/proposal";
 import { TypographyH3, TypographyH4 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { createFormFactory } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Building, Home } from "lucide-react";
 import { useState } from "react";
+import { json } from "stream/consumers";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 type ContactForm = {
   email: string;
@@ -26,16 +29,21 @@ export function GridTiedQuote() {
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact">("housing");
 
+  const consumptionDetails = useReadLocalStorage("consumption-details") as any;
+  const [, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
+
   const mutation = useMutation({
     mutationFn: () => {
-      return createProposal();
+      const monthlyConsumption =
+        consumptionDetails?.monthlyConsumption as number;
+      return createProposal(monthlyConsumption);
     },
   });
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      debugger;
-      mutation.mutateAsync();
+      const res = mutation.mutateAsync();
+      res.then((res) => alert(JSON.stringify(res)));
     },
   });
 
@@ -178,6 +186,9 @@ export function GridTiedQuote() {
                 </Button>
                 <Button variant="default" type="submit">
                   Submit
+                  {mutation.isPending && (
+                    <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />
+                  )}
                 </Button>
               </div>
             </form>
