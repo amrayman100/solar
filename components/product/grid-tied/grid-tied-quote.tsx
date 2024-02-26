@@ -30,7 +30,7 @@ export function GridTiedQuote() {
   const [formStage, setFormStage] = useState<"housing" | "contact">("housing");
 
   const consumptionDetails = useReadLocalStorage("consumption-details") as any;
-  const [, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
+  const [value, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
 
   const mutation = useMutation({
     mutationFn: () => {
@@ -43,7 +43,7 @@ export function GridTiedQuote() {
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
       const res = mutation.mutateAsync();
-      res.then((res) => alert(JSON.stringify(res)));
+      res.then((res) => setValue(res));
     },
   });
 
@@ -193,6 +193,23 @@ export function GridTiedQuote() {
               </div>
             </form>
           </form.Provider>
+          {value && mutation.isSuccess && (
+            <div className="mt-4">
+              <div>
+                <p>Cost of Panels: {value.costOfPanels}</p>
+                <p>Inverter Capacity: {value.invertor?.capacity}</p>
+                <p>Inverter Capacity: {value.invertor?.price}</p>
+                <p>
+                  Cost of Mounting Structure: {value.costOfMountingStructure}
+                </p>
+                <p>BOS Cost: {value.bosCost}</p>
+                <p>Total Cost: {value.totalCost}</p>
+                <p>Selling Cost: {value.sellingCost}</p>
+                <p>First Year Savings: {value.firstYearSavings}</p>
+                <p>Twenty-Fifth Year Savings: {value.twentyFifthYearSavings}</p>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
