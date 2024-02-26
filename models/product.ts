@@ -102,7 +102,7 @@ export function calculateTotalCost(
 }
 
 export function calculateSellingCost(totalCost: number, markup: number) {
-  return roundToDec(totalCost + totalCost * markup);
+  return roundToDec(totalCost * markup);
 }
 
 export function calculateFirstYearSavings(specificProd: number, kwp: number) {
