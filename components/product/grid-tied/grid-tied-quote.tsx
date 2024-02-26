@@ -8,8 +8,11 @@ import { createFormFactory } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Building, Home } from "lucide-react";
 import { useState } from "react";
-import { json } from "stream/consumers";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { z } from "zod";
+
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
+import { phoneRegex } from "@/lib/utils";
 
 type ContactForm = {
   email: string;
@@ -121,11 +124,12 @@ export function GridTiedQuote() {
               </div>
               <form.Field
                 name="email"
+                validatorAdapter={zodValidator}
                 validators={{
-                  onChange: ({ value }) =>
-                    !value ? "email is required" : undefined,
+                  onChange: z.string().email("Email is required"),
                 }}
-                children={(field) => (
+              >
+                {(field) => (
                   <>
                     <Input
                       type="email"
@@ -135,16 +139,22 @@ export function GridTiedQuote() {
                       className="bg-background mb-4"
                       placeholder="Email"
                     />
+                    {field.state.meta.errors ? (
+                      <p role="alert" className="text-red-500 mb-2">
+                        {field.state.meta.errors.join(", ")}
+                      </p>
+                    ) : null}
                   </>
                 )}
-              />
+              </form.Field>
               <form.Field
                 name="name"
                 validators={{
                   onChange: ({ value }) =>
-                    !value ? "name is required" : undefined,
+                    !value ? "Name is required" : undefined,
                 }}
-                children={(field) => (
+              >
+                {(field) => (
                   <>
                     <Input
                       type="text"
@@ -154,16 +164,22 @@ export function GridTiedQuote() {
                       className="bg-background mb-4"
                       placeholder="Name"
                     />
+                    {field.state.meta.errors ? (
+                      <p role="alert" className="text-red-500 mb-2">
+                        {field.state.meta.errors.join(", ")}
+                      </p>
+                    ) : null}
                   </>
                 )}
-              />
+              </form.Field>
               <form.Field
                 name="number"
+                validatorAdapter={zodValidator}
                 validators={{
-                  onChange: ({ value }) =>
-                    !value ? "number is required" : undefined,
+                  onChange: z.string().regex(phoneRegex, "Invalid Number"),
                 }}
-                children={(field) => (
+              >
+                {(field) => (
                   <>
                     <Input
                       type="text"
@@ -171,11 +187,16 @@ export function GridTiedQuote() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className="bg-background mb-4"
-                      placeholder="Phonenumber"
+                      placeholder="Phone Number"
                     />
+                    {field.state.meta.errors ? (
+                      <p role="alert" className="text-red-500 mb-2">
+                        {field.state.meta.errors.join(", ")}
+                      </p>
+                    ) : null}
                   </>
                 )}
-              />
+              </form.Field>
               <div className="w-full flex place-content-center mb-4 gap-2">
                 <Button
                   variant="secondary"
