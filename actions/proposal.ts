@@ -98,6 +98,7 @@ export async function createProposal(monthlyConsumption: number) {
   );
 
   return {
+    kwp,
     costOfPanels,
     invertor,
     costOfMountingStructure,

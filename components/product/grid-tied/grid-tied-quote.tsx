@@ -196,6 +196,7 @@ export function GridTiedQuote() {
           {value && mutation.isSuccess && (
             <div className="mt-4">
               <div>
+                <p>kwp: {value.kwp}</p>
                 <p>Cost of Panels: {value.costOfPanels}</p>
                 <p>Inverter Capacity: {value.invertor?.capacity}</p>
                 <p>Inverter Capacity: {value.invertor?.price}</p>
