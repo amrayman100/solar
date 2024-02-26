@@ -204,6 +204,7 @@ export function GridTiedQuote() {
                   Cost of Mounting Structure: {value.costOfMountingStructure}
                 </p>
                 <p>BOS Cost: {value.bosCost}</p>
+                <p>Labour Cost: {value.labourCost}</p>
                 <p>Total Cost: {value.totalCost}</p>
                 <p>Selling Cost: {value.sellingCost}</p>
                 <p>First Year Savings: {value.firstYearSavings}</p>

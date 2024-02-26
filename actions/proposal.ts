@@ -103,6 +103,7 @@ export async function createProposal(monthlyConsumption: number) {
     invertor,
     costOfMountingStructure,
     bosCost,
+    labourCost,
     totalCost,
     sellingCost,
     firstYearSavings,
