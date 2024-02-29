@@ -59,9 +59,8 @@ export function getInvertor(
   invertors: Invertor[]
 ): Invertor | null {
   for (const invertor of invertors) {
-    const lowerBound = 0.8 * kwp;
-    const upperBound = 1.2 * kwp;
-    if (lowerBound <= invertor.capacity && invertor.capacity >= upperBound) {
+    const targetInvertorCapacity = kwp / 1.2;
+    if (targetInvertorCapacity <= invertor.capacity) {
       return invertor;
     }
   }
