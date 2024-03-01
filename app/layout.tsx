@@ -8,7 +8,7 @@ import { ReactQueryClientProvider } from "@/components/react-query-client-provid
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Solar",
+  title: "Bolt Energy",
   description: "Solar Clean Energy",
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <ReactQueryClientProvider>
         <RTLProvider>
           <body className={inter.className}>

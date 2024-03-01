@@ -13,11 +13,17 @@ import { z } from "zod";
 
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
+import { BaseAddress, MapView } from "@/components/map/map";
 
 type ContactForm = {
   email: string;
   name: string;
   number: string;
+};
+
+type ConsumptionDetails = {
+  address: BaseAddress;
+  monthlyConsumption: number;
 };
 
 const formFactory = createFormFactory<ContactForm>({
@@ -30,15 +36,19 @@ const formFactory = createFormFactory<ContactForm>({
 
 export function GridTiedQuote() {
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
-  const [formStage, setFormStage] = useState<"housing" | "contact">("housing");
+  const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(
+    "map"
+  );
 
-  const consumptionDetails = useReadLocalStorage("consumption-details") as any;
+  const consumptionDetails = useReadLocalStorage<ConsumptionDetails | null>(
+    "consumption-details"
+  ) as ConsumptionDetails;
+
   const [value, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
 
   const mutation = useMutation({
     mutationFn: () => {
-      const monthlyConsumption =
-        consumptionDetails?.monthlyConsumption as number;
+      const monthlyConsumption = consumptionDetails?.monthlyConsumption;
       return createProposal(monthlyConsumption);
     },
   });
@@ -52,6 +62,31 @@ export function GridTiedQuote() {
 
   return (
     <div className="mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-max">
+      {formStage == "map" && (
+        <div>
+          <div className="flex flex-col space-y-2 mb-4">
+            <TypographyH3
+              className="font-semibold mb-4"
+              text="Locate your roof"
+            />
+            <MapView
+              onClick={(arg: { lat: number; lng: number }) => console.log(arg)}
+              address={
+                consumptionDetails?.address || { name: "", lat: 0, lng: 0 }
+              }
+              style={{
+                width: 800,
+                height: 400,
+              }}
+            />
+          </div>
+          <div className="w-full flex place-content-center mb-4 gap-2">
+            <Button size={"lg"} onClick={() => setFormStage("housing")}>
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
       {formStage == "housing" && (
         <>
           <div>
@@ -98,9 +133,16 @@ export function GridTiedQuote() {
               </div>
             </div>
           </div>
-          <div className="w-full flex place-content-center">
+          <div className="w-full flex place-content-center mb-4 gap-2">
             <Button size={"lg"} onClick={() => setFormStage("contact")}>
               Next
+            </Button>
+            <Button
+              variant="secondary"
+              type="submit"
+              onClick={() => setFormStage("map")}
+            >
+              Previous
             </Button>
           </div>
         </>

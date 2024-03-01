@@ -19,7 +19,7 @@
     "@tanstack/react-form": "^0.13.6",
     "@tanstack/react-query": "^5.24.1",
     "@tanstack/zod-form-adapter": "^0.13.6",
-    "@types/google.maps": "^3.55.3",
+    "@vis.gl/react-google-maps": "^0.7.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.29.4",
@@ -36,6 +36,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/google.maps": "^3.55.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

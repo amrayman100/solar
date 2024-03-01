@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocalStorage, useScript } from "usehooks-ts";
 import { createFormFactory } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
+import { BaseAddress } from "@/components/map/map";
 
 type Form = {
   monthlyConsumption: number | string;
@@ -17,7 +18,7 @@ const formFactory = createFormFactory<Form>({
 });
 
 export function MonthlyConsumptionForm() {
-  const [address, setAddress] = useState<google.maps.places.PlaceResult>();
+  const [address, setAddress] = useState<BaseAddress>();
   const [, setValue] = useLocalStorage("consumption-details", {});
 
   const router = useRouter();
@@ -76,7 +77,11 @@ export function MonthlyConsumptionForm() {
         return;
       }
 
-      setAddress(autoCompleteRef.current.getPlace());
+      setAddress({
+        name: autoCompleteRef.current.getPlace().name || "",
+        lat: autoCompleteRef.current.getPlace().geometry?.location?.lat() || 30,
+        lng: autoCompleteRef.current.getPlace().geometry?.location?.lng() || 30,
+      });
     });
   }, [scriptStatus, options]);
 
