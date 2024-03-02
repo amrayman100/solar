@@ -1,6 +1,7 @@
 import {
   APIProvider,
   Map,
+  useMap,
   AdvancedMarker,
   MapMouseEvent,
   useAdvancedMarkerRef,
@@ -16,9 +17,76 @@ type MapViewProps = {
   onClick: (arg: { lat: number; lng: number }) => void;
 };
 
-export function MapView(props: MapViewProps) {
+function PlacesSearch({
+  initName,
+  isPlacesAPILoaded,
+  setMarkerPos,
+}: {
+  initName: string;
+  isPlacesAPILoaded: boolean;
+  setMarkerPos: ({ lat, lng }: { lat: any; lng: any }) => void;
+}) {
   const autoCompleteRef = useRef<google.maps.places.Autocomplete>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const map = useMap("solar-quote-map");
+
+  function onLoad(
+    setMarkerPos: ({ lat, lng }: { lat: number; lng: number }) => void
+  ) {
+    debugger;
+    const options = {
+      componentRestrictions: { country: "eg" },
+      fields: ["address_components", "geometry", "name"],
+      types: ["establishment"],
+    };
+    if (
+      autoCompleteRef.current ||
+      !inputRef.current ||
+      !window.google ||
+      !window.google.maps ||
+      !window.google.maps.places
+    ) {
+      return;
+    }
+
+    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+      inputRef.current,
+      options
+    );
+
+    autoCompleteRef.current.addListener("place_changed", () => {
+      if (!autoCompleteRef.current) {
+        return;
+      }
+      const place = autoCompleteRef.current.getPlace();
+      const coords = place?.geometry?.location as any;
+      const coordsJson = {
+        lat: coords?.lat(),
+        lng: coords?.lng(),
+      };
+      setMarkerPos(coordsJson);
+      map?.setCenter(coordsJson);
+    });
+  }
+
+  useEffect(() => {
+    isPlacesAPILoaded && onLoad(setMarkerPos);
+  }, [isPlacesAPILoaded]);
+
+  return (
+    <Input
+      ref={inputRef}
+      defaultValue={initName}
+      type="text"
+      placeholder="Enter Your Address"
+      className="bg-background mb-4"
+    />
+  );
+}
+
+export function MapView(props: MapViewProps) {
+  const [isPlacesAPILoaded, setIsPlacesAPILoaded] = useState(false);
 
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [mapCenter, setMapCenter] = useState({
@@ -65,54 +133,25 @@ export function MapView(props: MapViewProps) {
       apiKey={process.env.NEXT_PUBLIC_MAP_API_KEY || ""}
       libraries={["places"]}
       onLoad={() => {
-        const options = {
-          componentRestrictions: { country: "eg" },
-          fields: ["address_components", "geometry", "name"],
-          types: ["establishment"],
-        };
-        if (
-          autoCompleteRef.current ||
-          !inputRef.current ||
-          !window.google ||
-          !window.google.maps ||
-          !window.google.maps.places
-        ) {
-          return;
-        }
-
-        autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-          inputRef.current,
-          options
-        );
-
-        autoCompleteRef.current.addListener("place_changed", () => {
-          if (!autoCompleteRef.current) {
-            return;
-          }
-          const place = autoCompleteRef.current.getPlace();
-          const coords = place?.geometry?.location as any;
-          const coordsJson = {
-            lat: coords?.lat(),
-            lng: coords?.lng(),
-          };
-          setMarkerPos(coordsJson);
-          setMapCenter(coordsJson);
-        });
+        setIsPlacesAPILoaded(true);
       }}
     >
-      <Input
-        ref={inputRef}
-        defaultValue={props.address?.name}
-        type="text"
-        placeholder="Enter Your Address"
-        className="bg-background mb-4"
+      <PlacesSearch
+        isPlacesAPILoaded={isPlacesAPILoaded}
+        initName={props.address.name}
+        setMarkerPos={({ lat, lng }) =>
+          setMarkerPos({
+            lat: lat,
+            lng: lng,
+          })
+        }
       />
       <Map
         id={"solar-quote-map"}
         mapId={"8c1c10c3cc4d248b"}
         onClick={(event) => handleClick(event)}
         style={props.style}
-        center={mapCenter}
+        defaultCenter={mapCenter}
         defaultZoom={15}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
