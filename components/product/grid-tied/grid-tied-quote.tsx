@@ -67,7 +67,7 @@ export function GridTiedQuote() {
         lat: latLng?.lat,
         long: latLng?.lng,
       });
-      res.then((res) => setValue(res));
+      res.then((res) => console.log(res));
     },
   });
 
