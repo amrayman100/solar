@@ -1,4 +1,4 @@
-import { GridTiedQuote } from "@/components/product/grid-tied/grid-tied-quote";
+import { GridTiedQuote } from "@/components/product/proposal/grid-tied-quote";
 
 export default async function Proposal() {
   return (

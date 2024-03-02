@@ -44,8 +44,6 @@ export function GridTiedQuote() {
     "consumption-details"
   ) as ConsumptionDetails;
 
-  const [value, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
-
   const [latLng, setLatLng] = useState<{
     lat: number;
     lng: number;
@@ -267,7 +265,7 @@ export function GridTiedQuote() {
               </div>
             </form>
           </form.Provider>
-          {value && mutation.isSuccess && (
+          {mutation.isSuccess && (
             <div className="mt-4">
               <div>Your Request is saved</div>
             </div>
