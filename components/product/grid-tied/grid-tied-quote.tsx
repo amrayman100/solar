@@ -1,5 +1,5 @@
 "use client";
-import { createProposal } from "@/actions/proposal";
+import { ProposalRequestInfo, createProposal } from "@/actions/proposal";
 import { TypographyH3, TypographyH4 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,16 +46,27 @@ export function GridTiedQuote() {
 
   const [value, setValue] = useLocalStorage<any>("grid-tied-proposal", {});
 
+  const [latLng, setLatLng] = useState<{
+    lat: number;
+    lng: number;
+  }>();
+
   const mutation = useMutation({
-    mutationFn: () => {
-      const monthlyConsumption = consumptionDetails?.monthlyConsumption;
-      return createProposal(monthlyConsumption);
+    mutationFn: (req: ProposalRequestInfo) => {
+      return createProposal(req);
     },
   });
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      const res = mutation.mutateAsync();
+      const res = mutation.mutateAsync({
+        monthlyConsumption: consumptionDetails?.monthlyConsumption,
+        name: value.name,
+        email: value.email,
+        phoneNumber: value.number,
+        lat: latLng?.lat,
+        long: latLng?.lng,
+      });
       res.then((res) => setValue(res));
     },
   });
@@ -70,7 +81,7 @@ export function GridTiedQuote() {
               text="Locate your roof"
             />
             <MapView
-              onClick={(arg: { lat: number; lng: number }) => console.log(arg)}
+              onClick={(arg: { lat: number; lng: number }) => setLatLng(arg)}
               address={
                 consumptionDetails?.address || { name: "", lat: 0, lng: 0 }
               }
@@ -258,21 +269,7 @@ export function GridTiedQuote() {
           </form.Provider>
           {value && mutation.isSuccess && (
             <div className="mt-4">
-              <div>
-                <p>kwp: {value.kwp}</p>
-                <p>Cost of Panels: {value.costOfPanels}</p>
-                <p>Inverter Capacity: {value.invertor?.capacity}</p>
-                <p>Inverter Capacity: {value.invertor?.price}</p>
-                <p>
-                  Cost of Mounting Structure: {value.costOfMountingStructure}
-                </p>
-                <p>BOS Cost: {value.bosCost}</p>
-                <p>Labour Cost: {value.labourCost}</p>
-                <p>Total Cost: {value.totalCost}</p>
-                <p>Selling Cost: {value.sellingCost}</p>
-                <p>First Year Savings: {value.firstYearSavings}</p>
-                <p>Twenty-Fifth Year Savings: {value.twentyFifthYearSavings}</p>
-              </div>
+              <div>Your Request is saved</div>
             </div>
           )}
         </>

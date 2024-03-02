@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
-import { productTable } from "@/lib/schema";
+import { productProposalTable, productTable } from "@/lib/schema";
 import {
   GridTied,
   GridTiedParams,
@@ -19,7 +19,16 @@ import {
 } from "@/models/product";
 import { eq } from "drizzle-orm";
 
-export async function createProposal(monthlyConsumption: number) {
+export type ProposalRequestInfo = {
+  monthlyConsumption: number;
+  lat?: number;
+  long?: number;
+  name: string;
+  email: string;
+  phoneNumber: string;
+};
+
+export async function createProposal(req: ProposalRequestInfo) {
   const res = await db
     .select()
     .from(productTable)
@@ -50,7 +59,7 @@ export async function createProposal(monthlyConsumption: number) {
 
   const params = gridTied.parameters;
 
-  const kwh = calculateKWH(monthlyConsumption, params.tarif);
+  const kwh = calculateKWH(req.monthlyConsumption, params.tarif);
   const kwp = calculateKWP(kwh, params.sunHours);
 
   const numberOfpanels = calculateNumberOfPanels(kwp, params.panelWatt);
@@ -97,16 +106,31 @@ export async function createProposal(monthlyConsumption: number) {
     params.panelDegradation
   );
 
-  return {
-    kwp,
-    costOfPanels,
-    invertor,
-    costOfMountingStructure,
-    bosCost,
-    labourCost,
-    totalCost,
-    sellingCost,
-    firstYearSavings,
-    twentyFifthYearSavings,
-  };
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: gridTiedDb.id,
+      name: req.name,
+      emailAddress: req.email,
+      phoneNumber: req.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: {
+        kwp,
+        costOfPanels,
+        invertor,
+        costOfMountingStructure,
+        bosCost,
+        labourCost,
+        totalCost,
+        sellingCost,
+        firstYearSavings,
+        twentyFifthYearSavings,
+      },
+    })
+    .returning({ id: productProposalTable.id });
+
+  return insertResult.length > 0 ? { id: insertResult[0].id } : {};
 }

@@ -12,6 +12,17 @@ export type Product<T> = {
   parameters: T;
 };
 
+export type ProductPropsal<T> = {
+  name: string;
+  emailAddress: string;
+  phoneNumber: string;
+  productId: number;
+  addressLatitude: number;
+  addessLongitude: number;
+  proposalDetails: T;
+  created?: Signature;
+};
+
 export type Invertor = { price: number; capacity: number };
 
 export type GridTiedParams = {
@@ -28,7 +39,22 @@ export type GridTiedParams = {
   invertors: Invertor[];
 };
 
+export type GridTiedProposalDetails = {
+  kwp: number;
+  costOfPanels: number;
+  invertor: number;
+  costOfMountingStructure: number;
+  bosCost: number;
+  labourCost: number;
+  totalCost: number;
+  sellingCost: number;
+  firstYearSavings: number;
+  twentyFifthYearSavings: number;
+};
+
 export type GridTied = Product<GridTiedParams>;
+
+export type GridTiedProposal = ProductPropsal<GridTiedProposalDetails>;
 
 function roundToDec(number: number) {
   return Math.round(number * 10) / 10;
