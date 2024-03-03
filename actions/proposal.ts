@@ -1,7 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
 import { productProposalTable, productTable } from "@/lib/schema";
-import { match } from "ts-pattern";
 import {
   GridTied,
   GridTiedParams,
@@ -21,7 +20,6 @@ import {
   calculateTwentyFifthSavings,
   getInvertor,
 } from "@/models/product";
-import { error } from "console";
 import { eq } from "drizzle-orm";
 
 export type ProposalRequestInfo = {
@@ -33,7 +31,7 @@ export type ProposalRequestInfo = {
   phoneNumber: string;
 };
 
-export type createProposal<T> = (
+export type CreateProposalServerFunction<T> = (
   req: ProposalRequestInfo
 ) => Promise<ProductProposal<T>>;
 
