@@ -1,9 +1,13 @@
 "use server";
 import { db } from "@/lib/db";
 import { productProposalTable, productTable } from "@/lib/schema";
+import { match } from "ts-pattern";
 import {
   GridTied,
   GridTiedParams,
+  GridTiedProposal,
+  GridTiedProposalDetails,
+  ProductProposal,
   calculateBosCost,
   calculateCostOfPanels,
   calculateFirstYearSavings,
@@ -17,6 +21,7 @@ import {
   calculateTwentyFifthSavings,
   getInvertor,
 } from "@/models/product";
+import { error } from "console";
 import { eq } from "drizzle-orm";
 
 export type ProposalRequestInfo = {
@@ -28,7 +33,13 @@ export type ProposalRequestInfo = {
   phoneNumber: string;
 };
 
-export async function createProposal(req: ProposalRequestInfo) {
+export type createProposal<T> = (
+  req: ProposalRequestInfo
+) => Promise<ProductProposal<T>>;
+
+export async function createGridTiedProposal(
+  req: ProposalRequestInfo
+): Promise<GridTiedProposal> {
   const res = await db
     .select()
     .from(productTable)
@@ -106,31 +117,45 @@ export async function createProposal(req: ProposalRequestInfo) {
     params.panelDegradation
   );
 
+  const proposal = {
+    name: req.name,
+    emailAddress: req.email,
+    phoneNumber: req.phoneNumber,
+    productId: gridTiedDb.id,
+    addressLatitude: req.lat || 0,
+    addressLongitude: req.long || 0,
+    proposalDetails: {
+      kwp,
+      costOfPanels,
+      invertor,
+      costOfMountingStructure,
+      bosCost,
+      labourCost,
+      totalCost,
+      sellingCost,
+      firstYearSavings,
+      twentyFifthYearSavings,
+    },
+  };
+
   const insertResult = await db
     .insert(productProposalTable)
     .values({
-      productId: gridTiedDb.id,
-      name: req.name,
-      emailAddress: req.email,
-      phoneNumber: req.phoneNumber,
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
       addressLatitude: req.lat?.toString(),
       addressLongitude: req.long?.toString(),
       createdAt: new Date().toLocaleDateString(),
       createdBy: req.email,
-      proposalDetails: {
-        kwp,
-        costOfPanels,
-        invertor,
-        costOfMountingStructure,
-        bosCost,
-        labourCost,
-        totalCost,
-        sellingCost,
-        firstYearSavings,
-        twentyFifthYearSavings,
-      },
+      proposalDetails: proposal.proposalDetails,
     })
-    .returning({ id: productProposalTable.id });
+    .returning();
 
-  return insertResult.length > 0 ? { id: insertResult[0].id } : {};
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  return proposal;
 }

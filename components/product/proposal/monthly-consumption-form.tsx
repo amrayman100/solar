@@ -36,7 +36,7 @@ export function MonthlyConsumptionForm() {
           monthlyConsumption: value.monthlyConsumption,
         });
 
-        router.push("/solar-quote");
+        router.push("/proposal");
       }
     },
   });

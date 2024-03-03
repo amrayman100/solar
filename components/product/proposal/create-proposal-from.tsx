@@ -1,5 +1,8 @@
 "use client";
-import { ProposalRequestInfo, createProposal } from "@/actions/proposal";
+import {
+  CreateProposalServerFunction,
+  ProposalRequestInfo,
+} from "@/actions/proposal";
 import { TypographyH3, TypographyH4 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +17,7 @@ import { z } from "zod";
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
 import { BaseAddress, MapView } from "@/components/map/map";
+import { ProductProposal } from "@/models/product";
 
 type ContactForm = {
   email: string;
@@ -34,7 +38,15 @@ const formFactory = createFormFactory<ContactForm>({
   },
 });
 
-export function GridTiedQuote() {
+type CreateProposalProps<T> = {
+  createProposalFunc: CreateProposalServerFunction<T>;
+  onProposalCreation: (proposal: ProductProposal<T>) => void;
+};
+
+export function CreateProposal<T>({
+  createProposalFunc,
+  onProposalCreation,
+}: CreateProposalProps<T>) {
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(
     "map"
@@ -51,7 +63,7 @@ export function GridTiedQuote() {
 
   const mutation = useMutation({
     mutationFn: (req: ProposalRequestInfo) => {
-      return createProposal(req);
+      return createProposalFunc(req);
     },
   });
 
@@ -65,7 +77,7 @@ export function GridTiedQuote() {
         lat: latLng?.lat,
         long: latLng?.lng,
       });
-      res.then((res) => console.log(res));
+      res.then((res) => console.log(onProposalCreation(res)));
     },
   });
 
