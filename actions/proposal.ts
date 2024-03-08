@@ -6,21 +6,38 @@ import {
   GridTiedParams,
   GridTiedProposal,
   GridTiedProposalDetails,
+  Invertor,
   ProductProposal,
-  calculateBosCost,
-  calculateCostOfPanels,
+  calculateConcreteFootingCost,
+  calculateDCCableCost,
+  calculateDCEarthCableCost,
   calculateFirstYearSavings,
-  calculateKWH,
-  calculateKWP,
-  calculateLabourCost,
+  calculateMc4Cost,
   calculateMountingStructureCost,
-  calculateNumberOfPanels,
+  calculateNumberofPanels,
   calculateSellingCost,
+  calculateSystemSize,
   calculateTotalCost,
   calculateTwentyFifthSavings,
+  calulateCostOfPanels,
+  getEarthLeakageCost,
+  getElectricityCompanyCost,
+  getFusePrice,
   getInvertor,
+  getInvertorACCableCost,
+  getInvertorACEarthCableCost,
+  getInvertorBaseCost,
+  getInvertorCircuitBreakerCost,
+  getInvertorFlexibleCost,
+  getInvertorVSNCost,
+  getLabourCost,
+  getMaintenanceCost,
+  getNumberOfStrings,
+  getSwitchBoxCost,
+  getTransportationCost,
 } from "@/models/product";
 import { eq } from "drizzle-orm";
+import { json } from "stream/consumers";
 
 export type ProposalRequestInfo = {
   monthlyConsumption: number;
@@ -66,54 +83,145 @@ export async function createGridTiedProposal(
     parameters: gridTiedDb.parameters as GridTiedParams,
   };
 
-  const params = gridTied.parameters;
+  const parameters = gridTied.parameters;
 
-  const kwh = calculateKWH(req.monthlyConsumption, params.tarif);
-  const kwp = calculateKWP(kwh, params.sunHours);
-
-  const numberOfpanels = calculateNumberOfPanels(kwp, params.panelWatt);
-
-  const costOfPanels = calculateCostOfPanels(
-    numberOfpanels,
-    params.panelWatt,
-    params.panelCostPerWatt
+  const systemSize = calculateSystemSize(
+    req.monthlyConsumption,
+    parameters.tarif,
+    parameters.specificProd
   );
 
-  const invertor = getInvertor(kwp, params.invertors);
+  const numberOfPanels = calculateNumberofPanels(
+    systemSize,
+    parameters.panel.powerOutputWatt
+  );
+
+  const costOfPanels = calulateCostOfPanels(
+    numberOfPanels,
+    parameters.dollarRate,
+    parameters.panel.pricePerWatt,
+    parameters.panel.powerOutputWatt
+  );
+
+  const invertor = getInvertor(systemSize, parameters.invertors);
   if (!invertor) {
     throw new Error("cannot get invertor");
   }
 
-  const costOfMountingStructure = calculateMountingStructureCost(
-    params.mountingPrice,
-    kwp
+  const invertorBaseCost = getInvertorBaseCost(invertor, parameters.dollarRate);
+  const invertorACCableCost = getInvertorACCableCost(invertor);
+  const invertorACCableEarthCost = getInvertorACEarthCableCost(invertor);
+  const invertorCircuitBreaker = getInvertorCircuitBreakerCost(invertor);
+  const invertorVSNCost = getInvertorVSNCost(invertor);
+  const invertorFlexibleCost = getInvertorFlexibleCost(invertor);
+
+  const mountingStructureCost = calculateMountingStructureCost(
+    parameters.mountingPrice,
+    systemSize
   );
 
-  const labourCost = calculateLabourCost(params.labourRate, kwp);
-
-  const bosCost = calculateBosCost(
-    params.bosRate,
-    costOfMountingStructure,
-    invertor.price,
-    costOfPanels
+  const concreteFootingCost = calculateConcreteFootingCost(
+    numberOfPanels,
+    parameters.panel.width,
+    parameters.structureSpan,
+    parameters.concreteFootingPrice
   );
+
+  const dcCableCost = calculateDCCableCost(
+    systemSize,
+    parameters.dcCable.price
+  );
+  const dcEarthCableCost = calculateDCEarthCableCost(parameters.dcEarthCable);
+
+  const numberOfStrings = getNumberOfStrings(numberOfPanels);
+  const mc4Cost = calculateMc4Cost(parameters.mc4, numberOfStrings);
+  const fuseCost = getFusePrice(parameters.fuse.price, numberOfStrings);
+
+  const earthLeakageCost = getEarthLeakageCost(parameters.earthLeakage, "giza");
+  const switchBoxCost = getSwitchBoxCost(parameters.switchBox, "giza");
+
+  const earthCost = parameters.earth;
+
+  const labourCost = getLabourCost(systemSize, parameters.labourBaseCost);
+  const transportationCost = getTransportationCost(
+    parameters.truckPrice,
+    numberOfPanels
+  );
+  const maintenanceCost = getMaintenanceCost(parameters.maintenance);
+  const electricityCompanyCost = getElectricityCompanyCost(
+    parameters.electricityCompanyCheckup
+  );
+
+  console.log(
+    systemSize,
+    numberOfPanels,
+    JSON.stringify(invertor),
+    JSON.stringify({
+      invertorBaseCost,
+      invertorACCableCost,
+      invertorACCableEarthCost,
+      invertorCircuitBreaker,
+      invertorVSNCost,
+      invertorFlexibleCost,
+    }),
+    mountingStructureCost,
+    {
+      dcCableCost,
+      dcEarthCableCost,
+    },
+    " number of strings " + numberOfStrings,
+    " mc4 cost " + mc4Cost,
+    " fuse cost " + fuseCost,
+    " labour cost " + labourCost,
+    " transportation cost " + transportationCost,
+    " maintenance cost " + maintenanceCost,
+    " electricity Company cost " + electricityCompanyCost,
+    " earth leakage cost " + earthLeakageCost,
+    " switch box cost " + switchBoxCost,
+    " earth cost " + earthCost
+  );
+
+  const invertorTotalCost =
+    invertorBaseCost +
+    invertorACCableCost +
+    invertorACCableEarthCost +
+    invertorCircuitBreaker +
+    invertorVSNCost +
+    invertorFlexibleCost;
 
   const totalCost = calculateTotalCost(
-    bosCost,
-    invertor.price,
+    invertorTotalCost,
     labourCost,
-    costOfMountingStructure,
-    costOfPanels
+    maintenanceCost,
+    costOfPanels,
+    concreteFootingCost,
+    dcCableCost,
+    dcEarthCableCost,
+    earthCost.price,
+    fuseCost,
+    mc4Cost,
+    switchBoxCost,
+    earthLeakageCost,
+    parameters.cleaningToolPrice,
+    electricityCompanyCost,
+    maintenanceCost,
+    mountingStructureCost,
+    transportationCost
   );
 
-  const sellingCost = calculateSellingCost(totalCost, params.markup);
+  const sellingCost = calculateSellingCost(totalCost, parameters.markup);
 
-  const firstYearSavings = calculateFirstYearSavings(params.specificProd, kwp);
+  const firstYearSavings = calculateFirstYearSavings(
+    parameters.specificProd,
+    systemSize
+  );
 
   const twentyFifthYearSavings = calculateTwentyFifthSavings(
     firstYearSavings,
-    params.panelDegradation
+    parameters.panelDegradation
   );
+
+  console.log(sellingCost, firstYearSavings, twentyFifthYearSavings);
 
   const proposal = {
     name: req.name,
@@ -123,37 +231,37 @@ export async function createGridTiedProposal(
     addressLatitude: req.lat || 0,
     addressLongitude: req.long || 0,
     proposalDetails: {
-      kwp,
-      costOfPanels,
-      invertor,
-      costOfMountingStructure,
-      bosCost,
-      labourCost,
-      totalCost,
-      sellingCost,
-      firstYearSavings,
-      twentyFifthYearSavings,
+      // kwp,
+      // costOfPanels,
+      // invertor,
+      // costOfMountingStructure,
+      // bosCost,
+      // labourCost,
+      // totalCost,
+      // sellingCost,
+      // firstYearSavings,
+      // twentyFifthYearSavings,
     },
   };
 
-  const insertResult = await db
-    .insert(productProposalTable)
-    .values({
-      productId: proposal.productId,
-      name: proposal.name,
-      emailAddress: proposal.emailAddress,
-      phoneNumber: proposal.phoneNumber,
-      addressLatitude: req.lat?.toString(),
-      addressLongitude: req.long?.toString(),
-      createdAt: new Date().toLocaleDateString(),
-      createdBy: req.email,
-      proposalDetails: proposal.proposalDetails,
-    })
-    .returning();
+  // const insertResult = await db
+  //   .insert(productProposalTable)
+  //   .values({
+  //     productId: proposal.productId,
+  //     name: proposal.name,
+  //     emailAddress: proposal.emailAddress,
+  //     phoneNumber: proposal.phoneNumber,
+  //     addressLatitude: req.lat?.toString(),
+  //     addressLongitude: req.long?.toString(),
+  //     createdAt: new Date().toLocaleDateString(),
+  //     createdBy: req.email,
+  //     proposalDetails: {},
+  //   })
+  //   .returning();
 
-  if (insertResult.length < 0) {
-    throw new Error("failed to insert");
-  }
+  // if (insertResult.length < 0) {
+  //   throw new Error("failed to insert");
+  // }
 
   return proposal;
 }

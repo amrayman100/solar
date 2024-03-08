@@ -29,7 +29,6 @@ export function MonthlyConsumptionForm() {
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      debugger;
       if (address) {
         setValue({
           address,

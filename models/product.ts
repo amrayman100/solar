@@ -23,33 +23,142 @@ export type ProductProposal<T> = {
   created?: Signature;
 };
 
-export type Invertor = { price: number; capacity: number };
+export type Panel = {
+  brand: string;
+  powerOutputWatt: number;
+  pricePerWatt: number;
+  width: number;
+};
+
+export type CitySpecificity = {
+  cityName: string;
+  quantity: number;
+};
+
+export type AcEarthCable = {
+  brand: string;
+  rating: string;
+  price: number;
+  quantity: number;
+};
+
+export type CircuitBreaker = {
+  brand: string;
+  rating: string;
+  price: number;
+};
+
+export type AcCable = {
+  brand: string;
+  price: number;
+  rating: string;
+  acEarthCable: AcEarthCable;
+  quantity: number;
+};
+
+export type Flexible = {
+  brand: string;
+  quantity: number;
+  price: number;
+};
+
+export type Invertor = {
+  brand: string;
+  price: number;
+  capacity: number;
+  acCable: AcCable;
+  circuitBreaker: CircuitBreaker;
+  flexible: Flexible;
+  vsn: { quantity: number; price: number };
+};
+
+export type DCCable = {
+  brand: string;
+  price: number;
+  rating: string;
+};
+
+export type DCEarthCable = {
+  brand: string;
+  quantity: number;
+  rating: string;
+  price: number;
+};
+
+export type MC4 = {
+  brand: string;
+  price: number;
+};
+
+export type EarthLeakage = {
+  brand: string;
+  rating: string;
+  price: number;
+  citySpecificities: CitySpecificity[];
+};
+
+export type SwitchBox = {
+  brand: string;
+  price: number;
+  citySpecificities: CitySpecificity[];
+};
+
+export type Fuse = {
+  brand: string;
+  price: number;
+};
+
+export type Earth = {
+  brand: string;
+  price: number;
+};
+
+export type Maintenance = {
+  price: number;
+  amountOfVisits: number;
+};
+
+export type ElectricityCompanyCheckup = {
+  price: number;
+  amountOfVisits: number;
+};
 
 export type GridTiedParams = {
+  panel: Panel;
   tarif: number;
-  sunHours: number;
-  bosRate: number;
   markup: number;
-  labourRate: number;
-  panelCostPerWatt: number;
-  panelWatt: number;
-  mountingPrice: number;
   panelDegradation: number;
   specificProd: number;
+  mountingPrice: number;
   invertors: Invertor[];
+  labourBaseCost: number;
+  structureSpan: number;
+  concreteFootingPrice: number;
+  dollarRate: number;
+  truckPrice: number;
+  dcCable: DCCable;
+  dcEarthCable: DCEarthCable;
+  earthLeakage: EarthLeakage;
+  switchBox: SwitchBox;
+  fuse: Fuse;
+  earth: Earth;
+  cleaningToolPrice: number;
+  maintenance: Maintenance;
+  electricityCompanyCheckup: ElectricityCompanyCheckup;
+  mc4: MC4;
 };
 
 export type GridTiedProposalDetails = {
-  kwp: number;
-  costOfPanels: number;
-  invertor: Invertor;
-  costOfMountingStructure: number;
-  bosCost: number;
-  labourCost: number;
-  totalCost: number;
-  sellingCost: number;
-  firstYearSavings: number;
-  twentyFifthYearSavings: number;
+  // kwp: number;
+  // costOfPanels: number;
+  // invertor: Invertor;
+  // costOfMountingStructure: number;
+  // bosCost: number;
+  // labourCost: number;
+  // totalCost: number;
+  // sellingCost: number;
+  // firstYearSavings: number;
+  // twentyFifthYearSavings: number;
 };
 
 export type GridTied = Product<GridTiedParams>;
@@ -60,33 +169,40 @@ function roundToDec(number: number) {
   return Math.round(number * 10) / 10;
 }
 
-export function calculateKWH(monthlyConsumption: number, tarif: number) {
-  return roundToDec(monthlyConsumption / tarif);
-}
-
-export function calculateKWP(kwh: number, sunHours: number) {
-  return roundToDec(kwh / (sunHours * 30));
-}
-
-export function calculateNumberOfPanels(kwp: number, panelWatt: number) {
-  return Math.round((kwp * 1000) / panelWatt);
-}
-
-export function calculateCostOfPanels(
-  numberOfPanels: number,
-  panelWattage: number,
-  panelCostPerWatt: number
+export function calculateSystemSize(
+  monthlyConsumption: number,
+  tarif: number,
+  specificProd: number
 ) {
-  return roundToDec(numberOfPanels * panelWattage * panelCostPerWatt);
+  return roundToDec((monthlyConsumption * 12) / tarif / specificProd);
+}
+
+export function calculateNumberofPanels(
+  systemSize: number,
+  panelPowerOutputWatt: number
+) {
+  const panelRating = panelPowerOutputWatt / 1000;
+  return Math.round(systemSize / panelRating);
+}
+
+export function calulateCostOfPanels(
+  numberOfPanels: number,
+  dollarRate: number,
+  panelCostPerWatt: number,
+  panelPowerOutputWatt: number
+) {
+  return roundToDec(
+    numberOfPanels * dollarRate * panelCostPerWatt * panelPowerOutputWatt
+  );
 }
 
 export function getInvertor(
-  kwp: number,
+  systemSize: number,
   invertors: Invertor[]
 ): Invertor | null {
   for (const invertor of invertors) {
     // kwp = systemSize
-    const targetInvertorCapacity = kwp / 1.2;
+    const targetInvertorCapacity = systemSize / 1.2;
     if (targetInvertorCapacity <= invertor.capacity) {
       return invertor;
     }
@@ -95,40 +211,178 @@ export function getInvertor(
   return null;
 }
 
+export function getInvertorBaseCost(invertor: Invertor, dollarRate: number) {
+  return roundToDec(invertor.price * dollarRate);
+}
+
+export function getInvertorACCableCost(invertor: Invertor) {
+  return roundToDec(invertor.acCable?.price * invertor.acCable?.quantity);
+}
+
+export function getInvertorACEarthCableCost(invertor: Invertor) {
+  if (!invertor?.acCable?.acEarthCable) {
+    return 0;
+  }
+
+  return roundToDec(
+    invertor.acCable.acEarthCable.price * invertor.acCable.acEarthCable.quantity
+  );
+}
+
+export function getInvertorCircuitBreakerCost(invertor: Invertor) {
+  return roundToDec(invertor.circuitBreaker.price);
+}
+
+export function getInvertorVSNCost(invertor: Invertor) {
+  return roundToDec(invertor.vsn.price * invertor.vsn.quantity);
+}
+
+export function getInvertorFlexibleCost(invertor: Invertor) {
+  return roundToDec(invertor.flexible.price * invertor.flexible.quantity);
+}
+
 export function calculateMountingStructureCost(
   mountingPrice: number,
-  kwp: number
+  systemSize: number
 ) {
-  return roundToDec(kwp * 1000 * mountingPrice);
+  return roundToDec(systemSize * mountingPrice);
 }
 
-export function calculateLabourCost(labourRate: number, kwp: number) {
-  return roundToDec(labourRate * kwp * 1000);
-}
-
-export function calculateBosCost(
-  bosRate: number,
-  mountingStructureCost: number,
-  invertorCost: number,
-  costOfPanels: number
+export function calculateConcreteFootingCost(
+  numberOfPanels: number,
+  panelWidth: number,
+  structureSpan: number,
+  concreteFootingPrice: number
 ) {
   return roundToDec(
-    bosRate * (mountingStructureCost + invertorCost + costOfPanels)
+    ((numberOfPanels * panelWidth) / structureSpan) * concreteFootingPrice
+  );
+}
+
+export function calculateDCCableCost(systemSize: number, dcCableCost: number) {
+  return roundToDec(systemSize * dcCableCost * 10);
+}
+
+export function calculateDCEarthCableCost(dcEarthCable: DCEarthCable) {
+  return roundToDec(dcEarthCable.price * dcEarthCable.quantity);
+}
+
+export function getNumberOfStrings(numberOfPanels: number) {
+  if (numberOfPanels <= 20) {
+    return 1;
+  }
+
+  const extraStrings = Math.round(numberOfPanels / 20);
+  return extraStrings + 1;
+}
+
+export function calculateMc4Cost(mc4: MC4, numberOfStrings: number) {
+  return roundToDec(mc4.price * numberOfStrings * 3);
+}
+
+export function getFusePrice(fusePrice: number, numberOfStrings: number) {
+  return roundToDec(fusePrice * numberOfStrings);
+}
+
+export function getEarthCost(earth: Earth) {
+  return earth.price;
+}
+
+export function getEarthLeakageCost(
+  earthLeakage: EarthLeakage,
+  cityName: string
+) {
+  const citySpecificity = earthLeakage.citySpecificities.find(
+    (city) => city.cityName == cityName
+  );
+
+  if (!citySpecificity) {
+    return 0;
+  }
+
+  return roundToDec(earthLeakage.price);
+}
+
+export function getSwitchBoxCost(switchBox: SwitchBox, cityName: string) {
+  const citySpecificity = switchBox.citySpecificities.find(
+    (city) => city.cityName == cityName
+  );
+
+  if (!citySpecificity) {
+    return 0;
+  }
+
+  return roundToDec(switchBox.price);
+}
+
+export function getLabourCost(systemSize: number, labourBaseCost: number) {
+  return roundToDec(systemSize * labourBaseCost);
+}
+
+export function getTransportationCost(
+  truckPrice: number,
+  numberOfPanels: number
+) {
+  let truckQuantity = Math.round(numberOfPanels / 31);
+  if (truckQuantity == 0) truckQuantity = 1;
+
+  return roundToDec(truckPrice * truckQuantity);
+}
+
+export function getMaintenanceCost(maintenance: Maintenance) {
+  return roundToDec(maintenance.price * maintenance.amountOfVisits);
+}
+
+export function getElectricityCompanyCost(
+  electricityCompanyCheckup: ElectricityCompanyCheckup
+) {
+  return roundToDec(
+    electricityCompanyCheckup.amountOfVisits * electricityCompanyCheckup.price
   );
 }
 
 export function calculateTotalCost(
-  bosCost: number,
-  invertorCost: number,
+  invertorTotalCost: number,
   labourCost: number,
   mountingCost: number,
-  costOfPanels: number
+  costOfPanels: number,
+  concreteFootingCost: number,
+  dcCableCost: number,
+  dcEarthCableCost: number,
+  switchBoxCost: number,
+  earthLeakageCost: number,
+  earthCost: number,
+  fusePrice: number,
+  mc4Cost: number,
+  cleaningToolCost: number,
+  electricityCompanyCost: number,
+  maintenanceCost: number,
+  mountingStructureCost: number,
+  transportationCost: number
 ) {
-  return bosCost + invertorCost + labourCost + mountingCost + costOfPanels;
+  return (
+    invertorTotalCost +
+    labourCost +
+    mountingCost +
+    costOfPanels +
+    concreteFootingCost +
+    dcCableCost +
+    dcEarthCableCost +
+    fusePrice +
+    mc4Cost +
+    earthCost +
+    switchBoxCost +
+    earthLeakageCost +
+    cleaningToolCost +
+    electricityCompanyCost +
+    maintenanceCost +
+    mountingStructureCost +
+    transportationCost
+  );
 }
 
 export function calculateSellingCost(totalCost: number, markup: number) {
-  return roundToDec(totalCost * markup);
+  return roundToDec(totalCost + totalCost * markup);
 }
 
 export function calculateFirstYearSavings(specificProd: number, kwp: number) {
