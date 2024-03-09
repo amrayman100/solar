@@ -52,7 +52,7 @@ export function CreateProposal<T>({
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(
-    "housing"
+    "map"
   );
 
   const consumptionDetails = useReadLocalStorage<ConsumptionDetails | null>(
