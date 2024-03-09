@@ -27,7 +27,7 @@
     "price": 2000,
     "rating": "25A",
     "citySpecificities": [
-      { "cityName": "Giza Governate", "quantity": 0 },
+      { "cityName": "Giza Governorate", "quantity": 0 },
       { "cityName": "Cairo Governorate", "quantity": 1 }
     ]
   },
@@ -36,7 +36,7 @@
     "brand": "ABB",
     "price": 1000,
     "citySpecificities": [
-      { "cityName": "Giza Governate", "quantity": 1 },
+      { "cityName": "Giza Governorate", "quantity": 1 },
       { "cityName": "Cairo Governorate", "quantity": 2 }
     ]
   },
