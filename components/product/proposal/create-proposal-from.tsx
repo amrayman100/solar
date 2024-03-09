@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
-import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
+import { useMediaQuery, useReadLocalStorage } from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
 import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
@@ -61,6 +61,8 @@ export function CreateProposal<T>({
 
   const [addressSubmit, setAddressSubmit] = useState<AddressDescription>();
 
+  const isMobileScreen = useMediaQuery("(max-width: 768px)");
+
   useEffect(() => {
     consumptionDetails?.address && setAddressSubmit(consumptionDetails.address);
   }, [consumptionDetails]);
@@ -70,6 +72,8 @@ export function CreateProposal<T>({
       return createProposalFunc(req);
     },
   });
+
+  console.log(isMobileScreen);
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
@@ -107,7 +111,7 @@ export function CreateProposal<T>({
   return (
     <>
       {mode == "submit" && (
-        <div className="lg:mx-auto lg:mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-max">
+        <div className="mx-auto lg:mt-10 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
           {formStage == "map" && (
             <div>
               <div className="flex flex-col space-y-2 mb-4">
@@ -122,7 +126,7 @@ export function CreateProposal<T>({
                     }
                     address={addressSubmit}
                     style={{
-                      width: 800,
+                      width: isMobileScreen ? "100%" : 800,
                       height: 400,
                     }}
                   />

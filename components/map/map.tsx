@@ -143,7 +143,6 @@ export function MapView(props: MapViewProps) {
   }, [marker]);
 
   const handleClick = (event: MapMouseEvent) => {
-    debugger;
     const coords = event.detail.latLng as any;
     setMarkerPos({
       lat: (coords?.lat as number) || 0,
