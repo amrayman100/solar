@@ -3,6 +3,7 @@
 import { GridTiedProposal } from "@/models/product";
 import { CreateProposal } from "./create-proposal-from";
 import { createGridTiedProposal } from "@/actions/proposal";
+import { ViewGridTiedProposal } from "./grid-tied-proposal";
 
 export function Proposal() {
   return (
@@ -12,6 +13,7 @@ export function Proposal() {
         onProposalCreation={(proposal: GridTiedProposal) =>
           console.log(proposal)
         }
+        viewProposal={ViewGridTiedProposal}
       />
     </>
   );

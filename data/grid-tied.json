@@ -6,7 +6,7 @@
     "width": 1.14
   },
   "tarif": 1.65,
-  "markup": 0.25,
+  "markup": 0.2,
   "labourBaseCost": 600,
   "panelDegradation": 0.8,
   "specificProd": 1600,
@@ -27,8 +27,8 @@
     "price": 2000,
     "rating": "25A",
     "citySpecificities": [
-      { "cityName": "giza", "quantity": 0 },
-      { "cityName": "cairo", "quantity": 1 }
+      { "cityName": "Giza Governate", "quantity": 0 },
+      { "cityName": "Cairo Governorate", "quantity": 1 }
     ]
   },
   "earth": { "brand": "Rod", "price": 3000 },
@@ -36,8 +36,8 @@
     "brand": "ABB",
     "price": 1000,
     "citySpecificities": [
-      { "cityName": "giza", "quantity": 1 },
-      { "cityName": "cairo", "quantity": 2 }
+      { "cityName": "Giza Governate", "quantity": 1 },
+      { "cityName": "Cairo Governorate", "quantity": 2 }
     ]
   },
   "fuse": { "brand": "Suntree", "price": 220 },
