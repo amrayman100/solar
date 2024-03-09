@@ -147,7 +147,7 @@ export function CreateProposal<T>({
                     className="font-semibold"
                     text="What type of housing do you live in?"
                   />
-                  <div className="flex gap-10 place-content-center w-100 py-12">
+                  <div className="flex flex-col lg:flex-row md:flex-row gap-10 place-content-center py-12 w-100">
                     <button
                       className="flex flex-col text-center items-center cursor-pointer"
                       onClick={() => setHousingType("single")}
@@ -190,6 +190,7 @@ export function CreateProposal<T>({
                   Next
                 </Button>
                 <Button
+                  size={"lg"}
                   variant="secondary"
                   type="submit"
                   onClick={() => setFormStage("map")}
@@ -293,13 +294,14 @@ export function CreateProposal<T>({
                   </form.Field>
                   <div className="w-full flex place-content-center mb-4 gap-2">
                     <Button
+                      size={"lg"}
                       variant="secondary"
                       type="submit"
                       onClick={() => setFormStage("housing")}
                     >
                       Previous
                     </Button>
-                    <Button variant="default" type="submit">
+                    <Button variant="default" type="submit" size={"lg"}>
                       Submit
                       {mutation.isPending && (
                         <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />
