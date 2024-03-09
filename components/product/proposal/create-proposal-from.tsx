@@ -107,7 +107,7 @@ export function CreateProposal<T>({
   return (
     <>
       {mode == "submit" && (
-        <div className="mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-max">
+        <div className="lg:mx-auto lg:mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-max">
           {formStage == "map" && (
             <div>
               <div className="flex flex-col space-y-2 mb-4">
