@@ -80,24 +80,24 @@ export function MonthlyConsumptionForm() {
 
       //Cairo Governorate,  Giza Governate
 
-      if (autoCompleteRef.current.getPlace().address_components) {
+      if (autoCompleteRef?.current?.getPlace().address_components) {
         const cities = autoCompleteRef.current
           .getPlace()
-          .address_components?.filter(
+          ?.address_components?.filter(
             (f) =>
               JSON.stringify(f.types) ===
               JSON.stringify(["administrative_area_level_1", "political"])
           );
 
-        console.log(cities);
-
-        if (cities && cities?.length > 0) city = cities[0].long_name;
+        if (cities && cities?.length > 0) city = cities[0]?.long_name;
       }
 
       setAddress({
-        fullAddress: autoCompleteRef.current.getPlace().name || "",
-        lat: autoCompleteRef.current.getPlace().geometry?.location?.lat() || 30,
-        lng: autoCompleteRef.current.getPlace().geometry?.location?.lng() || 30,
+        fullAddress: autoCompleteRef?.current?.getPlace()?.name || "",
+        lat:
+          autoCompleteRef?.current?.getPlace()?.geometry?.location?.lat() || 30,
+        lng:
+          autoCompleteRef.current?.getPlace()?.geometry?.location?.lng() || 30,
         city: city,
       });
     });
