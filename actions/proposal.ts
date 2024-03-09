@@ -135,8 +135,11 @@ export async function createGridTiedProposal(
   const mc4Cost = calculateMc4Cost(parameters.mc4, numberOfStrings);
   const fuseCost = getFusePrice(parameters.fuse.price, numberOfStrings);
 
-  const earthLeakageCost = getEarthLeakageCost(parameters.earthLeakage, "giza");
-  const switchBoxCost = getSwitchBoxCost(parameters.switchBox, "giza");
+  const earthLeakageCost = getEarthLeakageCost(
+    parameters.earthLeakage,
+    req.city
+  );
+  const switchBoxCost = getSwitchBoxCost(parameters.switchBox, req.city);
 
   const earthCost = parameters.earth;
 
