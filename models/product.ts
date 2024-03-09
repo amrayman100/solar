@@ -318,7 +318,7 @@ export function getEarthLeakageCost(
     return 0;
   }
 
-  return roundToDec(earthLeakage.price);
+  return roundToDec(earthLeakage.price * citySpecificity.quantity);
 }
 
 export function getSwitchBoxCost(switchBox: SwitchBox, cityName: string) {
@@ -330,7 +330,7 @@ export function getSwitchBoxCost(switchBox: SwitchBox, cityName: string) {
     return 0;
   }
 
-  return roundToDec(switchBox.price);
+  return roundToDec(switchBox.price * citySpecificity.quantity);
 }
 
 export function getLabourCost(systemSize: number, labourBaseCost: number) {
