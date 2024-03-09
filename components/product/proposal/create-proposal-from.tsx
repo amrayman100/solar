@@ -73,8 +73,6 @@ export function CreateProposal<T>({
     },
   });
 
-  console.log(isMobileScreen);
-
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
       let addressSubmitReq: { lat: number; long: number; city: string };
