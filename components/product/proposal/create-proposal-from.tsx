@@ -67,7 +67,6 @@ export function CreateProposal<T>({
 
   const mutation = useMutation({
     mutationFn: (req: ProposalRequestInfo) => {
-      setMode("view");
       return createProposalFunc(req);
     },
   });
@@ -98,7 +97,10 @@ export function CreateProposal<T>({
         phoneNumber: value.number,
         ...addressSubmitReq,
       });
-      res.then((res) => console.log(onProposalCreation(res)));
+      res.then((res) => {
+        setMode("view");
+        onProposalCreation(res);
+      });
     },
   });
 
