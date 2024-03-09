@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocalStorage, useScript } from "usehooks-ts";
 import { createFormFactory } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
-import { BaseAddress } from "@/components/map/map";
+import { AddressDescription } from "@/components/map/map";
 
 type Form = {
   monthlyConsumption: number | string;
@@ -18,7 +18,7 @@ const formFactory = createFormFactory<Form>({
 });
 
 export function MonthlyConsumptionForm() {
-  const [address, setAddress] = useState<BaseAddress>();
+  const [address, setAddress] = useState<AddressDescription>();
   const [, setValue] = useLocalStorage("consumption-details", {});
 
   const router = useRouter();
@@ -76,10 +76,29 @@ export function MonthlyConsumptionForm() {
         return;
       }
 
+      let city = "";
+
+      //Cairo Governorate,  Giza Governate
+
+      if (autoCompleteRef.current.getPlace().address_components) {
+        const cities = autoCompleteRef.current
+          .getPlace()
+          .address_components?.filter(
+            (f) =>
+              JSON.stringify(f.types) ===
+              JSON.stringify(["administrative_area_level_1", "political"])
+          );
+
+        console.log(cities);
+
+        if (cities && cities?.length > 0) city = cities[0].long_name;
+      }
+
       setAddress({
-        name: autoCompleteRef.current.getPlace().name || "",
+        fullAddress: autoCompleteRef.current.getPlace().name || "",
         lat: autoCompleteRef.current.getPlace().geometry?.location?.lat() || 30,
         lng: autoCompleteRef.current.getPlace().geometry?.location?.lng() || 30,
+        city: city,
       });
     });
   }, [scriptStatus, options]);

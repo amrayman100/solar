@@ -5,8 +5,6 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
-  GridTiedProposalDetails,
-  Invertor,
   ProductProposal,
   calculateConcreteFootingCost,
   calculateDCCableCost,
@@ -37,12 +35,12 @@ import {
   getTransportationCost,
 } from "@/models/product";
 import { eq } from "drizzle-orm";
-import { json } from "stream/consumers";
 
 export type ProposalRequestInfo = {
   monthlyConsumption: number;
   lat?: number;
   long?: number;
+  city: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -152,35 +150,6 @@ export async function createGridTiedProposal(
     parameters.electricityCompanyCheckup
   );
 
-  console.log(
-    systemSize,
-    numberOfPanels,
-    JSON.stringify(invertor),
-    JSON.stringify({
-      invertorBaseCost,
-      invertorACCableCost,
-      invertorACCableEarthCost,
-      invertorCircuitBreaker,
-      invertorVSNCost,
-      invertorFlexibleCost,
-    }),
-    mountingStructureCost,
-    {
-      dcCableCost,
-      dcEarthCableCost,
-    },
-    " number of strings " + numberOfStrings,
-    " mc4 cost " + mc4Cost,
-    " fuse cost " + fuseCost,
-    " labour cost " + labourCost,
-    " transportation cost " + transportationCost,
-    " maintenance cost " + maintenanceCost,
-    " electricity Company cost " + electricityCompanyCost,
-    " earth leakage cost " + earthLeakageCost,
-    " switch box cost " + switchBoxCost,
-    " earth cost " + earthCost
-  );
-
   const invertorTotalCost =
     invertorBaseCost +
     invertorACCableCost +
@@ -192,7 +161,6 @@ export async function createGridTiedProposal(
   const totalCost = calculateTotalCost(
     invertorTotalCost,
     labourCost,
-    maintenanceCost,
     costOfPanels,
     concreteFootingCost,
     dcCableCost,
@@ -221,8 +189,6 @@ export async function createGridTiedProposal(
     parameters.panelDegradation
   );
 
-  console.log(sellingCost, firstYearSavings, twentyFifthYearSavings);
-
   const proposal = {
     name: req.name,
     emailAddress: req.email,
@@ -231,37 +197,55 @@ export async function createGridTiedProposal(
     addressLatitude: req.lat || 0,
     addressLongitude: req.long || 0,
     proposalDetails: {
-      // kwp,
-      // costOfPanels,
-      // invertor,
-      // costOfMountingStructure,
-      // bosCost,
-      // labourCost,
-      // totalCost,
-      // sellingCost,
-      // firstYearSavings,
-      // twentyFifthYearSavings,
+      systemSize,
+      labourCost,
+      costOfPanels,
+      concreteFootingCost,
+      dcCableCost,
+      dcEarthCableCost,
+      fuseCost,
+      mc4Cost,
+      switchBoxCost,
+      earthLeakageCost,
+      electricityCompanyCost,
+      maintenanceCost,
+      mountingStructureCost,
+      transportationCost,
+      earthCost: earthCost.price,
+      cleaningToolPrice: parameters.cleaningToolPrice,
+      invertorCosts: {
+        invertorBaseCost,
+        invertorACCableCost,
+        invertorACCableEarthCost,
+        invertorCircuitBreaker,
+        invertorVSNCost,
+        invertorFlexibleCost,
+      },
+      sellingCost,
+      totalCost,
+      firstYearSavings,
+      twentyFifthYearSavings,
     },
   };
 
-  // const insertResult = await db
-  //   .insert(productProposalTable)
-  //   .values({
-  //     productId: proposal.productId,
-  //     name: proposal.name,
-  //     emailAddress: proposal.emailAddress,
-  //     phoneNumber: proposal.phoneNumber,
-  //     addressLatitude: req.lat?.toString(),
-  //     addressLongitude: req.long?.toString(),
-  //     createdAt: new Date().toLocaleDateString(),
-  //     createdBy: req.email,
-  //     proposalDetails: {},
-  //   })
-  //   .returning();
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: {},
+    })
+    .returning();
 
-  // if (insertResult.length < 0) {
-  //   throw new Error("failed to insert");
-  // }
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
 
   return proposal;
 }

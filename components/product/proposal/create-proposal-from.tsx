@@ -10,13 +10,13 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { createFormFactory } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Building, Home } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
-import { BaseAddress, MapView } from "@/components/map/map";
+import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
 
 type ContactForm = {
@@ -26,7 +26,7 @@ type ContactForm = {
 };
 
 type ConsumptionDetails = {
-  address: BaseAddress;
+  address: AddressDescription;
   monthlyConsumption: number;
 };
 
@@ -56,10 +56,11 @@ export function CreateProposal<T>({
     "consumption-details"
   ) as ConsumptionDetails;
 
-  const [latLng, setLatLng] = useState<{
-    lat: number;
-    lng: number;
-  }>();
+  const [addressSubmit, setAddressSubmit] = useState<AddressDescription>();
+
+  useEffect(() => {
+    consumptionDetails.address && setAddressSubmit(consumptionDetails.address);
+  }, [consumptionDetails.address]);
 
   const mutation = useMutation({
     mutationFn: (req: ProposalRequestInfo) => {
@@ -69,13 +70,29 @@ export function CreateProposal<T>({
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
+      let addressSubmitReq: { lat: number; long: number; city: string };
+      if (!addressSubmit) {
+        addressSubmitReq = {
+          lat: consumptionDetails?.address?.lat,
+          long: consumptionDetails?.address?.lng,
+          city: consumptionDetails.address.city,
+        };
+      } else {
+        addressSubmitReq = {
+          lat: addressSubmit?.lat,
+          long: addressSubmit?.lng,
+          city: addressSubmit.city,
+        };
+      }
+
+      debugger;
+
       const res = mutation.mutateAsync({
         monthlyConsumption: consumptionDetails?.monthlyConsumption,
         name: value.name,
         email: value.email,
         phoneNumber: value.number,
-        lat: latLng?.lat,
-        long: latLng?.lng,
+        ...addressSubmitReq,
       });
       res.then((res) => console.log(onProposalCreation(res)));
     },
@@ -90,16 +107,18 @@ export function CreateProposal<T>({
               className="font-semibold mb-4"
               text="Locate your roof"
             />
-            <MapView
-              onClick={(arg: { lat: number; lng: number }) => setLatLng(arg)}
-              address={
-                consumptionDetails?.address || { name: "", lat: 0, lng: 0 }
-              }
-              style={{
-                width: 800,
-                height: 400,
-              }}
-            />
+            {addressSubmit && (
+              <MapView
+                setAddressDescription={(arg: AddressDescription) =>
+                  setAddressSubmit(arg)
+                }
+                address={addressSubmit}
+                style={{
+                  width: 800,
+                  height: 400,
+                }}
+              />
+            )}
           </div>
           <div className="w-full flex place-content-center mb-4 gap-2">
             <Button size={"lg"} onClick={() => setFormStage("housing")}>

@@ -9,22 +9,27 @@ import {
 import { Input } from "@/components/ui/input";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 
-export type BaseAddress = { name: string; lat: number; lng: number };
+export type AddressDescription = {
+  fullAddress: string;
+  lat: number;
+  lng: number;
+  city: string;
+};
 
 type MapViewProps = {
   style: CSSProperties;
-  address: BaseAddress;
-  onClick: (arg: { lat: number; lng: number }) => void;
+  address: AddressDescription;
+  setAddressDescription: (addressDescription: AddressDescription) => void;
 };
 
 function PlacesSearch({
-  initName,
   isPlacesAPILoaded,
-  setMarkerPos,
+  address,
+  setAddressDescription,
 }: {
-  initName: string;
   isPlacesAPILoaded: boolean;
-  setMarkerPos: ({ lat, lng }: { lat: any; lng: any }) => void;
+  address: AddressDescription;
+  setAddressDescription: (addressDescription: AddressDescription) => void;
 }) {
   const autoCompleteRef = useRef<google.maps.places.Autocomplete>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -32,9 +37,8 @@ function PlacesSearch({
   const map = useMap("solar-quote-map");
 
   function onLoad(
-    setMarkerPos: ({ lat, lng }: { lat: number; lng: number }) => void
+    setAddressDescription: (addressDescription: AddressDescription) => void
   ) {
-    debugger;
     const options = {
       componentRestrictions: { country: "eg" },
       fields: ["address_components", "geometry", "name"],
@@ -59,25 +63,47 @@ function PlacesSearch({
       if (!autoCompleteRef.current) {
         return;
       }
+
+      let city = "";
+
+      if (autoCompleteRef.current.getPlace().address_components) {
+        const cities = autoCompleteRef.current
+          .getPlace()
+          .address_components?.filter(
+            (f) =>
+              JSON.stringify(f.types) ===
+              JSON.stringify(["administrative_area_level_1", "political"])
+          );
+
+        if (cities && cities?.length > 0) city = cities[0].long_name;
+      }
+
       const place = autoCompleteRef.current.getPlace();
       const coords = place?.geometry?.location as any;
       const coordsJson = {
         lat: coords?.lat(),
         lng: coords?.lng(),
       };
-      setMarkerPos(coordsJson);
+
+      setAddressDescription({
+        fullAddress: autoCompleteRef.current.getPlace().name || "",
+        lat: coords?.lat(),
+        lng: coords?.lng(),
+        city: city,
+      });
+
       map?.setCenter(coordsJson);
     });
   }
 
   useEffect(() => {
-    isPlacesAPILoaded && onLoad(setMarkerPos);
+    isPlacesAPILoaded && onLoad(setAddressDescription);
   }, [isPlacesAPILoaded]);
 
   return (
     <Input
       ref={inputRef}
-      defaultValue={initName}
+      defaultValue={address.fullAddress}
       type="text"
       placeholder="Enter Your Address"
       className="bg-background mb-4"
@@ -93,6 +119,7 @@ export function MapView(props: MapViewProps) {
     lat: props.address?.lat || 0,
     lng: props.address?.lng || 0,
   });
+
   const [markerPos, setMarkerPos] = useState({
     lat: props.address?.lat || 0,
     lng: props.address?.lng || 0,
@@ -116,13 +143,15 @@ export function MapView(props: MapViewProps) {
   }, [marker]);
 
   const handleClick = (event: MapMouseEvent) => {
+    debugger;
     const coords = event.detail.latLng as any;
     setMarkerPos({
       lat: (coords?.lat as number) || 0,
       lng: (coords?.lng as number) || 0,
     });
     coords &&
-      props.onClick({
+      props.setAddressDescription({
+        ...props.address,
         lat: (coords.lat as number) || 0,
         lng: (coords.lng as number) || 0,
       });
@@ -138,12 +167,9 @@ export function MapView(props: MapViewProps) {
     >
       <PlacesSearch
         isPlacesAPILoaded={isPlacesAPILoaded}
-        initName={props.address.name}
-        setMarkerPos={({ lat, lng }) =>
-          setMarkerPos({
-            lat: lat,
-            lng: lng,
-          })
+        address={props.address}
+        setAddressDescription={(addressDescription: AddressDescription) =>
+          props.setAddressDescription(addressDescription)
         }
       />
       <Map

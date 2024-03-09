@@ -149,16 +149,34 @@ export type GridTiedParams = {
 };
 
 export type GridTiedProposalDetails = {
-  // kwp: number;
-  // costOfPanels: number;
-  // invertor: Invertor;
-  // costOfMountingStructure: number;
-  // bosCost: number;
-  // labourCost: number;
-  // totalCost: number;
-  // sellingCost: number;
-  // firstYearSavings: number;
-  // twentyFifthYearSavings: number;
+  systemSize: number;
+  costOfPanels: number;
+  invertorCosts: {
+    invertorBaseCost: number;
+    invertorACCableCost: number;
+    invertorACCableEarthCost: number;
+    invertorCircuitBreaker: number;
+    invertorVSNCost: number;
+    invertorFlexibleCost: number;
+  };
+  labourCost: number;
+  concreteFootingCost: number;
+  dcCableCost: number;
+  dcEarthCableCost: number;
+  earthCost: number;
+  fuseCost: number;
+  mc4Cost: number;
+  switchBoxCost: number;
+  earthLeakageCost: number;
+  cleaningToolPrice: number;
+  electricityCompanyCost: number;
+  maintenanceCost: number;
+  mountingStructureCost: number;
+  transportationCost: number;
+  totalCost: number;
+  sellingCost: number;
+  firstYearSavings: number;
+  twentyFifthYearSavings: number;
 };
 
 export type GridTied = Product<GridTiedParams>;
@@ -344,7 +362,6 @@ export function getElectricityCompanyCost(
 export function calculateTotalCost(
   invertorTotalCost: number,
   labourCost: number,
-  mountingCost: number,
   costOfPanels: number,
   concreteFootingCost: number,
   dcCableCost: number,
@@ -363,7 +380,6 @@ export function calculateTotalCost(
   return (
     invertorTotalCost +
     labourCost +
-    mountingCost +
     costOfPanels +
     concreteFootingCost +
     dcCableCost +
