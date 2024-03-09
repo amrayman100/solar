@@ -29,11 +29,7 @@ export function TypographyH2({ text, className }: TypographyProps) {
 
 export function TypographyH3({ text, className }: TypographyProps) {
   return (
-    <h3
-      className={
-        "scroll-m-20 text-2xl font-semibold tracking-tight " + className
-      }
-    >
+    <h3 className={"text-2xl font-semibold tracking-tight " + className}>
       {text}
     </h3>
   );

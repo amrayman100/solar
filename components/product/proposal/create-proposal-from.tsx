@@ -52,7 +52,7 @@ export function CreateProposal<T>({
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(
-    "map"
+    "housing"
   );
 
   const consumptionDetails = useReadLocalStorage<ConsumptionDetails | null>(
@@ -142,9 +142,9 @@ export function CreateProposal<T>({
           {formStage == "housing" && (
             <>
               <div>
-                <div className="flex flex-col space-y-2 mb-4">
+                <div className="flex flex-col space-y-2 mb-4 w-100 min-w-0">
                   <TypographyH3
-                    className="font-semibold"
+                    className="font-semibold break-all overflow-auto break-normal max-w-80 lg:max-w-full"
                     text="What type of housing do you live in?"
                   />
                   <div className="flex flex-col lg:flex-row md:flex-row gap-10 place-content-center py-12 w-100">
