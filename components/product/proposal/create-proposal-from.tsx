@@ -38,16 +38,20 @@ const formFactory = createFormFactory<ContactForm>({
   },
 });
 
+interface ViewProps<T> {
+  proposal: ProductProposal<T>;
+}
+
 type CreateProposalProps<T> = {
   createProposalFunc: CreateProposalServerFunction<T>;
   onProposalCreation: (proposal: ProductProposal<T>) => void;
-  viewProposal: (proposal: ProductProposal<T>) => React.ReactNode;
+  ViewProposal: React.FC<ViewProps<T>>;
 };
 
 export function CreateProposal<T>({
   createProposalFunc,
   onProposalCreation,
-  viewProposal,
+  ViewProposal,
 }: CreateProposalProps<T>) {
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
@@ -109,7 +113,7 @@ export function CreateProposal<T>({
   return (
     <>
       {mode == "submit" && (
-        <div className="mx-auto lg:mt-10 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
+        <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
           {formStage == "map" && (
             <div>
               <div className="flex flex-col space-y-2 mb-4">
@@ -318,7 +322,7 @@ export function CreateProposal<T>({
         </div>
       )}
       {mutation.isSuccess && mode == "view" && mutation.data && (
-        <>{viewProposal(mutation.data)}</>
+        <ViewProposal proposal={mutation.data} />
       )}
     </>
   );

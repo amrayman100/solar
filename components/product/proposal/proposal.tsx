@@ -13,7 +13,7 @@ export function Proposal() {
         onProposalCreation={(proposal: GridTiedProposal) =>
           console.log(proposal)
         }
-        viewProposal={ViewGridTiedProposal}
+        ViewProposal={ViewGridTiedProposal}
       />
     </>
   );

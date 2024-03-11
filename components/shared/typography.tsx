@@ -46,3 +46,7 @@ export function TypographyH4({ text, className }: TypographyProps) {
     </h4>
   );
 }
+
+export function TypographyH5({ text, className }: TypographyProps) {
+  return <h5 className={"scroll-m-20 tracking-tight " + className}>{text}</h5>;
+}

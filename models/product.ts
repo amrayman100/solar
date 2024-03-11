@@ -159,6 +159,7 @@ export type GridTiedProposalDetails = {
     invertorVSNCost: number;
     invertorFlexibleCost: number;
   };
+  numberOfPanels: number;
   labourCost: number;
   concreteFootingCost: number;
   dcCableCost: number;
