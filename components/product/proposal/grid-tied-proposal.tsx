@@ -13,8 +13,6 @@ export function ViewGridTiedProposal({
 }) {
   const details = proposal.proposalDetails;
 
-  console.log("in");
-
   return (
     <div>
       <div
