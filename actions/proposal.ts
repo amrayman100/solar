@@ -21,13 +21,13 @@ import {
   getEarthLeakageCost,
   getElectricityCompanyCost,
   getFusePrice,
-  getInvertor,
-  getInvertorACCableCost,
-  getInvertorACEarthCableCost,
-  getInvertorBaseCost,
-  getInvertorCircuitBreakerCost,
-  getInvertorFlexibleCost,
-  getInvertorVSNCost,
+  getInverter,
+  getInverterACCableCost,
+  getInverterACEarthCableCost,
+  getInverterBaseCost,
+  getInverterCircuitBreakerCost,
+  getInverterFlexibleCost,
+  getInverterVSNCost,
   getLabourCost,
   getMaintenanceCost,
   getNumberOfStrings,
@@ -101,17 +101,17 @@ export async function createGridTiedProposal(
     parameters.panel.powerOutputWatt
   );
 
-  const invertor = getInvertor(systemSize, parameters.invertors);
-  if (!invertor) {
-    throw new Error("cannot get invertor");
+  const inverter = getInverter(systemSize, parameters.inverters);
+  if (!inverter) {
+    throw new Error("cannot get inverter");
   }
 
-  const invertorBaseCost = getInvertorBaseCost(invertor, parameters.dollarRate);
-  const invertorACCableCost = getInvertorACCableCost(invertor);
-  const invertorACCableEarthCost = getInvertorACEarthCableCost(invertor);
-  const invertorCircuitBreaker = getInvertorCircuitBreakerCost(invertor);
-  const invertorVSNCost = getInvertorVSNCost(invertor);
-  const invertorFlexibleCost = getInvertorFlexibleCost(invertor);
+  const inverterBaseCost = getInverterBaseCost(inverter, parameters.dollarRate);
+  const inverterACCableCost = getInverterACCableCost(inverter);
+  const inverterACCableEarthCost = getInverterACEarthCableCost(inverter);
+  const inverterCircuitBreaker = getInverterCircuitBreakerCost(inverter);
+  const inverterVSNCost = getInverterVSNCost(inverter);
+  const inverterFlexibleCost = getInverterFlexibleCost(inverter);
 
   const mountingStructureCost = calculateMountingStructureCost(
     parameters.mountingPrice,
@@ -153,16 +153,16 @@ export async function createGridTiedProposal(
     parameters.electricityCompanyCheckup
   );
 
-  const invertorTotalCost =
-    invertorBaseCost +
-    invertorACCableCost +
-    invertorACCableEarthCost +
-    invertorCircuitBreaker +
-    invertorVSNCost +
-    invertorFlexibleCost;
+  const inverterTotalCost =
+    inverterBaseCost +
+    inverterACCableCost +
+    inverterACCableEarthCost +
+    inverterCircuitBreaker +
+    inverterVSNCost +
+    inverterFlexibleCost;
 
   const totalCost = calculateTotalCost(
-    invertorTotalCost,
+    inverterTotalCost,
     labourCost,
     costOfPanels,
     concreteFootingCost,
@@ -217,14 +217,14 @@ export async function createGridTiedProposal(
       transportationCost,
       earthCost: earthCost.price,
       cleaningToolPrice: parameters.cleaningToolPrice,
-      invertor: {
-        invertorInfo: invertor,
-        invertorBaseCost,
-        invertorACCableCost,
-        invertorACCableEarthCost,
-        invertorCircuitBreaker,
-        invertorVSNCost,
-        invertorFlexibleCost,
+      inverter: {
+        inverterInfo: inverter,
+        inverterBaseCost,
+        inverterACCableCost,
+        inverterACCableEarthCost,
+        inverterCircuitBreaker,
+        inverterVSNCost,
+        inverterFlexibleCost,
       },
       sellingCost,
       totalCost,
@@ -306,7 +306,7 @@ export async function createProduct() {
         maintenance: { price: 400, amountOfVisits: 4 },
         electricityCompanyCheckup: { price: 1000, amountOfVisits: 1 },
         mc4: { brand: "Suntree", price: 60 },
-        invertors: [
+        inverters: [
           {
             brand: "Sungrow 5RT",
             capacity: 5,

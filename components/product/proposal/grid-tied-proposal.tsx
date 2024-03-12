@@ -42,19 +42,19 @@ export function ViewGridTiedProposal({
             </div>
           </div>
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow h-48 p-10 h-max">
-            <TypographyH3 text="Invertor" className="font-bold" />
+            <TypographyH3 text="Inverter" className="font-bold" />
             <div className="flex-col flex gap-2">
               <div>
                 <TypographyH5
                   className="font-bold"
-                  text={details.invertor.invertorInfo.brand}
+                  text={details.inverter.inverterInfo.brand}
                 ></TypographyH5>
               </div>
               <div className="text-center">
                 <span className="font-bold">
-                  {details.invertor.invertorInfo.capacity.toString() + " kw "}
+                  {details.inverter.inverterInfo.capacity.toString() + " kw "}
                 </span>
-                <span>{"Total invertor rating"}</span>
+                <span>{"Total inverter rating"}</span>
               </div>
             </div>
           </div>

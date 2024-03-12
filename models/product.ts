@@ -62,7 +62,7 @@ export type Flexible = {
   price: number;
 };
 
-export type Invertor = {
+export type Inverter = {
   brand: string;
   price: number;
   capacity: number;
@@ -130,7 +130,7 @@ export type GridTiedParams = {
   panelDegradation: number;
   specificProd: number;
   mountingPrice: number;
-  invertors: Invertor[];
+  inverters: Inverter[];
   labourBaseCost: number;
   structureSpan: number;
   concreteFootingPrice: number;
@@ -151,14 +151,14 @@ export type GridTiedParams = {
 export type GridTiedProposalDetails = {
   systemSize: number;
   costOfPanels: number;
-  invertor: {
-    invertorInfo: Invertor;
-    invertorBaseCost: number;
-    invertorACCableCost: number;
-    invertorACCableEarthCost: number;
-    invertorCircuitBreaker: number;
-    invertorVSNCost: number;
-    invertorFlexibleCost: number;
+  inverter: {
+    inverterInfo: Inverter;
+    inverterBaseCost: number;
+    inverterACCableCost: number;
+    inverterACCableEarthCost: number;
+    inverterCircuitBreaker: number;
+    inverterVSNCost: number;
+    inverterFlexibleCost: number;
   };
   numberOfPanels: number;
   labourCost: number;
@@ -216,49 +216,49 @@ export function calulateCostOfPanels(
   );
 }
 
-export function getInvertor(
+export function getInverter(
   systemSize: number,
-  invertors: Invertor[]
-): Invertor | null {
-  for (const invertor of invertors) {
+  inverters: Inverter[]
+): Inverter | null {
+  for (const inverter of inverters) {
     // kwp = systemSize
-    const targetInvertorCapacity = systemSize / 1.2;
-    if (targetInvertorCapacity <= invertor.capacity) {
-      return invertor;
+    const targetInverterCapacity = systemSize / 1.2;
+    if (targetInverterCapacity <= inverter.capacity) {
+      return inverter;
     }
   }
 
   return null;
 }
 
-export function getInvertorBaseCost(invertor: Invertor, dollarRate: number) {
-  return roundToDec(invertor.price * dollarRate);
+export function getInverterBaseCost(inverter: Inverter, dollarRate: number) {
+  return roundToDec(inverter.price * dollarRate);
 }
 
-export function getInvertorACCableCost(invertor: Invertor) {
-  return roundToDec(invertor.acCable?.price * invertor.acCable?.quantity);
+export function getInverterACCableCost(inverter: Inverter) {
+  return roundToDec(inverter.acCable?.price * inverter.acCable?.quantity);
 }
 
-export function getInvertorACEarthCableCost(invertor: Invertor) {
-  if (!invertor?.acCable?.acEarthCable) {
+export function getInverterACEarthCableCost(inverter: Inverter) {
+  if (!inverter?.acCable?.acEarthCable) {
     return 0;
   }
 
   return roundToDec(
-    invertor.acCable.acEarthCable.price * invertor.acCable.acEarthCable.quantity
+    inverter.acCable.acEarthCable.price * inverter.acCable.acEarthCable.quantity
   );
 }
 
-export function getInvertorCircuitBreakerCost(invertor: Invertor) {
-  return roundToDec(invertor.circuitBreaker.price);
+export function getInverterCircuitBreakerCost(inverter: Inverter) {
+  return roundToDec(inverter.circuitBreaker.price);
 }
 
-export function getInvertorVSNCost(invertor: Invertor) {
-  return roundToDec(invertor.vsn.price * invertor.vsn.quantity);
+export function getInverterVSNCost(inverter: Inverter) {
+  return roundToDec(inverter.vsn.price * inverter.vsn.quantity);
 }
 
-export function getInvertorFlexibleCost(invertor: Invertor) {
-  return roundToDec(invertor.flexible.price * invertor.flexible.quantity);
+export function getInverterFlexibleCost(inverter: Inverter) {
+  return roundToDec(inverter.flexible.price * inverter.flexible.quantity);
 }
 
 export function calculateMountingStructureCost(
@@ -362,7 +362,7 @@ export function getElectricityCompanyCost(
 }
 
 export function calculateTotalCost(
-  invertorTotalCost: number,
+  inverterTotalCost: number,
   labourCost: number,
   costOfPanels: number,
   concreteFootingCost: number,
@@ -380,7 +380,7 @@ export function calculateTotalCost(
   transportationCost: number
 ) {
   return (
-    invertorTotalCost +
+    inverterTotalCost +
     labourCost +
     costOfPanels +
     concreteFootingCost +

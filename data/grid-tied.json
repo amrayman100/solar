@@ -45,7 +45,7 @@
   "maintenance": { "price": 400, "amountOfVisits": 4 },
   "electricityCompanyCheckup": { "price": 1000, "amountOfVisits": 1 },
   "mc4": { "brand": "Suntree", "price": 60 },
-  "invertors": [
+  "inverters": [
     {
       "brand": "Sungrow 5RT",
       "capacity": 5,
