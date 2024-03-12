@@ -217,7 +217,8 @@ export async function createGridTiedProposal(
       transportationCost,
       earthCost: earthCost.price,
       cleaningToolPrice: parameters.cleaningToolPrice,
-      invertorCosts: {
+      invertor: {
+        invertorInfo: invertor,
         invertorBaseCost,
         invertorACCableCost,
         invertorACCableEarthCost,

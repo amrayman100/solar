@@ -151,7 +151,8 @@ export type GridTiedParams = {
 export type GridTiedProposalDetails = {
   systemSize: number;
   costOfPanels: number;
-  invertorCosts: {
+  invertor: {
+    invertorInfo: Invertor;
     invertorBaseCost: number;
     invertorACCableCost: number;
     invertorACCableEarthCost: number;
