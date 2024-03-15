@@ -148,12 +148,40 @@ export function ViewGridTiedProposal({
               </div>
             </div>
           </div>
+          <div>
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10">
+              <Table>
+                <TableCaption>Your Quotation</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead></TableHead>
+                    <TableHead className="text-right">Amount (EGP)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Price Per Watt
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {proposal.proposalDetails.pricePerWatt}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Total System Price
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {proposal.proposalDetails.sellingCost}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        // style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
-        className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
-      >
+      <div className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10">
         <div className="p-10">
           <TypographyH2 text="Electricity Bill Savings" />
           <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
@@ -224,39 +252,6 @@ export function ViewGridTiedProposal({
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        // style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
-        className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary p-10"
-      >
-        <TypographyH2 text="Quotation" />
-        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
-          <Table>
-            <TableCaption>Your Quotation</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead></TableHead>
-                <TableHead className="text-right">Amount (EGP)</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Price Per Watt</TableCell>
-                <TableCell className="text-right">
-                  {proposal.proposalDetails.pricePerWatt}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  Total System Price
-                </TableCell>
-                <TableCell className="text-right">
-                  {proposal.proposalDetails.sellingCost}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
         </div>
       </div>
     </div>
