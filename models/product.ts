@@ -181,6 +181,7 @@ export type GridTiedProposalDetails = {
   twentyFifthYearSavings: number;
   panelDegradation: number;
   currentMonthlyBill: number;
+  pricePerWatt: number;
 };
 
 export type GridTied = Product<GridTiedParams>;

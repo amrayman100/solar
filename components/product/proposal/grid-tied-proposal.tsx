@@ -17,12 +17,20 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
   ComposedChart,
   Line,
 } from "recharts";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export function ViewGridTiedProposal({
   proposal,
@@ -146,53 +154,20 @@ export function ViewGridTiedProposal({
         // style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
         className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
       >
-        <TypographyH2 text="Electricity Bill Savings" className="p-2" />
-        <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
-            <TypographyH3
-              text="First Year Monthly Bill Savings"
-              className="font-bold text-center p-2"
-            />
-            <div className="lg:flex-row flex-col flex gap-6">
-              <div className="text-center w-full">
-                <BarChart
-                  width={400}
-                  height={300}
-                  data={firstYearMonthlyBillSavingsBarChartData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Bar
-                    dataKey="bill"
-                    fill="#82ca9d"
-                    activeBar={<Rectangle fill="gold" stroke="purple" />}
-                  />
-                </BarChart>
-              </div>
-            </div>
-          </div>
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
-            <TypographyH3
-              text="Cumulative Bill Savings"
-              className="font-bold text-center p-2"
-            />
-            <div className="lg:flex-row flex-col flex gap-6 w-full">
-              <div
-                className="text-center w-full"
-                style={{ width: "100%", height: 300 }}
-              >
-                <ResponsiveContainer>
-                  <ComposedChart
-                    width={500}
-                    height={400}
-                    data={cumulativeSavingsBarChartData}
+        <div className="p-10">
+          <TypographyH2 text="Electricity Bill Savings" />
+          <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
+              <TypographyH3
+                text="First Year Monthly Bill Savings"
+                className="font-bold text-center p-2"
+              />
+              <div className="lg:flex-row flex-col flex gap-6">
+                <div className="text-center w-full">
+                  <BarChart
+                    width={400}
+                    height={300}
+                    data={firstYearMonthlyBillSavingsBarChartData}
                     margin={{
                       top: 5,
                       right: 30,
@@ -200,16 +175,88 @@ export function ViewGridTiedProposal({
                       bottom: 5,
                     }}
                   >
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <XAxis dataKey="name" scale="band" />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
                     <YAxis />
-                    <Bar dataKey="savings" barSize={20} fill="#413ea0" />
-                    <Line type="monotone" dataKey="savings" stroke="#ff7300" />
-                  </ComposedChart>
-                </ResponsiveContainer>
+                    <Bar
+                      dataKey="bill"
+                      fill="#82ca9d"
+                      activeBar={<Rectangle fill="gold" stroke="purple" />}
+                    />
+                  </BarChart>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
+              <TypographyH3
+                text="Cumulative Bill Savings"
+                className="font-bold text-center p-2"
+              />
+              <div className="lg:flex-row flex-col flex gap-6 w-full">
+                <div
+                  className="text-center w-full"
+                  style={{ width: "100%", height: 300 }}
+                >
+                  <ResponsiveContainer>
+                    <ComposedChart
+                      width={500}
+                      height={400}
+                      data={cumulativeSavingsBarChartData}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid stroke="#f5f5f5" />
+                      <XAxis dataKey="name" scale="band" />
+                      <YAxis />
+                      <Bar dataKey="savings" barSize={20} fill="#413ea0" />
+                      <Line
+                        type="monotone"
+                        dataKey="savings"
+                        stroke="#ff7300"
+                      />
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        // style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
+        className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary p-10"
+      >
+        <TypographyH2 text="Quotation" />
+        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
+          <Table>
+            <TableCaption>Your Quotation</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead></TableHead>
+                <TableHead className="text-right">Amount (EGP)</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">
+                  Total System Price
+                </TableCell>
+                <TableCell className="text-right">
+                  {proposal.proposalDetails.sellingCost}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Price Per Watt</TableCell>
+                <TableCell className="text-right">
+                  {proposal.proposalDetails.pricePerWatt}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

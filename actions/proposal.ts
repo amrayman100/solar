@@ -232,6 +232,7 @@ export async function createGridTiedProposal(
       twentyFifthYearSavings,
       panelDegradation: parameters.panelDegradation,
       currentMonthlyBill: req.monthlyConsumption,
+      pricePerWatt: parameters.panel.pricePerWatt,
     },
   };
 
