@@ -242,17 +242,17 @@ export function ViewGridTiedProposal({
             </TableHeader>
             <TableBody>
               <TableRow>
+                <TableCell className="font-medium">Price Per Watt</TableCell>
+                <TableCell className="text-right">
+                  {proposal.proposalDetails.pricePerWatt}
+                </TableCell>
+              </TableRow>
+              <TableRow>
                 <TableCell className="font-medium">
                   Total System Price
                 </TableCell>
                 <TableCell className="text-right">
                   {proposal.proposalDetails.sellingCost}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Price Per Watt</TableCell>
-                <TableCell className="text-right">
-                  {proposal.proposalDetails.pricePerWatt}
                 </TableCell>
               </TableRow>
             </TableBody>
