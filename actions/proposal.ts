@@ -230,6 +230,8 @@ export async function createGridTiedProposal(
       totalCost,
       firstYearSavings,
       twentyFifthYearSavings,
+      panelDegradation: parameters.panelDegradation,
+      currentMonthlyBill: req.monthlyConsumption,
     },
   };
 

@@ -1,10 +1,28 @@
+"use client";
 import {
   TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyH5,
 } from "@/components/shared/typography";
-import { GridTiedProposal } from "@/models/product";
+import {
+  GridTiedProposal,
+  calculateCumulativeSavings,
+  calculateFirstYearMonthlyBill,
+} from "@/models/product";
+import {
+  BarChart,
+  Bar,
+  Rectangle,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ComposedChart,
+  Line,
+} from "recharts";
 
 export function ViewGridTiedProposal({
   proposal,
@@ -12,6 +30,70 @@ export function ViewGridTiedProposal({
   proposal: GridTiedProposal;
 }) {
   const details = proposal.proposalDetails;
+
+  const firstYearMonthlyBill = calculateFirstYearMonthlyBill(
+    details.firstYearSavings
+  );
+
+  console.log(firstYearMonthlyBill, details.currentMonthlyBill);
+
+  const firstYearMonthlyBillSavingsBarChartData = [
+    {
+      name: "Old Bill",
+      bill: details.currentMonthlyBill,
+    },
+    {
+      name: "New Bill",
+      bill: firstYearMonthlyBill,
+    },
+  ];
+
+  const cumulativeSavingsBarChartData = [
+    {
+      name: "1 year",
+      savings: details.firstYearSavings,
+    },
+    {
+      name: "5 year",
+      savings: calculateCumulativeSavings(
+        10,
+        details.firstYearSavings,
+        details.panelDegradation
+      ),
+    },
+    {
+      name: "10 years",
+      savings: calculateCumulativeSavings(
+        10,
+        details.firstYearSavings,
+        details.panelDegradation
+      ),
+    },
+    {
+      name: "15 years",
+      savings: calculateCumulativeSavings(
+        15,
+        details.firstYearSavings,
+        details.panelDegradation
+      ),
+    },
+    {
+      name: "20 years",
+      savings: calculateCumulativeSavings(
+        20,
+        details.firstYearSavings,
+        details.panelDegradation
+      ),
+    },
+    {
+      name: "25 years",
+      savings: calculateCumulativeSavings(
+        25,
+        details.firstYearSavings,
+        details.panelDegradation
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -24,7 +106,7 @@ export function ViewGridTiedProposal({
           className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text mx-3"
         />
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow h-48 p-10 h-max">
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
             <TypographyH3 text="Solar Panels" className="font-bold" />
             <div className="lg:flex-row flex-col flex gap-6">
               <div className="text-center">
@@ -41,7 +123,7 @@ export function ViewGridTiedProposal({
               </div>
             </div>
           </div>
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow h-48 p-10 h-max">
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
             <TypographyH3 text="Inverter" className="font-bold" />
             <div className="flex-col flex gap-2">
               <div>
@@ -60,7 +142,76 @@ export function ViewGridTiedProposal({
           </div>
         </div>
       </div>
-      <div className="z-10 max-w-5xl w-full items-center justify-between text-sm lg:flex"></div>
+      <div
+        // style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
+        className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
+      >
+        <TypographyH2 text="Electricity Bill Savings" className="p-2" />
+        <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
+            <TypographyH3
+              text="First Year Monthly Bill Savings"
+              className="font-bold text-center p-2"
+            />
+            <div className="lg:flex-row flex-col flex gap-6">
+              <div className="text-center w-full">
+                <BarChart
+                  width={400}
+                  height={300}
+                  data={firstYearMonthlyBillSavingsBarChartData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Bar
+                    dataKey="bill"
+                    fill="#82ca9d"
+                    activeBar={<Rectangle fill="gold" stroke="purple" />}
+                  />
+                </BarChart>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
+            <TypographyH3
+              text="Cumulative Bill Savings"
+              className="font-bold text-center p-2"
+            />
+            <div className="lg:flex-row flex-col flex gap-6 w-full">
+              <div
+                className="text-center w-full"
+                style={{ width: "100%", height: 300 }}
+              >
+                <ResponsiveContainer>
+                  <ComposedChart
+                    width={500}
+                    height={400}
+                    data={cumulativeSavingsBarChartData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid stroke="#f5f5f5" />
+                    <XAxis dataKey="name" scale="band" />
+                    <YAxis />
+                    <Bar dataKey="savings" barSize={20} fill="#413ea0" />
+                    <Line type="monotone" dataKey="savings" stroke="#ff7300" />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

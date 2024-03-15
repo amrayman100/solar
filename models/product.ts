@@ -179,6 +179,8 @@ export type GridTiedProposalDetails = {
   sellingCost: number;
   firstYearSavings: number;
   twentyFifthYearSavings: number;
+  panelDegradation: number;
+  currentMonthlyBill: number;
 };
 
 export type GridTied = Product<GridTiedParams>;
@@ -405,6 +407,18 @@ export function calculateSellingCost(totalCost: number, markup: number) {
 
 export function calculateFirstYearSavings(specificProd: number, kwp: number) {
   return roundToDec(specificProd * kwp);
+}
+
+export function calculateFirstYearMonthlyBill(firstYearSavings: number) {
+  return roundToDec(firstYearSavings / 12);
+}
+
+export function calculateCumulativeSavings(
+  years: number,
+  firstYearSavings: number,
+  panelDegradation: number
+) {
+  return roundToDec(firstYearSavings * years * panelDegradation);
 }
 
 export function calculateTwentyFifthSavings(
