@@ -1,7 +1,7 @@
 "use client";
 
 import { GridTiedProposal } from "@/models/product";
-import { CreateProposal } from "./create-proposal-from";
+import { CreateProposal } from "./create-proposal-form";
 import { createGridTiedProposal } from "@/actions/proposal";
 import { ViewGridTiedProposal } from "./grid-tied-proposal";
 

@@ -20,6 +20,7 @@ import {
   ResponsiveContainer,
   ComposedChart,
   Line,
+  Tooltip,
 } from "recharts";
 
 import {
@@ -39,9 +40,7 @@ export function ViewGridTiedProposal({
 }) {
   const details = proposal.proposalDetails;
 
-  const firstYearMonthlyBill = calculateFirstYearMonthlyBill(
-    details.firstYearSavings
-  );
+  const firstYearMonthlyBill = proposal.proposalDetails.firstYearMonthlyBill;
 
   console.log(firstYearMonthlyBill, details.currentMonthlyBill);
 
@@ -203,6 +202,7 @@ export function ViewGridTiedProposal({
                       bottom: 5,
                     }}
                   >
+                    <Tooltip />
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
@@ -237,11 +237,13 @@ export function ViewGridTiedProposal({
                         bottom: 5,
                       }}
                     >
+                      <Tooltip />
                       <CartesianGrid stroke="#f5f5f5" />
                       <XAxis dataKey="name" scale="band" />
                       <YAxis />
                       <Bar dataKey="savings" barSize={20} fill="#413ea0" />
                       <Line
+                        tooltipType="none"
                         type="monotone"
                         dataKey="savings"
                         stroke="#ff7300"

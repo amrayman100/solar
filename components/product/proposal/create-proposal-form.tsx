@@ -161,7 +161,7 @@ export function CreateProposal<T>({
                         }`}
                       />
                       <TypographyH4
-                        text="Single-familly"
+                        text="Villa"
                         className={`${
                           housingType == "single" ? "text-primary" : ""
                         }`}
@@ -181,7 +181,7 @@ export function CreateProposal<T>({
                         className={`${
                           housingType == "multi" ? "text-primary" : ""
                         }`}
-                        text="Multi-familly"
+                        text="Apartment"
                       />
                     </button>
                   </div>

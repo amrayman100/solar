@@ -9,6 +9,7 @@ import {
   calculateConcreteFootingCost,
   calculateDCCableCost,
   calculateDCEarthCableCost,
+  calculateFirstYearMonthlyBill,
   calculateFirstYearSavings,
   calculateMc4Cost,
   calculateMountingStructureCost,
@@ -187,6 +188,12 @@ export async function createGridTiedProposal(
     systemSize
   );
 
+  const firstYearMonthlyBill = calculateFirstYearMonthlyBill(
+    firstYearSavings,
+    parameters.tarif,
+    req.monthlyConsumption
+  );
+
   const twentyFifthYearSavings = calculateTwentyFifthSavings(
     firstYearSavings,
     parameters.panelDegradation
@@ -233,6 +240,7 @@ export async function createGridTiedProposal(
       panelDegradation: parameters.panelDegradation,
       currentMonthlyBill: req.monthlyConsumption,
       pricePerWatt: parameters.panel.pricePerWatt,
+      firstYearMonthlyBill,
     },
   };
 
