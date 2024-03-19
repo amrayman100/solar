@@ -43,7 +43,7 @@ export type ProposalRequestInfo = {
   long?: number;
   city: string;
   name: string;
-  email: string;
+  email?: string;
   phoneNumber: string;
 };
 

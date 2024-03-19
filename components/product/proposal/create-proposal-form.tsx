@@ -20,7 +20,7 @@ import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
 
 type ContactForm = {
-  email: string;
+  email?: string;
   name: string;
   number: string;
 };
@@ -223,7 +223,11 @@ export function CreateProposal<T>({
                     name="email"
                     validatorAdapter={zodValidator}
                     validators={{
-                      onChange: z.string().email("Email is required"),
+                      onChange: z
+                        .string()
+                        .email("Email is not valid")
+                        .optional()
+                        .or(z.literal("")),
                     }}
                   >
                     {(field) => (
@@ -234,7 +238,7 @@ export function CreateProposal<T>({
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           className="bg-background mb-4"
-                          placeholder="Email"
+                          placeholder="Email (Optional)"
                         />
                         {field.state.meta.errors ? (
                           <p role="alert" className="text-red-500 mb-2">

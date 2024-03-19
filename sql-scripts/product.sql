@@ -12,7 +12,7 @@ create TABLE products (
 create TABLE product_proposals (
     id serial NOT NULL PRIMARY KEY,
     product_id serial NOT NULL,
-    email_address text NOT NULL,
+    email_address text,
     name text NOT NULL,
     phone_number text NOT NULL,
     address_latitude numeric,

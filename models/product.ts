@@ -14,7 +14,7 @@ export type Product<T> = {
 
 export type ProductProposal<T> = {
   name: string;
-  emailAddress: string;
+  emailAddress?: string;
   phoneNumber: string;
   productId: number;
   addressLatitude: number;

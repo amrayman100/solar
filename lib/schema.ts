@@ -29,7 +29,7 @@ export const productProposalTable = pgTable("product_proposals", {
   createdBy: text("created_by"),
   addressLatitude: numeric("address_latitude"),
   addressLongitude: numeric("address_longitude"),
-  emailAddress: text("email_address").notNull(),
+  emailAddress: text("email_address"),
   phoneNumber: text("phone_number").notNull(),
   proposalDetails: jsonb("proposal_details").notNull(),
 });
