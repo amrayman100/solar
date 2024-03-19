@@ -3,6 +3,13 @@ export type Signature = {
   at: string;
 };
 
+export type BillingPercentage = {
+  downPaymentPercentage: number;
+  componentsSupplyPercentage: number;
+  installationPercentage: number;
+  commissionPercentage: number;
+};
+
 export type Product<T> = {
   name: string;
   currency: string;
@@ -127,6 +134,7 @@ export type GridTiedParams = {
   panel: Panel;
   tarif: number;
   markup: number;
+  billingPercentage: BillingPercentage;
   panelDegradation: number;
   specificProd: number;
   mountingPrice: number;
@@ -146,6 +154,13 @@ export type GridTiedParams = {
   maintenance: Maintenance;
   electricityCompanyCheckup: ElectricityCompanyCheckup;
   mc4: MC4;
+};
+
+export type ProposalBilling = {
+  downPaymentFee: number;
+  componentsSupplyFee: number;
+  installationFee: number;
+  commissionFee: number;
 };
 
 export type GridTiedProposalDetails = {
@@ -175,21 +190,22 @@ export type GridTiedProposalDetails = {
   maintenanceCost: number;
   mountingStructureCost: number;
   transportationCost: number;
-  totalCost: number;
-  sellingCost: number;
   firstYearSavings: number;
-  firstYearMonthlyBill: number;
   twentyFifthYearSavings: number;
   panelDegradation: number;
+  firstYearMonthlyBill: number;
   currentMonthlyBill: number;
   pricePerWatt: number;
+  sellingCost: number;
+  totalCost: number;
+  billing: ProposalBilling;
 };
 
 export type GridTied = Product<GridTiedParams>;
 
 export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
 
-function roundToDec(number: number) {
+export function roundToDec(number: number) {
   return Math.round(number * 10) / 10;
 }
 

@@ -5,6 +5,7 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
+  GridTiedProposalDetails,
   ProductProposal,
   calculateConcreteFootingCost,
   calculateDCCableCost,
@@ -34,6 +35,7 @@ import {
   getNumberOfStrings,
   getSwitchBoxCost,
   getTransportationCost,
+  roundToDec,
 } from "@/models/product";
 import { eq } from "drizzle-orm";
 
@@ -199,7 +201,7 @@ export async function createGridTiedProposal(
     parameters.panelDegradation
   );
 
-  const proposal = {
+  const proposal: GridTiedProposal = {
     name: req.name,
     emailAddress: req.email,
     phoneNumber: req.phoneNumber,
@@ -241,6 +243,20 @@ export async function createGridTiedProposal(
       currentMonthlyBill: req.monthlyConsumption,
       pricePerWatt: parameters.panel.pricePerWatt,
       firstYearMonthlyBill,
+      billing: {
+        downPaymentFee: roundToDec(
+          parameters.billingPercentage.downPaymentPercentage * sellingCost
+        ),
+        componentsSupplyFee: roundToDec(
+          parameters.billingPercentage.componentsSupplyPercentage * sellingCost
+        ),
+        installationFee: roundToDec(
+          parameters.billingPercentage.installationPercentage * sellingCost
+        ),
+        commissionFee: roundToDec(
+          parameters.billingPercentage.commissionPercentage * sellingCost
+        ),
+      },
     },
   };
 
@@ -255,7 +271,7 @@ export async function createGridTiedProposal(
       addressLongitude: req.long?.toString(),
       createdAt: new Date().toLocaleDateString(),
       createdBy: req.email,
-      proposalDetails: {},
+      proposalDetails: proposal.proposalDetails,
     })
     .returning();
 
@@ -266,11 +282,17 @@ export async function createGridTiedProposal(
   return proposal;
 }
 
-export async function createProduct() {
+export async function updateProduct() {
   const res = await db
     .update(productTable)
     .set({
       parameters: {
+        billingPercentage: {
+          downPaymentPercentage: 0.5,
+          componentsSupplyPercentage: 0.25,
+          installationPercentage: 0.2,
+          commissionPercentage: 0.05,
+        },
         panel: {
           brand: "Suntech 555",
           powerOutputWatt: 555,

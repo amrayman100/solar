@@ -168,9 +168,33 @@ export function ViewGridTiedProposal({
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">
-                      Total System Price
+                      Contract Signature downpayment
                     </TableCell>
                     <TableCell className="text-right">
+                      {proposal.proposalDetails.billing?.downPaymentFee}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Delivery of Components
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {proposal.proposalDetails.billing?.componentsSupplyFee}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Installation and commissioning
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {proposal.proposalDetails.billing?.commissionFee}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-bold">
+                      Total System Price
+                    </TableCell>
+                    <TableCell className="text-right font-bold">
                       {proposal.proposalDetails.sellingCost}
                     </TableCell>
                   </TableRow>
@@ -180,7 +204,7 @@ export function ViewGridTiedProposal({
           </div>
         </div>
       </div>
-      <div className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10">
+      <div className="bg-cover bg-center w-screen h-max relative pb-10">
         <div className="p-10">
           <TypographyH2 text="Electricity Bill Savings" />
           <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
