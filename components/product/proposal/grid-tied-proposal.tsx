@@ -5,11 +5,7 @@ import {
   TypographyH3,
   TypographyH5,
 } from "@/components/shared/typography";
-import {
-  GridTiedProposal,
-  calculateCumulativeSavings,
-  calculateFirstYearMonthlyBill,
-} from "@/models/product";
+import { GridTiedProposal, calculateCumulativeSavings } from "@/models/product";
 import {
   BarChart,
   Bar,
