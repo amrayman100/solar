@@ -133,6 +133,7 @@ export type ElectricityCompanyCheckup = {
 export type GridTiedParams = {
   panel: Panel;
   tarif: number;
+  tarifEscalation: number;
   markup: number;
   billingPercentage: BillingPercentage;
   panelDegradation: number;
@@ -199,6 +200,7 @@ export type GridTiedProposalDetails = {
   sellingCost: number;
   totalCost: number;
   billing: ProposalBilling;
+  tarifEscalation: number;
 };
 
 export type GridTied = Product<GridTiedParams>;
@@ -423,8 +425,22 @@ export function calculateSellingCost(totalCost: number, markup: number) {
   return roundToDec(totalCost + totalCost * markup);
 }
 
-export function calculateFirstYearSavings(specificProd: number, kwp: number) {
-  return roundToDec(specificProd * kwp);
+export function calculateFirstYearSavings(
+  specificProd: number,
+  systemSize: number
+) {
+  return roundToDec(specificProd * systemSize);
+}
+
+export function calculateCumulativeSavings(
+  years: number,
+  firstYearSavings: number,
+  panelDegradation: number,
+  tarifEscalation: number
+) {
+  return roundToDec(
+    firstYearSavings * years * panelDegradation * tarifEscalation
+  );
 }
 
 //(firstYearSavings * tarif) - monthlyConsumption
@@ -436,17 +452,10 @@ export function calculateFirstYearMonthlyBill(
   return roundToDec((firstYearSavings * tarif) / 12 - monthlyConsumption);
 }
 
-export function calculateCumulativeSavings(
-  years: number,
-  firstYearSavings: number,
-  panelDegradation: number
-) {
-  return roundToDec(firstYearSavings * years * panelDegradation);
-}
-
 export function calculateTwentyFifthSavings(
   firstYearSavings: number,
-  panelDegradation: number
+  panelDegradation: number,
+  tarifEscalation: number
 ) {
-  return roundToDec(firstYearSavings * 25 * panelDegradation);
+  return roundToDec(firstYearSavings * 25 * panelDegradation * tarifEscalation);
 }

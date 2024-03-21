@@ -198,7 +198,8 @@ export async function createGridTiedProposal(
 
   const twentyFifthYearSavings = calculateTwentyFifthSavings(
     firstYearSavings,
-    parameters.panelDegradation
+    parameters.panelDegradation,
+    parameters.tarifEscalation
   );
 
   const proposal: GridTiedProposal = {
@@ -209,6 +210,7 @@ export async function createGridTiedProposal(
     addressLatitude: req.lat || 0,
     addressLongitude: req.long || 0,
     proposalDetails: {
+      tarifEscalation: parameters.tarifEscalation,
       numberOfPanels,
       systemSize,
       labourCost,
@@ -300,6 +302,7 @@ export async function updateProduct() {
           width: 1.14,
         },
         tarif: 1.65,
+        tarifEscalation: 4,
         markup: 0.2,
         labourBaseCost: 600,
         panelDegradation: 0.8,

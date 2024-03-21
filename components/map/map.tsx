@@ -172,6 +172,7 @@ export function MapView(props: MapViewProps) {
         }
       />
       <Map
+        mapTypeId={"satellite"}
         id={"solar-quote-map"}
         mapId={"8c1c10c3cc4d248b"}
         onClick={(event) => handleClick(event)}

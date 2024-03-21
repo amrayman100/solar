@@ -47,7 +47,7 @@ export function ViewGridTiedProposal({
     },
     {
       name: "New Bill",
-      bill: firstYearMonthlyBill,
+      bill: firstYearMonthlyBill < 0 ? 0 : firstYearMonthlyBill,
     },
   ];
 
@@ -61,7 +61,8 @@ export function ViewGridTiedProposal({
       savings: calculateCumulativeSavings(
         10,
         details.firstYearSavings,
-        details.panelDegradation
+        details.panelDegradation,
+        details.tarifEscalation
       ),
     },
     {
@@ -69,7 +70,8 @@ export function ViewGridTiedProposal({
       savings: calculateCumulativeSavings(
         10,
         details.firstYearSavings,
-        details.panelDegradation
+        details.panelDegradation,
+        details.tarifEscalation
       ),
     },
     {
@@ -77,7 +79,8 @@ export function ViewGridTiedProposal({
       savings: calculateCumulativeSavings(
         15,
         details.firstYearSavings,
-        details.panelDegradation
+        details.panelDegradation,
+        details.tarifEscalation
       ),
     },
     {
@@ -85,7 +88,8 @@ export function ViewGridTiedProposal({
       savings: calculateCumulativeSavings(
         20,
         details.firstYearSavings,
-        details.panelDegradation
+        details.panelDegradation,
+        details.tarifEscalation
       ),
     },
     {
@@ -93,7 +97,8 @@ export function ViewGridTiedProposal({
       savings: calculateCumulativeSavings(
         25,
         details.firstYearSavings,
-        details.panelDegradation
+        details.panelDegradation,
+        details.tarifEscalation
       ),
     },
   ];
