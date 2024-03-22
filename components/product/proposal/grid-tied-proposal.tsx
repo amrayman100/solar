@@ -3,6 +3,7 @@ import {
   TypographyH1,
   TypographyH2,
   TypographyH3,
+  TypographyH4,
   TypographyH5,
 } from "@/components/shared/typography";
 import { GridTiedProposal, calculateCumulativeSavings } from "@/models/product";
@@ -150,8 +151,8 @@ export function ViewGridTiedProposal({
           </div>
           <div>
             <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10">
+              <TypographyH4 text="Your quotation" />
               <Table>
-                <TableCaption>Your Quotation</TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead></TableHead>
@@ -160,43 +161,79 @@ export function ViewGridTiedProposal({
                 </TableHeader>
                 <TableBody>
                   <TableRow>
+                    <TableCell className="font-bold">
+                      Total System Price
+                    </TableCell>
+                    <TableCell className="text-right font-bold">
+                      {Math.round(
+                        proposal.proposalDetails.sellingCost
+                      ).toLocaleString("en", { useGrouping: true })}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
                     <TableCell className="font-medium">
                       Price Per Watt
                     </TableCell>
                     <TableCell className="text-right">
-                      {proposal.proposalDetails.pricePerWatt}
+                      {Math.round(
+                        proposal.proposalDetails.pricePerWatt
+                      ).toLocaleString("en", { useGrouping: true })}
                     </TableCell>
                   </TableRow>
+                </TableBody>
+                <p className="mt-2">
+                  Kindly Note There is an additional utility meter cost
+                </p>
+              </Table>
+            </div>
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10">
+              <TypographyH4 text="Payment Milestones" />
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell className="font-medium">
-                      Contract Signature downpayment
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {proposal.proposalDetails.billing?.downPaymentFee}
-                    </TableCell>
+                    <TableHead></TableHead>
+                    <TableHead className="text-right">Amount (EGP)</TableHead>
                   </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">
-                      Delivery of Components
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {proposal.proposalDetails.billing?.componentsSupplyFee}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">
-                      Installation and commissioning
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {proposal.proposalDetails.billing?.commissionFee}
-                    </TableCell>
-                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   <TableRow>
                     <TableCell className="font-bold">
                       Total System Price
                     </TableCell>
                     <TableCell className="text-right font-bold">
-                      {proposal.proposalDetails.sellingCost}
+                      {Math.round(
+                        proposal.proposalDetails.sellingCost
+                      ).toLocaleString("en", { useGrouping: true })}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Upon Contract Signature
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {Math.round(
+                        proposal.proposalDetails.billing?.downPaymentFee
+                      ).toLocaleString("en", { useGrouping: true })}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Upon components delivery
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {Math.round(
+                        proposal.proposalDetails.billing?.componentsSupplyFee
+                      ).toLocaleString("en", { useGrouping: true })}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Upon Installation
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {Math.round(
+                        proposal.proposalDetails.billing?.commissionFee
+                      ).toLocaleString("en", { useGrouping: true })}
                     </TableCell>
                   </TableRow>
                 </TableBody>
