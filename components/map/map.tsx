@@ -8,6 +8,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import { Input } from "@/components/ui/input";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+import { Button } from "../ui/button";
 
 export type AddressDescription = {
   fullAddress: string;
@@ -17,6 +18,7 @@ export type AddressDescription = {
 };
 
 type MapViewProps = {
+  actionButton: () => JSX.Element;
   style: CSSProperties;
   address: AddressDescription;
   setAddressDescription: (addressDescription: AddressDescription) => void;
@@ -111,6 +113,94 @@ function PlacesSearch({
   );
 }
 
+function LocateMeButton({
+  isGeocodeAPILoaded,
+  setAddressDescription,
+}: {
+  isGeocodeAPILoaded: boolean;
+
+  setAddressDescription: (addressDescription: AddressDescription) => void;
+}) {
+  const map = useMap("solar-quote-map");
+
+  const [geocodingService, setGeocodingService] =
+    useState<google.maps.Geocoder | null>(null);
+
+  function onLoad() {
+    const geocoderService = new google.maps.Geocoder();
+    setGeocodingService(geocoderService);
+  }
+
+  useEffect(() => {
+    isGeocodeAPILoaded && onLoad();
+  }, [isGeocodeAPILoaded]);
+
+  return (
+    <>
+      {geocodingService && (
+        <Button
+          size={"lg"}
+          onClick={() => {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                const coords = {
+                  lat,
+                  lng,
+                };
+
+                console.log(coords);
+                map?.setCenter(coords);
+                geocodingService
+                  .geocode({
+                    location: {
+                      lat,
+                      lng,
+                    },
+                  })
+                  .then((res) => {
+                    debugger;
+                    if (res.results.length <= 0) {
+                      return;
+                    }
+
+                    let city = "";
+                    const addressComponents = res.results[0].address_components;
+                    const cities = addressComponents.filter(
+                      (f) =>
+                        JSON.stringify(f.types) ===
+                        JSON.stringify([
+                          "administrative_area_level_1",
+                          "political",
+                        ])
+                    );
+
+                    if (cities && cities?.length > 0)
+                      city = cities[0]?.long_name;
+
+                    setAddressDescription({
+                      fullAddress: res.results[0].formatted_address,
+                      lat,
+                      lng,
+                      city: city,
+                    });
+                  });
+              },
+              null,
+              { enableHighAccuracy: true }
+            );
+          }}
+          variant={"outline"}
+        >
+          Get My Current Location
+        </Button>
+      )}
+    </>
+  );
+}
+
 export function MapView(props: MapViewProps) {
   const [isPlacesAPILoaded, setIsPlacesAPILoaded] = useState(false);
 
@@ -159,7 +249,7 @@ export function MapView(props: MapViewProps) {
   return (
     <APIProvider
       apiKey={process.env.NEXT_PUBLIC_MAP_API_KEY || ""}
-      libraries={["places"]}
+      libraries={["places", "geocoding"]}
       onLoad={() => {
         setIsPlacesAPILoaded(true);
       }}
@@ -184,6 +274,15 @@ export function MapView(props: MapViewProps) {
       >
         <AdvancedMarker ref={markerRef} position={markerPos} />
       </Map>
+      <div className="w-full flex place-content-center mb-4 gap-2 pt-2">
+        <LocateMeButton
+          isGeocodeAPILoaded={isPlacesAPILoaded}
+          setAddressDescription={(addressDescription: AddressDescription) =>
+            props.setAddressDescription(addressDescription)
+          }
+        />
+        <props.actionButton />
+      </div>
     </APIProvider>
   );
 }

@@ -123,6 +123,14 @@ export function CreateProposal<T>({
                 />
                 {addressSubmit && (
                   <MapView
+                    actionButton={() => (
+                      <Button
+                        size={"lg"}
+                        onClick={() => setFormStage("housing")}
+                      >
+                        Next
+                      </Button>
+                    )}
                     setAddressDescription={(arg: AddressDescription) =>
                       setAddressSubmit(arg)
                     }
@@ -133,11 +141,6 @@ export function CreateProposal<T>({
                     }}
                   />
                 )}
-              </div>
-              <div className="w-full flex place-content-center mb-4 gap-2">
-                <Button size={"lg"} onClick={() => setFormStage("housing")}>
-                  Next
-                </Button>
               </div>
             </div>
           )}
