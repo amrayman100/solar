@@ -23,7 +23,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -197,12 +196,12 @@ export function ViewGridTiedProposal({
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-bold">
-                      Total System Price
+                    <TableCell className="font-medium">
+                      Commission Fee
                     </TableCell>
-                    <TableCell className="text-right font-bold">
+                    <TableCell className="text-right">
                       {Math.round(
-                        proposal.proposalDetails.sellingCost
+                        proposal.proposalDetails.billing?.commissionFee
                       ).toLocaleString("en", { useGrouping: true })}
                     </TableCell>
                   </TableRow>
@@ -232,7 +231,7 @@ export function ViewGridTiedProposal({
                     </TableCell>
                     <TableCell className="text-right">
                       {Math.round(
-                        proposal.proposalDetails.billing?.commissionFee
+                        proposal.proposalDetails.billing?.installationFee
                       ).toLocaleString("en", { useGrouping: true })}
                     </TableCell>
                   </TableRow>
