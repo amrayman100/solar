@@ -139,7 +139,7 @@ export type GridTiedParams = {
   panelDegradation: number;
   specificProd: number;
   mountingPrice: number;
-  inverters: Inverter[];
+  inverters: Array<Inverter>;
   labourBaseCost: number;
   structureSpan: number;
   concreteFootingPrice: number;

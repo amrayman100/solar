@@ -208,117 +208,115 @@ export function CreateProposal<T>({
 
           {formStage == "contact" && (
             <>
-              <form.Provider>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    void form.handleSubmit();
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  void form.handleSubmit();
+                }}
+              >
+                <div className="flex flex-col space-y-2 mb-4">
+                  <TypographyH3
+                    className="font-semibold"
+                    text="Please enter your contact info"
+                  />
+                </div>
+                <form.Field
+                  name="email"
+                  validatorAdapter={zodValidator}
+                  validators={{
+                    onChange: z
+                      .string()
+                      .email("Email is not valid")
+                      .optional()
+                      .or(z.literal("")),
                   }}
                 >
-                  <div className="flex flex-col space-y-2 mb-4">
-                    <TypographyH3
-                      className="font-semibold"
-                      text="Please enter your contact info"
-                    />
-                  </div>
-                  <form.Field
-                    name="email"
-                    validatorAdapter={zodValidator}
-                    validators={{
-                      onChange: z
-                        .string()
-                        .email("Email is not valid")
-                        .optional()
-                        .or(z.literal("")),
-                    }}
+                  {(field) => (
+                    <>
+                      <Input
+                        type="email"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="bg-background mb-4"
+                        placeholder="Email (Optional)"
+                      />
+                      {field.state.meta.errors ? (
+                        <p role="alert" className="text-red-500 mb-2">
+                          {field.state.meta.errors.join(", ")}
+                        </p>
+                      ) : null}
+                    </>
+                  )}
+                </form.Field>
+                <form.Field
+                  name="name"
+                  validators={{
+                    onChange: ({ value }) =>
+                      !value ? "Name is required" : undefined,
+                  }}
+                >
+                  {(field) => (
+                    <>
+                      <Input
+                        type="text"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="bg-background mb-4"
+                        placeholder="Name"
+                      />
+                      {field.state.meta.errors ? (
+                        <p role="alert" className="text-red-500 mb-2">
+                          {field.state.meta.errors.join(", ")}
+                        </p>
+                      ) : null}
+                    </>
+                  )}
+                </form.Field>
+                <form.Field
+                  name="number"
+                  validatorAdapter={zodValidator}
+                  validators={{
+                    onChange: z.string().regex(phoneRegex, "Invalid Number"),
+                  }}
+                >
+                  {(field) => (
+                    <>
+                      <Input
+                        type="text"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="bg-background mb-4"
+                        placeholder="Phone Number"
+                      />
+                      {field.state.meta.errors ? (
+                        <p role="alert" className="text-red-500 mb-2">
+                          {field.state.meta.errors.join(", ")}
+                        </p>
+                      ) : null}
+                    </>
+                  )}
+                </form.Field>
+                <div className="w-full flex place-content-center mb-4 gap-2">
+                  <Button
+                    size={"lg"}
+                    variant="secondary"
+                    type="submit"
+                    onClick={() => setFormStage("housing")}
                   >
-                    {(field) => (
-                      <>
-                        <Input
-                          type="email"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          className="bg-background mb-4"
-                          placeholder="Email (Optional)"
-                        />
-                        {field.state.meta.errors ? (
-                          <p role="alert" className="text-red-500 mb-2">
-                            {field.state.meta.errors.join(", ")}
-                          </p>
-                        ) : null}
-                      </>
+                    Previous
+                  </Button>
+                  <Button variant="default" type="submit" size={"lg"}>
+                    Submit
+                    {mutation.isPending && (
+                      <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />
                     )}
-                  </form.Field>
-                  <form.Field
-                    name="name"
-                    validators={{
-                      onChange: ({ value }) =>
-                        !value ? "Name is required" : undefined,
-                    }}
-                  >
-                    {(field) => (
-                      <>
-                        <Input
-                          type="text"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          className="bg-background mb-4"
-                          placeholder="Name"
-                        />
-                        {field.state.meta.errors ? (
-                          <p role="alert" className="text-red-500 mb-2">
-                            {field.state.meta.errors.join(", ")}
-                          </p>
-                        ) : null}
-                      </>
-                    )}
-                  </form.Field>
-                  <form.Field
-                    name="number"
-                    validatorAdapter={zodValidator}
-                    validators={{
-                      onChange: z.string().regex(phoneRegex, "Invalid Number"),
-                    }}
-                  >
-                    {(field) => (
-                      <>
-                        <Input
-                          type="text"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          className="bg-background mb-4"
-                          placeholder="Phone Number"
-                        />
-                        {field.state.meta.errors ? (
-                          <p role="alert" className="text-red-500 mb-2">
-                            {field.state.meta.errors.join(", ")}
-                          </p>
-                        ) : null}
-                      </>
-                    )}
-                  </form.Field>
-                  <div className="w-full flex place-content-center mb-4 gap-2">
-                    <Button
-                      size={"lg"}
-                      variant="secondary"
-                      type="submit"
-                      onClick={() => setFormStage("housing")}
-                    >
-                      Previous
-                    </Button>
-                    <Button variant="default" type="submit" size={"lg"}>
-                      Submit
-                      {mutation.isPending && (
-                        <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />
-                      )}
-                    </Button>
-                  </div>
-                </form>
-              </form.Provider>
+                  </Button>
+                </div>
+              </form>
               {mutation.isSuccess && (
                 <div className="mt-4">
                   <div>Your Request is saved</div>

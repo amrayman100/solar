@@ -42,15 +42,6 @@ export function MonthlyConsumptionForm() {
   const autoCompleteRef = useRef<google.maps.places.Autocomplete>();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const options = useMemo(
-    () => ({
-      componentRestrictions: { country: "eg" },
-      fields: ["address_components", "geometry", "name"],
-      types: ["establishment"],
-    }),
-    []
-  );
-
   function onLoad() {
     const options = {
       componentRestrictions: { country: "eg" },
@@ -116,45 +107,43 @@ export function MonthlyConsumptionForm() {
       }}
     >
       <div className="m-auto h-full mt-12">
-        <form.Provider>
-          <form
-            className="flex flex-col lg:flex-row md:flex:row gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              void form.handleSubmit();
+        <form
+          className="flex flex-col lg:flex-row md:flex:row gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            void form.handleSubmit();
+          }}
+        >
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Enter Your Address"
+            className="bg-background"
+          />
+          <form.Field
+            name="monthlyConsumption"
+            validators={{
+              onChange: ({ value }) =>
+                !value ? "address is required" : undefined,
             }}
-          >
-            <Input
-              ref={inputRef}
-              type="text"
-              placeholder="Enter Your Address"
-              className="bg-background"
-            />
-            <form.Field
-              name="monthlyConsumption"
-              validators={{
-                onChange: ({ value }) =>
-                  !value ? "address is required" : undefined,
-              }}
-              children={(field) => (
-                <>
-                  <Input
-                    type="number"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                    className="bg-background"
-                    placeholder="Monthly Consumption"
-                  />
-                </>
-              )}
-            />
-            <Button variant="default" type="submit">
-              Calculate My Fee
-            </Button>
-          </form>
-        </form.Provider>
+            children={(field) => (
+              <>
+                <Input
+                  type="number"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                  className="bg-background"
+                  placeholder="Monthly Consumption"
+                />
+              </>
+            )}
+          />
+          <Button variant="default" type="submit">
+            Calculate My Fee
+          </Button>
+        </form>
       </div>
     </APIProvider>
   );
