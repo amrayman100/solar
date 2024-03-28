@@ -53,14 +53,15 @@ export type CircuitBreaker = {
   brand: string;
   rating: string;
   price: number;
+  quantity: number;
 };
 
 export type AcCable = {
   brand: string;
   price: number;
   rating: string;
-  acEarthCable: AcEarthCable;
   quantity: number;
+  acEarthCable: AcEarthCable;
 };
 
 export type Flexible = {
@@ -272,7 +273,9 @@ export function getInverterACEarthCableCost(inverter: Inverter) {
 }
 
 export function getInverterCircuitBreakerCost(inverter: Inverter) {
-  return roundToDec(inverter.circuitBreaker.price);
+  return roundToDec(
+    inverter.circuitBreaker.price * inverter.circuitBreaker.quantity
+  );
 }
 
 export function getInverterVSNCost(inverter: Inverter) {
@@ -459,3 +462,69 @@ export function calculateTwentyFifthSavings(
 ) {
   return roundToDec(firstYearSavings * 25 * panelDegradation * tarifEscalation);
 }
+
+// off grid
+
+// inputs = { load is a dropdown list of  // air conditoner ///}
+
+// 7agat be mawateer (ac, fridge , fan, water motor , shutter) or not ()
+// ac with invertor is mawteer
+
+//watt -> HP
+
+//hp to watt -> hp * 0.745 * 1000
+
+// total of each item
+
+// each item as surge power
+
+// surge factor
+
+// check #1 total power
+
+// check surge = 1.5 * 5000
+
+/*
+1.75 * 5000 >= surgePower
+
+
+baseline battery => invertor
+12v battery
+
+
+system voltage = for 5000 48 => invertor
+
+numberOFBatteries => system voltage / 12
+
+isElectrictySuppliedByGov => are you connected (utlity grid) to the goverment grid/electricty
+
+
+isElectrictySuppliedByGov yes => working hours
+
+
+isElectrictySuppliedByGov yes => morning hours , evening hours
+
+for each item
+battery capacity need => working hour * total capacity
+
+total battery capacity needed = battery capacity need += (1---n)
+
+battery ( rateBatteryCapacity : 200, volt: 12, real capacites : [(20,200), (10,190)])
+
+1,5,20 => ratedTimeForBatteryToDischarge
+200,190,174,132 -> realratedCapacityBattery
+
+timeForDisachargeBattery: ratedBattery * systemVoltage / total power loaf
+
+
+x = 
+
+real battery capacity = (((x - smallRatedTime) * ratedLarge)) + ((ratedLarge - x) * ratedSmall)) / (largeRated - smallRated )
+
+
+invertor for off grid -> circuit breaker quantity
+manual transfer switch
+
+
+
+*/
