@@ -33,13 +33,19 @@ import { MaintenanceForm } from "./maintenance-form";
 import { useMutation } from "@tanstack/react-query";
 import { updateProduct } from "@/actions/proposal";
 import { ReloadIcon } from "@radix-ui/react-icons";
-
-type GridTiedForm = {};
+import { useToast } from "@/components/ui/use-toast";
 
 export function GridTiedForm({ product }: { product: GridTied }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
   const mutation = useMutation({
-    mutationFn: (req: GridTied) => {
-      return updateProduct(req);
+    mutationFn: async (req: GridTied) => {
+      await updateProduct(req);
+      setIsLoading(false);
+      toast({
+        title: "Updated Grid Tied Product Successfully",
+      });
     },
   });
 
@@ -107,7 +113,10 @@ export function GridTiedForm({ product }: { product: GridTied }) {
           </MenubarMenu>
           <Button
             variant="default"
-            onClick={() => form.handleSubmit()}
+            onClick={() => {
+              setIsLoading(true);
+              form.handleSubmit();
+            }}
             className="w-max px-4"
           >
             Save
