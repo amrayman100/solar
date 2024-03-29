@@ -1,26 +1,26 @@
 import { Input } from "@/components/ui/input";
-import { GridTied, Panel } from "@/models/product";
-import { DeepKeys, FieldApi } from "@tanstack/react-form";
+import { DCCable, GridTied } from "@/models/product";
+import { FieldApi } from "@tanstack/react-form";
 import { Label } from "@/components/ui/label";
 
-interface PanelContainer {
-  parameters: {
-    panel: Panel;
-  };
-}
-
 type Props = {
-  field: FieldApi<GridTied, "parameters.panel", undefined, undefined, Panel>;
+  field: FieldApi<
+    GridTied,
+    "parameters.dcCable",
+    undefined,
+    undefined,
+    DCCable
+  >;
 };
 
-export function PanelForm({ field }: Props) {
+export function DCCableForm({ field }: Props) {
   return (
     <>
       <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
         <div>
           <Label className="mb-2">Brand Name</Label>
           <field.form.Field
-            name={`parameters.panel.brand`}
+            name={`parameters.dcCable.brand`}
             validators={{
               onChange: ({ value }) => (!value ? "required" : undefined),
             }}
@@ -28,7 +28,7 @@ export function PanelForm({ field }: Props) {
             {(field) => {
               return (
                 <Input
-                  id={"parameters.panel.brand"}
+                  id={"parameters.dcCable.brand"}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
@@ -41,10 +41,10 @@ export function PanelForm({ field }: Props) {
         </div>
         <div>
           <Label htmlFor="picture" className="mb-2">
-            Power Output Watt
+            Price
           </Label>
           <field.form.Field
-            name={`parameters.panel.powerOutputWatt`}
+            name={`parameters.dcCable.price`}
             validators={{
               onChange: ({ value }) =>
                 !value && value != 0 ? "required" : undefined,
@@ -53,7 +53,7 @@ export function PanelForm({ field }: Props) {
               <>
                 <Input
                   type="number"
-                  key={"parameters.panel.powerOutputWatt"}
+                  key={"parameters.dcCable.price"}
                   value={subField.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
@@ -71,53 +71,21 @@ export function PanelForm({ field }: Props) {
         </div>
         <div>
           <Label htmlFor="picture" className="mb-2">
-            Price Per Watt
+            Rating
           </Label>
           <field.form.Field
-            name={`parameters.panel.pricePerWatt`}
+            name={`parameters.dcCable.rating`}
             validators={{
-              onChange: ({ value }) =>
-                !value && value != 0 ? "required" : undefined,
+              onChange: ({ value }) => (!value ? "required" : undefined),
             }}
             children={(subField) => (
               <>
                 <Input
-                  type="number"
-                  key={"parameters.panel.costPerWatt"}
+                  key={"parameters.dcCable.costPerWatt"}
                   value={subField.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
-                    subField.handleChange(e.target.valueAsNumber);
-                  }}
-                />
-                {subField.state.meta.errors ? (
-                  <p role="alert" className="text-red-500 mb-2">
-                    {subField.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </>
-            )}
-          />
-        </div>
-        <div>
-          <Label htmlFor="picture" className="mb-2">
-            Width
-          </Label>
-          <field.form.Field
-            name={`parameters.panel.width`}
-            validators={{
-              onChange: ({ value }) =>
-                !value && value != 0 ? "required" : undefined,
-            }}
-            children={(subField) => (
-              <>
-                <Input
-                  type="number"
-                  key={"parameters.panel.width"}
-                  value={subField.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    subField.handleChange(e.target.valueAsNumber);
+                    subField.handleChange(e.target.value);
                   }}
                 />
                 {subField.state.meta.errors ? (

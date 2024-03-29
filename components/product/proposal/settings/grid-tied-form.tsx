@@ -24,11 +24,12 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { DCCableForm } from "./dc-cable-form";
 
 type GridTiedForm = {};
 
 export function GridTiedForm({ product }: { product: GridTied }) {
-  const [mode, setMode] = useState<"panel" | "inverter" | "">("panel");
+  const [mode, setMode] = useState<"panel" | "inverter" | "dcCable">("panel");
   const form = useForm({
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -47,10 +48,10 @@ export function GridTiedForm({ product }: { product: GridTied }) {
               <MenubarItem onClick={() => setMode("inverter")}>
                 Inverter
               </MenubarItem>
+              <MenubarItem onClick={() => setMode("dcCable")}>
+                DC Cable
+              </MenubarItem>
             </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Simulation</MenubarTrigger>
           </MenubarMenu>
           <Button
             variant="default"
@@ -69,9 +70,9 @@ export function GridTiedForm({ product }: { product: GridTied }) {
       </Menubar>
       <div className="h-full mt-12">
         {product && (
-          <div className="m-auto h-full mt-12 w-2/4">
+          <div className="h-full mt-12 w-2/4 flex">
             <form
-              className="flex flex-col gap-10"
+              className="flex flex-col gap-10 flex-1"
               onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -125,7 +126,19 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                   </form.Field>
                 </div>
               </div>
+
+              <div style={{ display: mode === "dcCable" ? "block" : "none" }}>
+                <TypographyH2 text="DC Cable Setting" className="m-4" />
+                <form.Field name="parameters.dcCable" mode="value">
+                  {(field) => {
+                    return <DCCableForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
             </form>
+            <div className="flex-2">
+              <TypographyH2 text="Simulation" className="m-4" />
+            </div>
           </div>
         )}
       </div>
