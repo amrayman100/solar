@@ -102,13 +102,13 @@ export type EarthLeakage = {
   brand: string;
   rating: string;
   price: number;
-  citySpecificities: CitySpecificity[];
+  citySpecificities: Array<CitySpecificity>;
 };
 
 export type SwitchBox = {
   brand: string;
   price: number;
-  citySpecificities: CitySpecificity[];
+  citySpecificities: Array<CitySpecificity>;
 };
 
 export type Fuse = {

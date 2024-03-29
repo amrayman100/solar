@@ -1,26 +1,26 @@
 import { Input } from "@/components/ui/input";
-import { DCCable, GridTied } from "@/models/product";
+import { DCEarthCable, GridTied } from "@/models/product";
 import { FieldApi } from "@tanstack/react-form";
 import { Label } from "@/components/ui/label";
 
 type Props = {
   field: FieldApi<
     GridTied,
-    "parameters.dcCable",
+    "parameters.dcEarthCable",
     undefined,
     undefined,
-    DCCable
+    DCEarthCable
   >;
 };
 
-export function DCCableForm({ field }: Props) {
+export function DCEarthCableForm({ field }: Props) {
   return (
     <>
       <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
         <div>
           <Label className="mb-2">Brand Name</Label>
           <field.form.Field
-            name={`parameters.dcCable.brand`}
+            name={`parameters.dcEarthCable.brand`}
             validators={{
               onChange: ({ value }) => (!value ? "required" : undefined),
             }}
@@ -28,7 +28,7 @@ export function DCCableForm({ field }: Props) {
             {(field) => {
               return (
                 <Input
-                  id={"parameters.dcCable.brand"}
+                  id={"parameters.dcEarthCable.brand"}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
@@ -44,7 +44,7 @@ export function DCCableForm({ field }: Props) {
             Price
           </Label>
           <field.form.Field
-            name={`parameters.dcCable.price`}
+            name={`parameters.dcEarthCable.price`}
             validators={{
               onChange: ({ value }) =>
                 !value && value != 0 ? "required" : undefined,
@@ -53,7 +53,37 @@ export function DCCableForm({ field }: Props) {
               <>
                 <Input
                   type="number"
-                  key={"parameters.dcCable.price"}
+                  key={"parameters.dcEarthCable.price"}
+                  value={subField.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    subField.handleChange(e.target.valueAsNumber);
+                  }}
+                />
+                {subField.state.meta.errors ? (
+                  <p role="alert" className="text-red-500 mb-2">
+                    {subField.state.meta.errors.join(", ")}
+                  </p>
+                ) : null}
+              </>
+            )}
+          />
+        </div>
+        <div>
+          <Label htmlFor="picture" className="mb-2">
+            Quantity
+          </Label>
+          <field.form.Field
+            name={`parameters.dcEarthCable.quantity`}
+            validators={{
+              onChange: ({ value }) =>
+                !value && value != 0 ? "required" : undefined,
+            }}
+            children={(subField) => (
+              <>
+                <Input
+                  type="number"
+                  key={"parameters.dcEarthCable.quantity"}
                   value={subField.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
@@ -74,14 +104,14 @@ export function DCCableForm({ field }: Props) {
             Rating
           </Label>
           <field.form.Field
-            name={`parameters.dcCable.rating`}
+            name={`parameters.dcEarthCable.rating`}
             validators={{
               onChange: ({ value }) => (!value ? "required" : undefined),
             }}
             children={(subField) => (
               <>
                 <Input
-                  key={"parameters.dcCable.rating"}
+                  key={"parameters.dcEarthCable.costPerWatt"}
                   value={subField.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {

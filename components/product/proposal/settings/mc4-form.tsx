@@ -1,26 +1,20 @@
 import { Input } from "@/components/ui/input";
-import { DCCable, GridTied } from "@/models/product";
+import { GridTied, MC4 } from "@/models/product";
 import { FieldApi } from "@tanstack/react-form";
 import { Label } from "@/components/ui/label";
 
 type Props = {
-  field: FieldApi<
-    GridTied,
-    "parameters.dcCable",
-    undefined,
-    undefined,
-    DCCable
-  >;
+  field: FieldApi<GridTied, "parameters.mc4", undefined, undefined, MC4>;
 };
 
-export function DCCableForm({ field }: Props) {
+export function Mc4Form({ field }: Props) {
   return (
     <>
       <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
         <div>
           <Label className="mb-2">Brand Name</Label>
           <field.form.Field
-            name={`parameters.dcCable.brand`}
+            name={`parameters.mc4.brand`}
             validators={{
               onChange: ({ value }) => (!value ? "required" : undefined),
             }}
@@ -28,7 +22,7 @@ export function DCCableForm({ field }: Props) {
             {(field) => {
               return (
                 <Input
-                  id={"parameters.dcCable.brand"}
+                  id={"parameters.mc4.brand"}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
@@ -44,7 +38,7 @@ export function DCCableForm({ field }: Props) {
             Price
           </Label>
           <field.form.Field
-            name={`parameters.dcCable.price`}
+            name={`parameters.mc4.price`}
             validators={{
               onChange: ({ value }) =>
                 !value && value != 0 ? "required" : undefined,
@@ -53,39 +47,11 @@ export function DCCableForm({ field }: Props) {
               <>
                 <Input
                   type="number"
-                  key={"parameters.dcCable.price"}
+                  key={"parameters.mc4.price"}
                   value={subField.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => {
                     subField.handleChange(e.target.valueAsNumber);
-                  }}
-                />
-                {subField.state.meta.errors ? (
-                  <p role="alert" className="text-red-500 mb-2">
-                    {subField.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </>
-            )}
-          />
-        </div>
-        <div>
-          <Label htmlFor="picture" className="mb-2">
-            Rating
-          </Label>
-          <field.form.Field
-            name={`parameters.dcCable.rating`}
-            validators={{
-              onChange: ({ value }) => (!value ? "required" : undefined),
-            }}
-            children={(subField) => (
-              <>
-                <Input
-                  key={"parameters.dcCable.rating"}
-                  value={subField.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    subField.handleChange(e.target.value);
                   }}
                 />
                 {subField.state.meta.errors ? (

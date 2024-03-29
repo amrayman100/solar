@@ -8,10 +8,8 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { GridTied } from "@/models/product";
 import { useForm } from "@tanstack/react-form";
-import { Label } from "@/components/ui/label";
 import { InvertorForm } from "./invertor-form";
 import { PanelForm } from "./panel-form";
 import { useState } from "react";
@@ -20,19 +18,52 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { DCCableForm } from "./dc-cable-form";
+import { DCEarthCableForm } from "./dc-earth-cable-form";
+import { EarthLeakageForm } from "./earth-leakage";
+import { SwitchBoxForm } from "./switch-box";
+import { FuseForm } from "./fuse-form";
+import { EarthForm } from "./earth-form";
+import { Mc4Form } from "./mc4-form";
+import { BillingForm } from "./billing-form";
+import { LabourForm } from "./labour-form";
+import { MaintenanceForm } from "./maintenance-form";
+import { useMutation } from "@tanstack/react-query";
+import { updateProduct } from "@/actions/proposal";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 type GridTiedForm = {};
 
 export function GridTiedForm({ product }: { product: GridTied }) {
-  const [mode, setMode] = useState<"panel" | "inverter" | "dcCable">("panel");
+  const mutation = useMutation({
+    mutationFn: (req: GridTied) => {
+      return updateProduct(req);
+    },
+  });
+
+  const [mode, setMode] = useState<
+    | "panel"
+    | "inverter"
+    | "dcCable"
+    | "dcEarthCable"
+    | "earthLeakage"
+    | "switchBox"
+    | "fuse"
+    | "earth"
+    | "mc4"
+    | "billing"
+    | "labour"
+    | "maintenance"
+  >("panel");
   const form = useForm({
     onSubmit: async ({ value }) => {
       console.log(value);
+      mutation.mutateAsync({
+        ...value,
+        updated: { by: "admin", at: new Date().toUTCString() },
+      });
     },
     defaultValues: product,
   });
@@ -51,6 +82,27 @@ export function GridTiedForm({ product }: { product: GridTied }) {
               <MenubarItem onClick={() => setMode("dcCable")}>
                 DC Cable
               </MenubarItem>
+              <MenubarItem onClick={() => setMode("dcEarthCable")}>
+                DC Earth Cable
+              </MenubarItem>
+              <MenubarItem onClick={() => setMode("earthLeakage")}>
+                Earth Leakage
+              </MenubarItem>
+              <MenubarItem onClick={() => setMode("switchBox")}>
+                Switch Box
+              </MenubarItem>
+              <MenubarItem onClick={() => setMode("fuse")}>Fuse</MenubarItem>
+              <MenubarItem onClick={() => setMode("earth")}>Earth</MenubarItem>
+              <MenubarItem onClick={() => setMode("mc4")}>MC4</MenubarItem>
+              <MenubarItem onClick={() => setMode("billing")}>
+                Billing
+              </MenubarItem>
+              <MenubarItem onClick={() => setMode("maintenance")}>
+                Maintenance
+              </MenubarItem>
+              <MenubarItem onClick={() => setMode("labour")}>
+                Labour
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
           <Button
@@ -59,6 +111,9 @@ export function GridTiedForm({ product }: { product: GridTied }) {
             className="w-max px-4"
           >
             Save
+            {(mutation.isPending || form.state.isSubmitting) && (
+              <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />
+            )}
           </Button>
         </div>
         <div>
@@ -68,9 +123,9 @@ export function GridTiedForm({ product }: { product: GridTied }) {
           />
         </div>
       </Menubar>
-      <div className="h-full mt-12">
+      <div className="h-full">
         {product && (
-          <div className="h-full mt-12 w-2/4 flex">
+          <div className="h-full w-2/4 flex">
             <form
               className="flex flex-col gap-10 flex-1"
               onSubmit={(e) => {
@@ -109,7 +164,6 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                                 variant={"destructive"}
                                 key={"invertor-delete-" + i}
                                 onClick={() => {
-                                  debugger;
                                   form.removeFieldValue(
                                     `parameters.inverters`,
                                     i
@@ -128,10 +182,91 @@ export function GridTiedForm({ product }: { product: GridTied }) {
               </div>
 
               <div style={{ display: mode === "dcCable" ? "block" : "none" }}>
-                <TypographyH2 text="DC Cable Setting" className="m-4" />
+                <TypographyH2 text="DC Cable Settings" className="m-4" />
                 <form.Field name="parameters.dcCable" mode="value">
                   {(field) => {
                     return <DCCableForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div
+                style={{ display: mode === "dcEarthCable" ? "block" : "none" }}
+              >
+                <TypographyH2 text="DC Earth Cable Settings" className="m-4" />
+                <form.Field name="parameters.dcEarthCable" mode="value">
+                  {(field) => {
+                    return <DCEarthCableForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div
+                style={{ display: mode === "earthLeakage" ? "block" : "none" }}
+              >
+                <TypographyH2 text="Earth Leakage Settings" className="m-4" />
+                <form.Field name="parameters.earthLeakage" mode="value">
+                  {(field) => {
+                    return <EarthLeakageForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div style={{ display: mode === "switchBox" ? "block" : "none" }}>
+                <TypographyH2 text="Switch Box Settings" className="m-4" />
+                <form.Field name="parameters.switchBox" mode="value">
+                  {(field) => {
+                    return <SwitchBoxForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div style={{ display: mode === "fuse" ? "block" : "none" }}>
+                <TypographyH2 text="Fuse Settings" className="m-4" />
+                <form.Field name="parameters.fuse" mode="value">
+                  {(field) => {
+                    return <FuseForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div style={{ display: mode === "earth" ? "block" : "none" }}>
+                <TypographyH2 text="Earth Settings" className="m-4" />
+                <form.Field name="parameters.earth" mode="value">
+                  {(field) => {
+                    return <EarthForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div style={{ display: mode === "mc4" ? "block" : "none" }}>
+                <TypographyH2 text="MC4 Settings" className="m-4" />
+                <form.Field name="parameters.mc4" mode="value">
+                  {(field) => {
+                    return <Mc4Form field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div
+                style={{ display: mode === "billing" ? "block" : "none" }}
+                className="overflow-y-auto h-5/6"
+              >
+                <TypographyH2 text="Billing Setting" className="m-4" />
+                <form.Field name="parameters" mode="value">
+                  {(field) => {
+                    return <BillingForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div style={{ display: mode === "labour" ? "block" : "none" }}>
+                <TypographyH2 text="Labour Rate Settings" className="m-4" />
+                <form.Field name="parameters" mode="value">
+                  {(field) => {
+                    return <LabourForm field={field} />;
+                  }}
+                </form.Field>
+              </div>
+              <div
+                style={{ display: mode === "maintenance" ? "block" : "none" }}
+              >
+                <TypographyH2 text="Mainetenance Settings" className="m-4" />
+                <form.Field name="parameters" mode="value">
+                  {(field) => {
+                    return <MaintenanceForm field={field} />;
                   }}
                 </form.Field>
               </div>
