@@ -6,7 +6,7 @@ import { TypographyH1 } from "@/components/shared/typography";
 export default async function GridTiedSettings() {
   const gridTiedProduct = await getProduct();
   return (
-    <main>
+    <main className="">
       <div>{gridTiedProduct && <GridTiedForm product={gridTiedProduct} />}</div>
     </main>
   );

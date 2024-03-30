@@ -3,12 +3,6 @@ import { GridTied, Panel } from "@/models/product";
 import { DeepKeys, FieldApi } from "@tanstack/react-form";
 import { Label } from "@/components/ui/label";
 
-interface PanelContainer {
-  parameters: {
-    panel: Panel;
-  };
-}
-
 type Props = {
   field: FieldApi<GridTied, "parameters.panel", undefined, undefined, Panel>;
 };

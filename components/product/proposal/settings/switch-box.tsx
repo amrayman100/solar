@@ -78,11 +78,16 @@ export function SwitchBoxForm({ field }: Props) {
                 (citySpecificity, i) => {
                   return (
                     <div key={"earth-leakage-citySpecificity" + i}>
-                      <TypographyH5 text={citySpecificity?.cityName} />
+                      <TypographyH5
+                        text={citySpecificity?.cityName}
+                        className="mb-2"
+                      />
                       <Label
                         className="mb-2"
                         key={"earth-leakage-citySpecificity-label" + i}
-                      ></Label>
+                      >
+                        Quantity
+                      </Label>
                       <field.form.Field
                         name={`parameters.switchBox.citySpecificities[${i}].quantity`}
                         validators={{

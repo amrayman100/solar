@@ -463,6 +463,194 @@ export function calculateTwentyFifthSavings(
   return roundToDec(firstYearSavings * 25 * panelDegradation * tarifEscalation);
 }
 
+export function getGridTiedProposal(
+  parameters: GridTiedParams,
+  gridTiedId: number,
+  city: string,
+  monthlyConsumption: number,
+  name: string,
+  phoneNumber: string,
+  lat?: number | undefined,
+  long?: number | undefined,
+  email?: string | undefined
+) {
+  debugger;
+  const systemSize = calculateSystemSize(
+    monthlyConsumption,
+    parameters.tarif,
+    parameters.specificProd
+  );
+
+  const numberOfPanels = calculateNumberofPanels(
+    systemSize,
+    parameters.panel.powerOutputWatt
+  );
+
+  const costOfPanels = calulateCostOfPanels(
+    numberOfPanels,
+    parameters.dollarRate,
+    parameters.panel.pricePerWatt,
+    parameters.panel.powerOutputWatt
+  );
+
+  const inverter = getInverter(systemSize, parameters.inverters);
+  if (!inverter) {
+    throw new Error("cannot get inverter");
+  }
+
+  const inverterBaseCost = getInverterBaseCost(inverter, parameters.dollarRate);
+  const inverterACCableCost = getInverterACCableCost(inverter);
+  const inverterACCableEarthCost = getInverterACEarthCableCost(inverter);
+  const inverterCircuitBreaker = getInverterCircuitBreakerCost(inverter);
+  const inverterVSNCost = getInverterVSNCost(inverter);
+  const inverterFlexibleCost = getInverterFlexibleCost(inverter);
+
+  const mountingStructureCost = calculateMountingStructureCost(
+    parameters.mountingPrice,
+    systemSize
+  );
+
+  const concreteFootingCost = calculateConcreteFootingCost(
+    numberOfPanels,
+    parameters.panel.width,
+    parameters.structureSpan,
+    parameters.concreteFootingPrice
+  );
+
+  const dcCableCost = calculateDCCableCost(
+    systemSize,
+    parameters.dcCable.price
+  );
+  const dcEarthCableCost = calculateDCEarthCableCost(parameters.dcEarthCable);
+
+  const numberOfStrings = getNumberOfStrings(numberOfPanels);
+  const mc4Cost = calculateMc4Cost(parameters.mc4, numberOfStrings);
+  const fuseCost = getFusePrice(parameters.fuse.price, numberOfStrings);
+
+  const earthLeakageCost = getEarthLeakageCost(parameters.earthLeakage, city);
+  const switchBoxCost = getSwitchBoxCost(parameters.switchBox, city);
+
+  const earthCost = parameters.earth;
+
+  const labourCost = getLabourCost(systemSize, parameters.labourBaseCost);
+  const transportationCost = getTransportationCost(
+    parameters.truckPrice,
+    numberOfPanels
+  );
+  const maintenanceCost = getMaintenanceCost(parameters.maintenance);
+  const electricityCompanyCost = getElectricityCompanyCost(
+    parameters.electricityCompanyCheckup
+  );
+
+  const inverterTotalCost =
+    inverterBaseCost +
+    inverterACCableCost +
+    inverterACCableEarthCost +
+    inverterCircuitBreaker +
+    inverterVSNCost +
+    inverterFlexibleCost;
+
+  const totalCost = calculateTotalCost(
+    inverterTotalCost,
+    labourCost,
+    costOfPanels,
+    concreteFootingCost,
+    dcCableCost,
+    dcEarthCableCost,
+    earthCost.price,
+    fuseCost,
+    mc4Cost,
+    switchBoxCost,
+    earthLeakageCost,
+    parameters.cleaningToolPrice,
+    electricityCompanyCost,
+    maintenanceCost,
+    mountingStructureCost,
+    transportationCost
+  );
+
+  const sellingCost = calculateSellingCost(totalCost, parameters.markup);
+
+  const firstYearSavings = calculateFirstYearSavings(
+    parameters.specificProd,
+    systemSize
+  );
+
+  const firstYearMonthlyBill = calculateFirstYearMonthlyBill(
+    firstYearSavings,
+    parameters.tarif,
+    monthlyConsumption
+  );
+
+  const twentyFifthYearSavings = calculateTwentyFifthSavings(
+    firstYearSavings,
+    parameters.panelDegradation,
+    parameters.tarifEscalation
+  );
+
+  const proposal: GridTiedProposal = {
+    name: name,
+    emailAddress: email,
+    phoneNumber: phoneNumber,
+    productId: gridTiedId,
+    addressLatitude: lat || 0,
+    addressLongitude: long || 0,
+    proposalDetails: {
+      tarifEscalation: parameters.tarifEscalation,
+      numberOfPanels,
+      systemSize,
+      labourCost,
+      costOfPanels,
+      concreteFootingCost,
+      dcCableCost,
+      dcEarthCableCost,
+      fuseCost,
+      mc4Cost,
+      switchBoxCost,
+      earthLeakageCost,
+      electricityCompanyCost,
+      maintenanceCost,
+      mountingStructureCost,
+      transportationCost,
+      earthCost: earthCost.price,
+      cleaningToolPrice: parameters.cleaningToolPrice,
+      inverter: {
+        inverterInfo: inverter,
+        inverterBaseCost,
+        inverterACCableCost,
+        inverterACCableEarthCost,
+        inverterCircuitBreaker,
+        inverterVSNCost,
+        inverterFlexibleCost,
+      },
+      sellingCost,
+      totalCost,
+      firstYearSavings,
+      twentyFifthYearSavings,
+      panelDegradation: parameters.panelDegradation,
+      currentMonthlyBill: monthlyConsumption,
+      pricePerWatt: parameters.panel.pricePerWatt,
+      firstYearMonthlyBill,
+      billing: {
+        downPaymentFee: roundToDec(
+          parameters.billingPercentage.downPaymentPercentage * sellingCost
+        ),
+        componentsSupplyFee: roundToDec(
+          parameters.billingPercentage.componentsSupplyPercentage * sellingCost
+        ),
+        installationFee: roundToDec(
+          parameters.billingPercentage.installationPercentage * sellingCost
+        ),
+        commissionFee: roundToDec(
+          parameters.billingPercentage.commissionPercentage * sellingCost
+        ),
+      },
+    },
+  };
+
+  return proposal;
+}
+
 // off grid
 
 // inputs = { load is a dropdown list of  // air conditoner ///}
