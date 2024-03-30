@@ -114,7 +114,7 @@ export function ViewGridTiedProposal({
           className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text mx-3"
         />
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
             <TypographyH3 text="Solar Panels" className="font-bold" />
             <div className="lg:flex-row flex-col flex gap-6">
               <div className="text-center">
@@ -131,7 +131,7 @@ export function ViewGridTiedProposal({
               </div>
             </div>
           </div>
-          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
+          <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
             <TypographyH3 text="Inverter" className="font-bold" />
             <div className="flex-col flex gap-2">
               <div>
@@ -149,7 +149,7 @@ export function ViewGridTiedProposal({
             </div>
           </div>
           <div>
-            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4">
               <TypographyH4 text="Your quotation" />
               <Table>
                 <TableHeader>
@@ -185,7 +185,7 @@ export function ViewGridTiedProposal({
                 </p>
               </Table>
             </div>
-            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4">
               <TypographyH4 text="Payment Milestones" />
               <Table>
                 <TableHeader>
@@ -242,10 +242,10 @@ export function ViewGridTiedProposal({
         </div>
       </div>
       <div className="bg-cover bg-center w-screen h-max relative pb-10">
-        <div className="p-10">
+        <div className="p-4">
           <TypographyH2 text="Electricity Bill Savings" />
           <div className="lg:flex-row flex-col flex gap-6 h-full mx-4">
-            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
               <TypographyH3
                 text="First Year Monthly Bill Savings"
                 className="font-bold text-center p-2"
@@ -276,7 +276,7 @@ export function ViewGridTiedProposal({
                 </div>
               </div>
             </div>
-            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-10 h-max w-full">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max w-full">
               <TypographyH3
                 text="Cumulative Bill Savings"
                 className="font-bold text-center p-2"

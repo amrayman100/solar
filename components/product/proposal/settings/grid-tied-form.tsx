@@ -187,7 +187,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
         {product && (
           <div className="w-full flex flex-col lg:flex-row">
             <form
-              className="flex flex-col gap-10 lg:flex-2 lg:w-1/3"
+              className="flex flex-col gap-4 lg:flex-2 lg:w-1/3"
               onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -340,7 +340,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
               }}
             >
               <TypographyH2 text="Simulation" className="m-4" />
-              <div className="flex flex-col lg:flex-row rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+              <div className="flex flex-col lg:flex-row rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
                 <div>
                   <Label className="mb-2">Monthly Consumption</Label>
                   <simulationForm.Field
@@ -411,9 +411,9 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                 </div>
               </div>
               {gridTiedProposal && (
-                <div className="overflow-y-auto h-128">
-                  <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
-                    <TypographyH3 text="Simulation Results" className="m-4" />
+                <div className="overflow-y-auto h-128 p-4">
+                  <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow gap-4 mt-4 p-4">
+                    <TypographyH3 text="Simulation Results" />
                     <div className="flex gap-4 mx-4 mb-2 flex-wrap w-full">
                       <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="System Size:" />
@@ -535,10 +535,10 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col lg:p-10 gap-4 mt-4">
-                      <TypographyH3 text="Chosen Inverter" className="m-4" />
+                    <div className="flex flex-col lg:p-4 gap-4 mt-4">
+                      <TypographyH3 text="Chosen Inverter" />
                       <div className="flex flex-col lg:flex-row gap-4 mb-2 w-full">
-                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 gap-4 mt-4 w-full">
+                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 gap-4 mt-4 w-full">
                           <TypographyH4 text="Inverter Info" />
                           <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Brand:" />
@@ -558,7 +558,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                             />
                           </div>
                         </div>
-                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 gap-4 mt-4 w-full">
+                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 gap-4 mt-4 w-full">
                           <TypographyH4 text="Inverter Costs" />
                           <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Base Costs:" />
@@ -605,11 +605,11 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col p-10 mx-4 gap-4 mt-4">
-                      <TypographyH3 text="Client Billing" className="m-4" />
+                    <div className="flex flex-col p-4 mx-4 gap-4 mt-4">
+                      <TypographyH3 text="Client Billing" />
                       <div className="flex flex-col lg:flex-row gap-4 lg:mx-4 mb-2 w-full">
                         <div className="flex flex-col lg:flex-row gap-2 w-full">
-                          <div className="rounded-xl border bg-card text-card-foreground shadow p-10 flex-1 flex-grow w-full">
+                          <div className="rounded-xl border bg-card text-card-foreground shadow p-4 flex-1 flex-grow w-full">
                             <TypographyH4 text="Quotation" />
                             <Table>
                               <TableHeader>
@@ -650,7 +650,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                               </TableBody>
                             </Table>
                           </div>
-                          <div className="rounded-xl border bg-card text-card-foreground shadow p-10 flex-1 flex-grow  w-full">
+                          <div className="rounded-xl border bg-card text-card-foreground shadow p-4 flex-1 flex-grow  w-full">
                             <TypographyH4 text="Payment Milestones" />
                             <Table>
                               <TableHeader>

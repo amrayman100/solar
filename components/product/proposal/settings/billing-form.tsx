@@ -11,7 +11,7 @@ type Props = {
 export function BillingForm({ field }: Props) {
   return (
     <>
-      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
         <div>
           <Label htmlFor="picture" className="mb-2">
             Dollar Rate
@@ -197,7 +197,7 @@ export function BillingForm({ field }: Props) {
             text={"Billing Percentage"}
             className="font-bold mb-2 overflow-y-auto"
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div>
               <Label htmlFor="picture" className="mb-2">
                 Down Payment Percentage

@@ -16,7 +16,7 @@ type Props = {
 export function DCEarthCableForm({ field }: Props) {
   return (
     <>
-      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
         <div>
           <Label className="mb-2">Brand Name</Label>
           <field.form.Field

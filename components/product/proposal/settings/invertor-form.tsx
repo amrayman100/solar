@@ -19,7 +19,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
   return (
     <>
       <div
-        className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4"
+        className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4"
         key={"invertor-base" + i}
       >
         <TypographyH4
@@ -117,7 +117,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
             className="font-bold mb-2"
             key={"circuit-breaker-heading" + i}
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div key={"invertor-circuit-breaker" + i}>
               <Label
                 key={"invertor-circuit-breaker-brand-label" + i}
@@ -276,7 +276,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
             className="font-bold mb-2"
             key={"flexible-heading-" + i}
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div key={"invertor-flexible-" + i}>
               <Label
                 key={"invertor-flexible-brand-label-" + i}
@@ -400,7 +400,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
             className="font-bold mb-2"
             key={"vsn-heading-" + i}
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div key={"invertor-vsn-price-" + i}>
               <Label
                 key={"invertor-vsn-price-label-" + i}
@@ -489,7 +489,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
             className="font-bold mb-2"
             key={"ac-cable-heading" + i}
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div key={"invertor-ac-cable-brand" + i}>
               <Label
                 key={"invertor-ac-cable-brand-label" + i}
@@ -648,7 +648,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                   className="font-bold mb-2"
                   key={"ac-earth-cable-heading" + i}
                 />
-                <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+                <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
                   <div key={"invertor-ac-earth-cable-brand" + i}>
                     <Label
                       key={"invertor-ac-earth-cable-brand-label" + i}

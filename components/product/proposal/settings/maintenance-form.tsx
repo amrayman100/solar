@@ -11,7 +11,7 @@ type Props = {
 export function MaintenanceForm({ field }: Props) {
   return (
     <>
-      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+      <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
         <div>
           <Label htmlFor="picture" className="mb-2">
             Cleaning Tool Price
@@ -47,7 +47,7 @@ export function MaintenanceForm({ field }: Props) {
             text={"Maintenance Visits"}
             className="font-bold mb-2 overflow-y-auto"
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div>
               <Label htmlFor="picture" className="mb-2">
                 Price
@@ -115,7 +115,7 @@ export function MaintenanceForm({ field }: Props) {
             text={"Electricity Company Checkups"}
             className="font-bold mb-2 overflow-y-auto"
           />
-          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+          <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-4 mx-4 h-max gap-4">
             <div>
               <Label htmlFor="picture" className="mb-2">
                 Price
