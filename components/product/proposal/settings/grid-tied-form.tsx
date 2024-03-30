@@ -535,7 +535,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
+                    <div className="flex flex-col p-10 mx-4 gap-4 mt-4">
                       <TypographyH3 text="Chosen Inverter" className="m-4" />
                       <div className="flex flex-row gap-4 mx-4 mb-2 w-full">
                         <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
@@ -605,7 +605,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
+                    <div className="flex flex-col p-10 mx-4 gap-4 mt-4">
                       <TypographyH3 text="Client Billing" className="m-4" />
                       <div className="flex flex-row gap-4 mx-4 mb-2 w-full">
                         <div className="flex gap-2 w-full">
