@@ -185,9 +185,9 @@ export function GridTiedForm({ product }: { product: GridTied }) {
       </Menubar>
       <div className="max-h-screen">
         {product && (
-          <div className="w-full flex">
+          <div className="w-full flex flex-col lg:flex-row">
             <form
-              className="flex flex-col gap-10 flex-2 w-1/3"
+              className="flex flex-col gap-10 lg:flex-2 lg:w-1/3"
               onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -340,7 +340,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
               }}
             >
               <TypographyH2 text="Simulation" className="m-4" />
-              <div className="flex flex-row rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
+              <div className="flex flex-col lg:flex-row rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 h-max gap-4">
                 <div>
                   <Label className="mb-2">Monthly Consumption</Label>
                   <simulationForm.Field
@@ -415,119 +415,119 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                   <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
                     <TypographyH3 text="Simulation Results" className="m-4" />
                     <div className="flex gap-4 mx-4 mb-2 flex-wrap w-full">
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="System Size:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.systemSize.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Cost Of Panels:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.costOfPanels.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Number Of Panels:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.numberOfPanels.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Labour  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.labourCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Concrete Footing  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.concreteFootingCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="DC Cable  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.dcCableCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="DC Earth Cable  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.dcEarthCableCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Earth  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.earthCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Fuse  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.fuseCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="MC4  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.mc4Cost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Switch Box  Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.switchBoxCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Earth Leakage Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.earthLeakageCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Cleaning Tool Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.cleaningToolPrice.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Electricty Company:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.electricityCompanyCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Maintenance Cost Visits Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.maintenanceCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Mounting Structure Costs:" />
                         <TypographyH5
                           className="font-normal"
                           text={gridTiedProposal.proposalDetails.mountingStructureCost.toString()}
                         />
                       </div>
-                      <div className="flex gap-2 w-96">
+                      <div className="flex gap-2 lg:w-96">
                         <TypographyH5 text="Transportation Costs:" />
                         <TypographyH5
                           className="font-normal"
@@ -535,12 +535,12 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col p-10 mx-4 gap-4 mt-4">
+                    <div className="flex flex-col lg:p-10 gap-4 mt-4">
                       <TypographyH3 text="Chosen Inverter" className="m-4" />
-                      <div className="flex flex-row gap-4 mx-4 mb-2 w-full">
-                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
+                      <div className="flex flex-col lg:flex-row gap-4 mb-2 w-full">
+                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 gap-4 mt-4 w-full">
                           <TypographyH4 text="Inverter Info" />
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Brand:" />
                             <TypographyH5
                               className="font-normal"
@@ -550,7 +550,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                               }
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Capacity:" />
                             <TypographyH5
                               className="font-normal"
@@ -558,44 +558,44 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                             />
                           </div>
                         </div>
-                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 mx-4 gap-4 mt-4">
+                        <div className="flex flex-col rounded-xl border bg-card text-card-foreground shadow p-10 gap-4 mt-4 w-full">
                           <TypographyH4 text="Inverter Costs" />
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Base Costs:" />
                             <TypographyH5
                               className="font-normal"
                               text={gridTiedProposal.proposalDetails.inverter.inverterBaseCost.toString()}
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter AC Cable Costs:" />
                             <TypographyH5
                               className="font-normal"
                               text={gridTiedProposal.proposalDetails.inverter.inverterACCableCost.toString()}
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter AC Earth Cable Costs:" />
                             <TypographyH5
                               className="font-normal"
                               text={gridTiedProposal.proposalDetails.inverter.inverterACCableEarthCost.toString()}
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Circuit Breaker Costs:" />
                             <TypographyH5
                               className="font-normal"
                               text={gridTiedProposal.proposalDetails.inverter.inverterCircuitBreaker.toString()}
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter VSN Costs:" />
                             <TypographyH5
                               className="font-normal"
                               text={gridTiedProposal.proposalDetails.inverter.inverterVSNCost.toString()}
                             />
                           </div>
-                          <div className="flex gap-2 w-96">
+                          <div className="flex gap-2 lg:w-96">
                             <TypographyH5 text="Inverter Flexible Costs:" />
                             <TypographyH5
                               className="font-normal"
@@ -607,8 +607,8 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                     </div>
                     <div className="flex flex-col p-10 mx-4 gap-4 mt-4">
                       <TypographyH3 text="Client Billing" className="m-4" />
-                      <div className="flex flex-row gap-4 mx-4 mb-2 w-full">
-                        <div className="flex gap-2 w-full">
+                      <div className="flex flex-col lg:flex-row gap-4 lg:mx-4 mb-2 w-full">
+                        <div className="flex flex-col lg:flex-row gap-2 w-full">
                           <div className="rounded-xl border bg-card text-card-foreground shadow p-10 flex-1 flex-grow w-full">
                             <TypographyH4 text="Quotation" />
                             <Table>
