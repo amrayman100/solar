@@ -664,20 +664,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                               <TableBody>
                                 <TableRow>
                                   <TableCell className="font-medium">
-                                    Commission Fee
-                                  </TableCell>
-                                  <TableCell className="text-right">
-                                    {Math.round(
-                                      gridTiedProposal.proposalDetails.billing
-                                        ?.commissionFee
-                                    ).toLocaleString("en", {
-                                      useGrouping: true,
-                                    })}
-                                  </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell className="font-medium">
-                                    Upon Contract Signature
+                                    Down payment
                                   </TableCell>
                                   <TableCell className="text-right">
                                     {Math.round(
@@ -690,7 +677,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                                 </TableRow>
                                 <TableRow>
                                   <TableCell className="font-medium">
-                                    Upon components delivery
+                                    Upon components supply
                                   </TableCell>
                                   <TableCell className="text-right">
                                     {Math.round(
@@ -709,6 +696,19 @@ export function GridTiedForm({ product }: { product: GridTied }) {
                                     {Math.round(
                                       gridTiedProposal.proposalDetails.billing
                                         ?.installationFee
+                                    ).toLocaleString("en", {
+                                      useGrouping: true,
+                                    })}
+                                  </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">
+                                    Upon commissioning
+                                  </TableCell>
+                                  <TableCell className="text-right">
+                                    {Math.round(
+                                      gridTiedProposal.proposalDetails.billing
+                                        ?.commissionFee
                                     ).toLocaleString("en", {
                                       useGrouping: true,
                                     })}
