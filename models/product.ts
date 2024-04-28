@@ -80,6 +80,13 @@ export type Inverter = {
   vsn: { quantity: number; price: number };
 };
 
+export type OffGridInverter = Omit<
+  Inverter,
+  "acCable" | "circuitBreaker" | "flexible" | "vsn"
+> & {
+  systemVoltage: number;
+};
+
 export type DCCable = {
   brand: string;
   price: number;
@@ -204,9 +211,129 @@ export type GridTiedProposalDetails = {
   tarifEscalation: number;
 };
 
+export type DeviceLoadTemplate = {
+  name: string;
+  hasSurgePower: boolean;
+  powerWatt: number;
+};
+
+export type DeviceLoad = DeviceLoadTemplate & {
+  quantity: number;
+  workingHours?: number;
+  morningHours?: number;
+  eveningHours?: number;
+};
+
+export type CapacityVariance = {
+  hoursTillEmpty: number;
+  capacity: number;
+};
+
+export type OffGridBattery = {
+  capacity: number;
+  voltage: number;
+  capacityVariances: Array<CapacityVariance>;
+};
+
+export type OffGridParams = {
+  isConnectedToGrid: boolean;
+  panel: Panel;
+  deviceLoadTemplates: Array<DeviceLoadTemplate>;
+};
+
 export type GridTied = Product<GridTiedParams>;
 
 export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
+
+export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
+  let totalPower = 0;
+
+  deviceLoads.forEach((device) => {
+    // const powerInWatt = device.powerWatt * 735.5;
+    totalPower += device.powerWatt * device.quantity;
+  });
+
+  return totalPower;
+}
+
+export function calculateTotalSurgePower(deviceLoads: Array<DeviceLoad>) {
+  let totalSurgePower = 0;
+
+  deviceLoads.forEach((device) => {
+    if (device.hasSurgePower) {
+      // const powerInWatt = device.powerWatt * 735.5 * 3;
+      totalSurgePower += device.powerWatt * device.quantity * 3;
+    } else {
+      totalSurgePower += device.powerWatt * device.quantity;
+    }
+  });
+
+  return totalSurgePower;
+}
+
+export function getInvertorForOffGrid(
+  inverters: OffGridInverter[],
+  totalPower: number,
+  surgePower: number
+) {
+  for (const inverter of inverters) {
+    const surgedCapacity = inverter.capacity * 1.8;
+    if (inverter.capacity > totalPower && surgedCapacity > surgePower) {
+      return inverter;
+    }
+  }
+
+  return null;
+}
+
+export function calculateActualC(
+  battery: OffGridBattery,
+  inverter: OffGridInverter,
+  totalPower: number
+) {
+  return (battery.capacity * inverter.systemVoltage) / totalPower;
+}
+
+function isBetween(n: number, a: number, b: number) {
+  return (n - a) * (n - b) <= 0;
+}
+
+export function calculateRealBatteryCapacityInterpolation(
+  battery: OffGridBattery,
+  actualC: number
+) {
+  let upperBound: CapacityVariance | null = null;
+  let lowerBound: CapacityVariance | null = null;
+  let isFound = false;
+  for (let i = 0; i < battery.capacityVariances.length - 1; i++) {
+    lowerBound = battery.capacityVariances[i];
+    upperBound = battery.capacityVariances[i + 1];
+
+    isFound = isBetween(
+      actualC,
+      lowerBound.hoursTillEmpty,
+      upperBound.hoursTillEmpty
+    );
+
+    if (isFound) break;
+  }
+
+  if (!isFound || !upperBound || !lowerBound) {
+    return null;
+  }
+
+  console.log(lowerBound, upperBound);
+
+  const a = (actualC - lowerBound.hoursTillEmpty) * upperBound.capacity;
+  const b = (upperBound.hoursTillEmpty - actualC) * lowerBound.capacity;
+  const c = a + b;
+
+  const x = actualC - lowerBound.hoursTillEmpty;
+  const y = upperBound.hoursTillEmpty - actualC;
+  const w = x + y;
+
+  return c / w;
+}
 
 export function roundToDec(number: number) {
   return Math.round(number * 10) / 10;
@@ -712,6 +839,103 @@ real battery capacity = (((x - smallRatedTime) * ratedLarge)) + ((ratedLarge - x
 
 invertor for off grid -> circuit breaker quantity
 manual transfer switch
+
+
+
+*/
+
+/*
+
+
+  #1 do you have a utility grid? (do you have a govermental source of electricty) yes/no    utilityGrid
+  yes => solar panels number = 0
+  no => we will calculate solar panels
+
+  yes => show working hours column only
+  no => show evening hours and morning hours
+
+
+
+  #2 User enters his loads (loads of electricty devices) (use from predefined tables (can edit the power) or other)
+    => then calculate total power (sum) (will be used for the invertor)
+    => surge power (fridge -> shutter) surge power = total power * 3 (will save field hasSurgedMotor)
+    => surge power summation 
+
+  #3 choose invertor
+     invertor power > totalPower && (invertor power * 1.8) > surge power
+
+
+  #4 batteries
+    => invertor power , invertor system voltage
+    => battery calculation => utilityGrid => true =>
+    if(utilityGrid) {
+      energy needed => total power * working hours (for each load)
+      totalEnergyCapacityNeeded = summ( battery capacitty for all loads)
+
+      // Bbattey will will use is 200
+
+      batttery rated C (hours of emptying) = 20, 10, 5, 1
+      battery rated capacity (ma5zoon) = 200, 190, 174, 132
+
+
+      actualC = (batteryCapacity(200 msln) * invertorSystemVoltage) / totalPower
+
+      example actualC = 3
+
+      Interpolation 
+
+      realBatteryCapacity = ((actaulC - 1) * 174 ) + ((5 - actualC) * 132)) / (actualC - 1) + (5 - actualC)
+
+      numberOfStrings = totalEnergyNeeded / round(invertorSystemVoltage * depthOfDischarge * realBatteryCapacity)
+
+      numberOfBatteries =  numberOfStrings * (invertorSystemVoltage * batteryVoltage)
+    } 
+    else {
+
+      energy needed => morning hours * total power * 0.2(variable) + evening hours * total power
+      totalEnergyCapacityNeeded = summ( battery capacitty for all loads)
+
+      actualC = (batteryCapacity(200 msln) * invertorSystemVoltage) / totalPower
+
+      example actualC = 3
+
+      Interpolation 
+
+      realBatteryCapacity = ((actaulC - 1) * 174 ) + ((5 - actualC) * 132)) / (actualC - 1) + (5 - actualC)
+
+      numberOfStrings = totalEnergyNeeded / round(invertorSystemVoltage * depthOfDischarge * realBatteryCapacity)
+
+      numberOfBatteries =  numberOfStrings * (invertorSystemVoltage * batteryVoltage)
+
+
+      // here we need solar //
+
+      solarNeededEngergy = (morning hours + evening hours) * total power (summation for all loads)
+
+      numberOfPanels = solarNeededEnergy / sunHours * panel.powerOutputWatt (panel rating) => lazem yet2sem 3ala 2 law 9 5aly 10
+
+      if(numberOfPanels * panel.powerOutputWatt  > inverter.Capacity) {
+
+        pricing += chargeController (fixed 5000 geneh)
+      }
+
+
+
+    }
+
+
+
+
+
+
+*/
+
+/*
+
+battery = {
+  batteryCapacity,
+  batteryVoltage
+}
 
 
 
