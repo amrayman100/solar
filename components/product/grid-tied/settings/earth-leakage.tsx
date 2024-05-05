@@ -132,13 +132,7 @@ export function EarthLeakageForm({ field }: Props) {
                               defaultValue={subField.state.value}
                               onBlur={field.handleBlur}
                               onChange={(e) => {
-                                subField.handleChange(
-                                  e.target
-                                    .valueAsNumber as unknown as UpdaterFn<
-                                    never,
-                                    never
-                                  >
-                                );
+                                subField.handleChange(e.target.valueAsNumber);
                               }}
                             />
                             {subField.state.meta.errors ? (

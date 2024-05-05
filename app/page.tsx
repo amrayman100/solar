@@ -1,4 +1,4 @@
-import { MonthlyConsumptionForm } from "@/components/product/proposal/monthly-consumption-form";
+import { MonthlyConsumptionForm } from "@/components/product/grid-tied/monthly-consumption-form";
 import Header from "@/components/shared/header";
 import { TypographyH1 } from "@/components/shared/typography";
 

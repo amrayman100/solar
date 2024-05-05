@@ -139,9 +139,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.value as unknown as UpdaterFn<never, never>
-                        );
+                        subField.handleChange(e.target.value);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -176,12 +174,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -214,9 +207,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.value as unknown as UpdaterFn<never, never>
-                        );
+                        subField.handleChange(e.target.value);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -251,12 +242,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -297,9 +283,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       defaultValue={subField.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => {
-                        subField.handleChange(
-                          e.target.value as unknown as UpdaterFn<never, never>
-                        );
+                        subField.handleChange(e.target.value);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -334,12 +318,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -374,12 +353,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -424,12 +398,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -464,12 +433,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -511,9 +475,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.value as unknown as UpdaterFn<never, never>
-                        );
+                        subField.handleChange(e.target.value);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -548,12 +510,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -586,9 +543,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.value as unknown as UpdaterFn<never, never>
-                        );
+                        subField.handleChange(e.target.value);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -624,12 +579,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                       onBlur={field.handleBlur}
                       onChange={(e) => {
                         console.log(subField.getInfo());
-                        subField.handleChange(
-                          e.target.valueAsNumber as unknown as UpdaterFn<
-                            never,
-                            never
-                          >
-                        );
+                        subField.handleChange(e.target.valueAsNumber);
                       }}
                     />
                     {subField.state.meta.errors ? (
@@ -671,12 +621,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                             onBlur={field.handleBlur}
                             onChange={(e) => {
                               console.log(subField.getInfo());
-                              subField.handleChange(
-                                e.target.value as unknown as UpdaterFn<
-                                  never,
-                                  never
-                                >
-                              );
+                              subField.handleChange(e.target.value);
                             }}
                           />
                           {subField.state.meta.errors ? (
@@ -711,12 +656,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                             onBlur={field.handleBlur}
                             onChange={(e) => {
                               console.log(subField.getInfo());
-                              subField.handleChange(
-                                e.target.valueAsNumber as unknown as UpdaterFn<
-                                  never,
-                                  never
-                                >
-                              );
+                              subField.handleChange(e.target.valueAsNumber);
                             }}
                           />
                           {subField.state.meta.errors ? (
@@ -750,12 +690,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                             onBlur={field.handleBlur}
                             onChange={(e) => {
                               console.log(subField.getInfo());
-                              subField.handleChange(
-                                e.target.value as unknown as UpdaterFn<
-                                  never,
-                                  never
-                                >
-                              );
+                              subField.handleChange(e.target.value);
                             }}
                           />
                           {subField.state.meta.errors ? (
@@ -790,12 +725,7 @@ export function InvertorForm({ form, field, i, invertor }: props) {
                             onBlur={field.handleBlur}
                             onChange={(e) => {
                               console.log(subField.getInfo());
-                              subField.handleChange(
-                                e.target.valueAsNumber as unknown as UpdaterFn<
-                                  never,
-                                  never
-                                >
-                              );
+                              subField.handleChange(e.target.valueAsNumber);
                             }}
                           />
                           {subField.state.meta.errors ? (

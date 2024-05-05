@@ -34,7 +34,7 @@ export function MonthlyConsumptionForm() {
           monthlyConsumption: value.monthlyConsumption,
         });
 
-        router.push("/proposal");
+        router.push("/proposal/grid-tied");
       }
     },
   });

@@ -5,13 +5,15 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
+  OffGridProposal,
   ProductProposal,
   getGridTiedProposal,
 } from "@/models/product";
+import { error } from "console";
 import { eq } from "drizzle-orm";
 
-export type ProposalRequestInfo = {
-  monthlyConsumption: number;
+export type ProposalRequestInfo<T> = {
+  consumptionDetails: T;
   lat?: number;
   long?: number;
   city: string;
@@ -20,12 +22,12 @@ export type ProposalRequestInfo = {
   phoneNumber: string;
 };
 
-export type CreateProposalServerFunction<T> = (
-  req: ProposalRequestInfo
+export type CreateProposalServerFunction<A, T> = (
+  req: ProposalRequestInfo<A>
 ) => Promise<ProductProposal<T>>;
 
 export async function createGridTiedProposal(
-  req: ProposalRequestInfo
+  req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
   const res = await db
     .select()
@@ -61,7 +63,7 @@ export async function createGridTiedProposal(
     parameters,
     gridTiedDb.id,
     req.city,
-    req.monthlyConsumption,
+    req.consumptionDetails.monthlyConsumption,
     req.name,
     req.phoneNumber,
     req.lat,
@@ -134,4 +136,10 @@ export async function getProduct() {
   };
 
   return gridTied;
+}
+
+export async function createOffGridProposal(
+  req: ProposalRequestInfo<{}>
+): Promise<OffGridProposal> {
+  throw error("not implemented yet");
 }

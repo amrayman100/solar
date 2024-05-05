@@ -211,6 +211,8 @@ export type GridTiedProposalDetails = {
   tarifEscalation: number;
 };
 
+export type OffGridProposalDetails = {};
+
 export type DeviceLoadTemplate = {
   name: string;
   hasSurgePower: boolean;
@@ -232,6 +234,7 @@ export type CapacityVariance = {
 export type OffGridBattery = {
   capacity: number;
   voltage: number;
+  depthOfDischarge: number;
   capacityVariances: Array<CapacityVariance>;
 };
 
@@ -244,6 +247,8 @@ export type OffGridParams = {
 export type GridTied = Product<GridTiedParams>;
 
 export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
+
+export type OffGridProposal = ProductProposal<OffGridProposalDetails>;
 
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
@@ -322,8 +327,6 @@ export function calculateRealBatteryCapacityInterpolation(
     return null;
   }
 
-  console.log(lowerBound, upperBound);
-
   const a = (actualC - lowerBound.hoursTillEmpty) * upperBound.capacity;
   const b = (upperBound.hoursTillEmpty - actualC) * lowerBound.capacity;
   const c = a + b;
@@ -333,6 +336,42 @@ export function calculateRealBatteryCapacityInterpolation(
   const w = x + y;
 
   return c / w;
+}
+
+export function calculateNumberOfOffGridBatteryStrings(
+  battery: OffGridBattery,
+  inverter: OffGridInverter,
+  totalEnergyNeeded: number,
+  realBatteryCapacity: number
+) {
+  return roundToDec(
+    totalEnergyNeeded /
+      roundToDec(
+        inverter.systemVoltage * battery.depthOfDischarge * realBatteryCapacity
+      )
+  );
+}
+
+export function calculateNumberOfOffGridBatteries(
+  numberOfStrings: number,
+  battery: OffGridBattery,
+  inverter: OffGridInverter
+) {
+  return roundToDec(numberOfStrings * inverter.systemVoltage * battery.voltage);
+}
+
+export function calculateSolarEnergyNeeded(
+  deviceLoads: Array<DeviceLoad>,
+  totalPower: number
+) {
+  let solarEnergyNeeded = 0;
+  deviceLoads.forEach((device) => {
+    totalPower = device.powerWatt * device.quantity;
+    solarEnergyNeeded +=
+      (device.morningHours || 0 + (device.eveningHours || 0)) * totalPower;
+  });
+
+  return solarEnergyNeeded;
 }
 
 export function roundToDec(number: number) {
