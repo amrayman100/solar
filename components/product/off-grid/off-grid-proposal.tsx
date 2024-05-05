@@ -1,7 +1,7 @@
 "use client";
 
 import { GridTiedProposal, OffGridProposal } from "@/models/product";
-import { createGridTiedProposal } from "@/actions/proposal";
+import { createOffGridProposal } from "@/actions/proposal";
 import { CreateProposal } from "../create-proposal-form";
 import { ViewOffGridProposal } from "./view-off-grid-proposal";
 
@@ -9,7 +9,9 @@ export function GridTiedProposal() {
   return (
     <>
       <CreateProposal
-        createProposalFunc={createGridTiedProposal}
+        consumptionDetails={{}}
+        address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
+        createProposalFunc={createOffGridProposal}
         onProposalCreation={(proposal: OffGridProposal) =>
           console.log(proposal)
         }
