@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyH4,
@@ -16,7 +15,7 @@ import {
 import { useForm } from "@tanstack/react-form";
 import { InvertorForm } from "./invertor-form";
 import { PanelForm } from "./panel-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Menubar,
   MenubarContent,
@@ -86,6 +85,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
     | "labour"
     | "maintenance"
   >("panel");
+
   const form = useForm({
     onSubmit: async ({ value }) => {
       console.log(value);

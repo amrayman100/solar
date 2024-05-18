@@ -64,6 +64,10 @@ export type AcCable = {
   acEarthCable: AcEarthCable;
 };
 
+export type OffGridDcCable = DCCable & {
+  meterPerString: number;
+};
+
 export type Flexible = {
   brand: string;
   quantity: number;
@@ -80,10 +84,7 @@ export type Inverter = {
   vsn: { quantity: number; price: number };
 };
 
-export type OffGridInverter = Omit<
-  Inverter,
-  "acCable" | "circuitBreaker" | "flexible" | "vsn"
-> & {
+export type OffGridInverter = Omit<Inverter, "flexible" | "vsn"> & {
   systemVoltage: number;
 };
 
@@ -120,6 +121,13 @@ export type SwitchBox = {
 
 export type Fuse = {
   brand: string;
+  price: number;
+};
+
+export type ManualTransferSwitch = {
+  brand: string;
+  quantity: number;
+  rating: string;
   price: number;
 };
 
@@ -211,19 +219,27 @@ export type GridTiedProposalDetails = {
   tarifEscalation: number;
 };
 
-export type OffGridProposalDetails = {};
+export type OffGridProposalDetails = {
+  isConnectedToGrid: boolean;
+  deviceLoads: Array<DeviceLoad>;
+};
 
 export type DeviceLoadTemplate = {
   name: string;
   hasSurgePower: boolean;
   powerWatt: number;
+  hasManualTransferSwitch: boolean;
 };
 
 export type DeviceLoad = DeviceLoadTemplate & {
+  name: string;
   quantity: number;
   workingHours?: number;
   morningHours?: number;
   eveningHours?: number;
+  hasManualTransferSwitch: boolean;
+  isCustom: boolean;
+  powerHP?: number;
 };
 
 export type CapacityVariance = {
@@ -236,15 +252,41 @@ export type OffGridBattery = {
   voltage: number;
   depthOfDischarge: number;
   capacityVariances: Array<CapacityVariance>;
+  price: number;
+  meterString: number;
+  cableCost: number;
+  circuitBreaker: CircuitBreaker;
 };
 
 export type OffGridParams = {
-  isConnectedToGrid: boolean;
   panel: Panel;
+  battery: OffGridBattery;
+  inverters: Array<OffGridInverter>;
   deviceLoadTemplates: Array<DeviceLoadTemplate>;
+  mountingPrice: number;
+  dcCable: OffGridDcCable;
+  labourCost: number;
+  mc4: MC4;
+  manualTransferSwitch: ManualTransferSwitch;
+  fuse: Fuse;
+  transportationCost: number;
+  flexible: Flexible;
+  cleaningToolPrice: number;
+  batteryStandPrice: {
+    insideHousePrice: number;
+    outsideHousePerFourBatteriesPrice: number;
+  };
+};
+
+export type OffGridConsumption = {
+  isConnectedToGrid: boolean;
+  deviceLoads: Array<DeviceLoad>;
+  placeBatteriesIndoors: boolean;
 };
 
 export type GridTied = Product<GridTiedParams>;
+
+export type OffGrid = Product<OffGridParams>;
 
 export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
 
@@ -296,6 +338,7 @@ export function calculateActualC(
   inverter: OffGridInverter,
   totalPower: number
 ) {
+  console.log(battery.capacity, inverter.systemVoltage, totalPower);
   return (battery.capacity * inverter.systemVoltage) / totalPower;
 }
 
@@ -307,6 +350,10 @@ export function calculateRealBatteryCapacityInterpolation(
   battery: OffGridBattery,
   actualC: number
 ) {
+  if (actualC < 1) {
+    actualC = 1;
+  }
+
   let upperBound: CapacityVariance | null = null;
   let lowerBound: CapacityVariance | null = null;
   let isFound = false;
@@ -341,11 +388,11 @@ export function calculateRealBatteryCapacityInterpolation(
 export function calculateNumberOfOffGridBatteryStrings(
   battery: OffGridBattery,
   inverter: OffGridInverter,
-  totalEnergyNeeded: number,
+  surgePower: number,
   realBatteryCapacity: number
 ) {
-  return roundToDec(
-    totalEnergyNeeded /
+  return Math.ceil(
+    surgePower /
       roundToDec(
         inverter.systemVoltage * battery.depthOfDischarge * realBatteryCapacity
       )
@@ -357,21 +404,32 @@ export function calculateNumberOfOffGridBatteries(
   battery: OffGridBattery,
   inverter: OffGridInverter
 ) {
-  return roundToDec(numberOfStrings * inverter.systemVoltage * battery.voltage);
+  return Math.ceil(
+    numberOfStrings * (inverter.systemVoltage / battery.voltage)
+  );
 }
 
-export function calculateSolarEnergyNeeded(
-  deviceLoads: Array<DeviceLoad>,
-  totalPower: number
+export function calculateOffGridSolarEnergyNeeded(
+  deviceLoads: Array<DeviceLoad>
 ) {
   let solarEnergyNeeded = 0;
   deviceLoads.forEach((device) => {
-    totalPower = device.powerWatt * device.quantity;
+    const totalPower = device.powerWatt * device.quantity;
     solarEnergyNeeded +=
       (device.morningHours || 0 + (device.eveningHours || 0)) * totalPower;
   });
 
   return solarEnergyNeeded;
+}
+
+export function calculateNumberOfOffGridPanels(
+  solarEnergyNeeded: number,
+  panel: Panel,
+  sunHours: number
+) {
+  const solarEnergy = (solarEnergyNeeded / sunHours) * panel.powerOutputWatt;
+
+  return solarEnergy % 2 == 0 ? solarEnergy : solarEnergy + 1;
 }
 
 export function roundToDec(number: number) {
@@ -817,6 +875,40 @@ export function getGridTiedProposal(
   return proposal;
 }
 
+export function calculateOffGridMountingStructureCost(
+  numberOfSolarPanels: number,
+  mountingPrice: number,
+  panel: Panel
+) {
+  const systemSize = numberOfSolarPanels * (panel.powerOutputWatt / 1000);
+  return roundToDec(systemSize * mountingPrice);
+}
+
+export function calculateOffGridDCCableCost(
+  numberOfPanels: number,
+  meterPerString: number,
+  dcCableCost: number
+) {
+  return roundToDec((numberOfPanels / 2) * meterPerString * dcCableCost);
+}
+
+export function calculateOffGridBatteryCableCosts(
+  numberOfBatteryStrings: number,
+  battery: OffGridBattery
+) {
+  return roundToDec(
+    numberOfBatteryStrings * battery.meterString * battery.cableCost
+  );
+}
+
+export function calculateOffGridMc4Cost(mc4: MC4, numberOfPanels: number) {
+  return roundToDec(mc4.price * (numberOfPanels / 2));
+}
+
+export function calculateOffGridFusePrice(fuse: Fuse, numberOfPanels: number) {
+  return roundToDec((numberOfPanels / 2) * fuse.price);
+}
+
 // off grid
 
 // inputs = { load is a dropdown list of  // air conditoner ///}
@@ -952,6 +1044,7 @@ manual transfer switch
       solarNeededEngergy = (morning hours + evening hours) * total power (summation for all loads)
 
       numberOfPanels = solarNeededEnergy / sunHours * panel.powerOutputWatt (panel rating) => lazem yet2sem 3ala 2 law 9 5aly 10
+      (even number)
 
       if(numberOfPanels * panel.powerOutputWatt  > inverter.Capacity) {
 
@@ -976,6 +1069,512 @@ battery = {
   batteryVoltage
 }
 
-
+panelrating = power output watt / 1000
 
 */
+
+const deviceLoadTemplates: DeviceLoadTemplate[] = [
+  {
+    name: "lamp",
+    powerWatt: 12,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "socket",
+    powerWatt: 50,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "router",
+    powerWatt: 50,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "tv",
+    powerWatt: 200,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "fridge",
+    powerWatt: 400,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "ac",
+    powerWatt: 1676.25,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "fan",
+    powerWatt: 100,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "motor",
+    powerWatt: 745,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "shutter",
+    powerWatt: 330,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "waterHeater",
+    powerWatt: 2000,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "camera",
+    powerWatt: 70,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+  {
+    name: "ac-inverter",
+    powerWatt: 1676.25,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+  },
+];
+
+const devices: DeviceLoad[] = [
+  {
+    name: "lamp",
+    powerWatt: 12,
+    hasSurgePower: false,
+    quantity: 1,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+  {
+    name: "socket",
+    powerWatt: 50,
+    hasSurgePower: false,
+    quantity: 3,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+  {
+    name: "router",
+    powerWatt: 50,
+    hasSurgePower: false,
+    quantity: 2,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+  {
+    name: "fridge",
+    powerWatt: 400,
+    hasSurgePower: true,
+    quantity: 1,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+  {
+    name: "shutter",
+    powerWatt: 330,
+    hasSurgePower: true,
+    quantity: 2,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+  {
+    name: "camera",
+    powerWatt: 70,
+    hasSurgePower: false,
+    quantity: 4,
+    morningHours: 1,
+    hasManualTransferSwitch: false,
+    isCustom: false,
+  },
+];
+
+const inverters: OffGridInverter[] = [
+  {
+    capacity: 1000,
+    brand: "1KW - MPPT",
+    systemVoltage: 12,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x4",
+      price: 37.19,
+      quantity: 100,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 15,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 45,
+    },
+  },
+  {
+    capacity: 2000,
+    brand: "2KW - MPPT",
+    systemVoltage: 24,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x4",
+      price: 37.19,
+      quantity: 100,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 15,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 45,
+    },
+  },
+  {
+    capacity: 3000,
+    brand: "3KW - MPPT",
+    systemVoltage: 24,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x4",
+      price: 37.19,
+      quantity: 100,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 15,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 45,
+    },
+  },
+  {
+    capacity: 5000,
+    brand: "5KW - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 100,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 15,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 45,
+    },
+  },
+  {
+    capacity: 10000,
+    brand: "2 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 200,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 30,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 90,
+    },
+  },
+  {
+    capacity: 15000,
+    brand: "3 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 300,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 45,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 135,
+    },
+  },
+  {
+    capacity: 20000,
+    brand: "4 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 400,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 60,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 180,
+    },
+  },
+  {
+    capacity: 25000,
+    brand: "5 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 500,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 75,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 225,
+    },
+  },
+  {
+    capacity: 30000,
+    brand: "6 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 600,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 90,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 270,
+    },
+  },
+  {
+    capacity: 35000,
+    brand: "7 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 700,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 105,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 315,
+    },
+  },
+  {
+    capacity: 40000,
+    brand: "8 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 800,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 120,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 360,
+    },
+  },
+  {
+    capacity: 45000,
+    brand: "9 x 5.2kWp - MPPT",
+    systemVoltage: 48,
+    price: 10,
+    acCable: {
+      brand: "El-Sweedy",
+      rating: "1x6",
+      price: 54.67,
+      quantity: 900,
+      acEarthCable: {
+        brand: "El-Sweedy",
+        rating: "1x6",
+        price: 54.67,
+        quantity: 135,
+      },
+    },
+    circuitBreaker: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 510,
+      quantity: 405,
+    },
+  },
+];
+
+const battery: OffGridBattery = {
+  cableCost: 300,
+  price: 20000,
+  meterString: 6,
+  depthOfDischarge: 0.7,
+  capacity: 200,
+  voltage: 12,
+  capacityVariances: [
+    {
+      hoursTillEmpty: 1,
+      capacity: 132,
+    },
+    {
+      hoursTillEmpty: 5,
+      capacity: 174,
+    },
+    {
+      hoursTillEmpty: 10,
+      capacity: 190,
+    },
+    {
+      hoursTillEmpty: 20,
+      capacity: 200,
+    },
+  ],
+  circuitBreaker: {
+    brand: "ABB",
+    rating: "200A",
+    price: 5000,
+    quantity: 1,
+  },
+};
+
+export const offGridProduct: OffGrid = {
+  name: "off-grid",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {
+    labourCost: 3000,
+    battery: battery,
+    inverters: inverters,
+    deviceLoadTemplates,
+    mc4: {
+      brand: "Suntree",
+      price: 60,
+    },
+    dcCable: {
+      meterPerString: 20,
+      price: 60,
+      brand: "KBE",
+      rating: "4mm2",
+    },
+    mountingPrice: 100,
+    panel: {
+      brand: "Tongwei Solar 560",
+      powerOutputWatt: 560,
+      pricePerWatt: 7.6,
+      width: 1.14,
+    },
+    manualTransferSwitch: {
+      brand: "ABB",
+      rating: "10A-40A",
+      price: 1000,
+      quantity: 1,
+    },
+    fuse: {
+      brand: "Suntree",
+      price: 220,
+    },
+    flexible: {
+      brand: "",
+      quantity: 2,
+      price: 600,
+    },
+    transportationCost: 2000,
+    cleaningToolPrice: 800,
+    batteryStandPrice: {
+      insideHousePrice: 3000,
+      outsideHousePerFourBatteriesPrice: 1400,
+    },
+  },
+};

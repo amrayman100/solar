@@ -5,9 +5,21 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
+  OffGridConsumption,
+  OffGridParams,
   OffGridProposal,
   ProductProposal,
+  calculateActualC,
+  calculateNumberOfOffGridBatteries,
+  calculateNumberOfOffGridBatteryStrings,
+  calculateNumberOfOffGridPanels,
+  calculateOffGridSolarEnergyNeeded,
+  calculateRealBatteryCapacityInterpolation,
+  calculateTotalPower,
+  calculateTotalSurgePower,
   getGridTiedProposal,
+  getInvertorForOffGrid,
+  offGridProduct,
 } from "@/models/product";
 import { error } from "console";
 import { eq } from "drizzle-orm";
@@ -29,6 +41,9 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
+  const res1 = await db.insert(productTable).values(offGridProduct);
+
+  console.log(res1);
   const res = await db
     .select()
     .from(productTable)
@@ -139,7 +154,113 @@ export async function getProduct() {
 }
 
 export async function createOffGridProposal(
-  req: ProposalRequestInfo<{}>
+  req: ProposalRequestInfo<OffGridConsumption>
 ): Promise<OffGridProposal> {
+  console.log(req.consumptionDetails);
+  const gridTiedProduct = await getOffGridProduct();
+  const params = gridTiedProduct.parameters;
+
+  const totalPower = calculateTotalPower(req.consumptionDetails.deviceLoads);
+  const surgePower = calculateTotalSurgePower(
+    req.consumptionDetails.deviceLoads
+  );
+
+  const inverter = getInvertorForOffGrid(
+    params.inverters,
+    totalPower,
+    surgePower
+  );
+
+  if (inverter) {
+    const actaulC1 = calculateActualC(params.battery, inverter, totalPower);
+    console.log("actual C", actaulC1);
+
+    const realBatteryCapacity = calculateRealBatteryCapacityInterpolation(
+      params.battery,
+      actaulC1
+    );
+
+    console.log("realBatteryCapacity", realBatteryCapacity);
+
+    const numberOfBatteryStrings = calculateNumberOfOffGridBatteryStrings(
+      params.battery,
+      inverter,
+      surgePower,
+      realBatteryCapacity || 0
+    );
+
+    console.log("numberOfBatteryStrings", numberOfBatteryStrings);
+
+    const numberOfBatteries = calculateNumberOfOffGridBatteries(
+      numberOfBatteryStrings,
+      params.battery,
+      inverter
+    );
+
+    console.log("numberOfBatteries", numberOfBatteries);
+
+    let numberOfPanels = 0;
+
+    if (!req.consumptionDetails.isConnectedToGrid) {
+      const solarEnergyNeeded = calculateOffGridSolarEnergyNeeded(
+        req.consumptionDetails.deviceLoads
+      );
+
+      console.log("solarEnergyNeeded", solarEnergyNeeded);
+
+      numberOfPanels = calculateNumberOfOffGridPanels(
+        solarEnergyNeeded,
+        params.panel,
+        4.5
+      );
+
+      console.log("numberOfPanels", numberOfPanels);
+    }
+  }
+
   throw error("not implemented yet");
+}
+
+export async function getOffGridProduct() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "off-grid"));
+
+    const offGridDb = res[0];
+    const offGrid = {
+      name: offGridDb.name,
+      isEnabled: offGridDb.isEnabled,
+      created: {
+        by: offGridDb.createdBy || "",
+        at: offGridDb.createdAt || "",
+      },
+      updated: {
+        by: offGridDb.updatedBy || "",
+        at: offGridDb.updatedAt || "",
+      },
+      currency: offGridDb.currency,
+      parameters: offGridDb.parameters as OffGridParams,
+    };
+
+    return offGrid;
+  } catch (err) {
+    console.log("err 123", err);
+    return {
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as OffGridParams,
+    };
+  }
 }

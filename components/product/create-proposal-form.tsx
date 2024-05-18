@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
-import { useMediaQuery, useReadLocalStorage } from "usehooks-ts";
+import { useMediaQuery } from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
 import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
@@ -37,9 +37,9 @@ interface ViewProps<T> {
   proposal: ProductProposal<T>;
 }
 
-export type CustomFormStepProps = {
+export interface CustomFormStepProps {
   navigate: (dir: "previous" | "next") => void;
-};
+}
 
 type CreateProposalProps<A, T> = {
   consumptionDetails: A;
@@ -77,6 +77,8 @@ export function CreateProposal<A, T>({
     },
   });
 
+  console.log(customFormSteps);
+
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
       let addressSubmitReq: { lat: number; long: number; city: string };
@@ -112,22 +114,32 @@ export function CreateProposal<A, T>({
 
   return (
     <>
-      {customFormSteps?.length && (
-        <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
-          {customFormSteps.map((Step) => {
-            return (
-              <Step
-                navigate={(dir: "next" | "previous") => {
-                  console.log(dir);
-                }}
-              />
-            );
-          })}
-        </div>
-      )}
+      {customFormSteps?.length &&
+        customFormCounter < customFormSteps?.length && (
+          <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
+            {customFormSteps.map((Step, i) => {
+              if (i !== customFormCounter) {
+                return null;
+              }
+
+              return (
+                <Step
+                  key={"custom-form-step-" + i}
+                  navigate={(dir: "next" | "previous") => {
+                    if (dir === "next") {
+                      setCustomFormCounter(customFormCounter + 1);
+                    } else {
+                      setCustomFormCounter(customFormCounter - 1);
+                    }
+                  }}
+                />
+              );
+            })}
+          </div>
+        )}
       {mode == "submit" &&
         (!customFormSteps?.length ||
-          customFormCounter < customFormSteps?.length) && (
+          customFormCounter == customFormSteps?.length) && (
           <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
             {formStage == "map" && (
               <div>
@@ -139,12 +151,26 @@ export function CreateProposal<A, T>({
                   {addressSubmit && (
                     <MapView
                       actionButton={() => (
-                        <Button
-                          size={"lg"}
-                          onClick={() => setFormStage("housing")}
-                        >
-                          Next
-                        </Button>
+                        <>
+                          {customFormSteps?.length && (
+                            <Button
+                              size={"lg"}
+                              variant="secondary"
+                              type="submit"
+                              onClick={() =>
+                                setCustomFormCounter(customFormCounter - 1)
+                              }
+                            >
+                              Previous
+                            </Button>
+                          )}
+                          <Button
+                            size={"lg"}
+                            onClick={() => setFormStage("housing")}
+                          >
+                            Next
+                          </Button>{" "}
+                        </>
                       )}
                       setAddressDescription={(arg: AddressDescription) =>
                         setAddressSubmit(arg)

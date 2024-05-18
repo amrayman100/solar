@@ -18,19 +18,24 @@ export function GridTiedProposal() {
 
   return (
     <>
-      {localStorageData && (
+      {
         <CreateProposal
           consumptionDetails={{
-            monthlyConsumption: localStorageData.monthlyConsumption,
+            monthlyConsumption: localStorageData?.monthlyConsumption || 0,
           }}
-          address={localStorageData.address}
+          address={
+            localStorageData?.address || {
+              lat: 0,
+              lng: 0,
+            }
+          }
           createProposalFunc={createGridTiedProposal}
           onProposalCreation={(proposal: GridTiedProposal) =>
             console.log(proposal)
           }
           ViewProposal={ViewGridTiedProposal}
         />
-      )}
+      }
     </>
   );
 }

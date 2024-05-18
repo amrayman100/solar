@@ -5,7 +5,6 @@ import { FieldApi, FormApi } from "@tanstack/react-form";
 
 import { TypographyH4, TypographyH5 } from "@/components/shared/typography";
 import { Input } from "@/components/ui/input";
-import { UpdaterFn, useForm } from "@tanstack/react-form";
 import { Label } from "@/components/ui/label";
 
 type props = {
