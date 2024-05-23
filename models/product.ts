@@ -37,6 +37,10 @@ export type Panel = {
   width: number;
 };
 
+export type OffGridPanel = Panel & {
+  switchBox: SwitchBox;
+};
+
 export type CitySpecificity = {
   cityName: string;
   quantity: number;
@@ -222,6 +226,32 @@ export type GridTiedProposalDetails = {
 export type OffGridProposalDetails = {
   isConnectedToGrid: boolean;
   deviceLoads: Array<DeviceLoad>;
+  inverter: {
+    inverterInfo: OffGridInverter;
+    inverterACCableCost: number;
+    inverterACCableEarthCost: number;
+    inverterCircuitBreaker: number;
+  };
+  costOfPanels: number;
+  mountingStructureCost: number;
+  dcCableCosts: number;
+  batteryCableCosts: number;
+  labourCost: number;
+  mc4Cost: number;
+  manualTransferSwitchCost: number;
+  batteryCircuitBreakerCost: number;
+  fuseCost: number;
+  switchBoxCost: number;
+  cleaningToolCost: number;
+  batteryStandCost: number;
+  sellingCost: number;
+  totalCost: number;
+  billing: ProposalBilling;
+  battery: OffGridBattery;
+  numberOfBatteries: number;
+  batteriesCost: number;
+  panel: OffGridPanel;
+  numberOfPanels: number;
 };
 
 export type DeviceLoadTemplate = {
@@ -256,10 +286,11 @@ export type OffGridBattery = {
   meterString: number;
   cableCost: number;
   circuitBreaker: CircuitBreaker;
+  brand: string;
 };
 
 export type OffGridParams = {
-  panel: Panel;
+  panel: OffGridPanel;
   battery: OffGridBattery;
   inverters: Array<OffGridInverter>;
   deviceLoadTemplates: Array<DeviceLoadTemplate>;
@@ -276,6 +307,9 @@ export type OffGridParams = {
     insideHousePrice: number;
     outsideHousePerFourBatteriesPrice: number;
   };
+  dollarRate: number;
+  billingPercentage: BillingPercentage;
+  markup: number;
 };
 
 export type OffGridConsumption = {
@@ -424,10 +458,14 @@ export function calculateOffGridSolarEnergyNeeded(
 
 export function calculateNumberOfOffGridPanels(
   solarEnergyNeeded: number,
-  panel: Panel,
+  panel: OffGridPanel,
   sunHours: number
 ) {
-  const solarEnergy = (solarEnergyNeeded / sunHours) * panel.powerOutputWatt;
+  const solarEnergyNeededKW = solarEnergyNeeded / 1000;
+  const panelRatingKW = panel.powerOutputWatt / 1000;
+  const solarEnergy = Math.ceil(
+    solarEnergyNeededKW / (sunHours * panelRatingKW)
+  );
 
   return solarEnergy % 2 == 0 ? solarEnergy : solarEnergy + 1;
 }
@@ -455,11 +493,10 @@ export function calculateNumberofPanels(
 export function calulateCostOfPanels(
   numberOfPanels: number,
   dollarRate: number,
-  panelCostPerWatt: number,
-  panelPowerOutputWatt: number
+  panel: OffGridPanel | Panel
 ) {
   return roundToDec(
-    numberOfPanels * dollarRate * panelCostPerWatt * panelPowerOutputWatt
+    numberOfPanels * dollarRate * panel.pricePerWatt * panel.powerOutputWatt
   );
 }
 
@@ -713,8 +750,7 @@ export function getGridTiedProposal(
   const costOfPanels = calulateCostOfPanels(
     numberOfPanels,
     parameters.dollarRate,
-    parameters.panel.pricePerWatt,
-    parameters.panel.powerOutputWatt
+    parameters.panel
   );
 
   const inverter = getInverter(systemSize, parameters.inverters);
@@ -878,7 +914,7 @@ export function getGridTiedProposal(
 export function calculateOffGridMountingStructureCost(
   numberOfSolarPanels: number,
   mountingPrice: number,
-  panel: Panel
+  panel: OffGridPanel
 ) {
   const systemSize = numberOfSolarPanels * (panel.powerOutputWatt / 1000);
   return roundToDec(systemSize * mountingPrice);
@@ -886,10 +922,11 @@ export function calculateOffGridMountingStructureCost(
 
 export function calculateOffGridDCCableCost(
   numberOfPanels: number,
-  meterPerString: number,
-  dcCableCost: number
+  dcCable: OffGridDcCable
 ) {
-  return roundToDec((numberOfPanels / 2) * meterPerString * dcCableCost);
+  return roundToDec(
+    (numberOfPanels / 2) * dcCable.meterPerString * dcCable.price
+  );
 }
 
 export function calculateOffGridBatteryCableCosts(
@@ -1210,7 +1247,7 @@ const inverters: OffGridInverter[] = [
     capacity: 1000,
     brand: "1KW - MPPT",
     systemVoltage: 12,
-    price: 10,
+    price: 15502,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x4",
@@ -1234,7 +1271,7 @@ const inverters: OffGridInverter[] = [
     capacity: 2000,
     brand: "2KW - MPPT",
     systemVoltage: 24,
-    price: 10,
+    price: 15502,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x4",
@@ -1258,7 +1295,7 @@ const inverters: OffGridInverter[] = [
     capacity: 3000,
     brand: "3KW - MPPT",
     systemVoltage: 24,
-    price: 10,
+    price: 15502,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x4",
@@ -1282,7 +1319,7 @@ const inverters: OffGridInverter[] = [
     capacity: 5000,
     brand: "5KW - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 33120,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1306,7 +1343,7 @@ const inverters: OffGridInverter[] = [
     capacity: 10000,
     brand: "2 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 80000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1330,7 +1367,7 @@ const inverters: OffGridInverter[] = [
     capacity: 15000,
     brand: "3 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 120000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1354,7 +1391,7 @@ const inverters: OffGridInverter[] = [
     capacity: 20000,
     brand: "4 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 160000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1378,7 +1415,7 @@ const inverters: OffGridInverter[] = [
     capacity: 25000,
     brand: "5 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 200000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1402,7 +1439,7 @@ const inverters: OffGridInverter[] = [
     capacity: 30000,
     brand: "6 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 240000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1426,7 +1463,7 @@ const inverters: OffGridInverter[] = [
     capacity: 35000,
     brand: "7 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 280000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1450,7 +1487,7 @@ const inverters: OffGridInverter[] = [
     capacity: 40000,
     brand: "8 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 320000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1474,7 +1511,7 @@ const inverters: OffGridInverter[] = [
     capacity: 45000,
     brand: "9 x 5.2kWp - MPPT",
     systemVoltage: 48,
-    price: 10,
+    price: 360000,
     acCable: {
       brand: "El-Sweedy",
       rating: "1x6",
@@ -1497,6 +1534,7 @@ const inverters: OffGridInverter[] = [
 ];
 
 const battery: OffGridBattery = {
+  brand: "NewMax 200AH-12V LeadAcid Gel",
   cableCost: 300,
   price: 20000,
   meterString: 6,
@@ -1534,6 +1572,7 @@ export const offGridProduct: OffGrid = {
   currency: "EGP",
   isEnabled: true,
   parameters: {
+    markup: 0.25,
     labourCost: 3000,
     battery: battery,
     inverters: inverters,
@@ -1550,10 +1589,15 @@ export const offGridProduct: OffGrid = {
     },
     mountingPrice: 100,
     panel: {
-      brand: "Tongwei Solar 560",
-      powerOutputWatt: 560,
-      pricePerWatt: 7.6,
+      brand: "Tongwei Solar 555",
+      powerOutputWatt: 555,
+      pricePerWatt: 10.8,
       width: 1.14,
+      switchBox: {
+        brand: "ABB",
+        price: 2000,
+        citySpecificities: [],
+      },
     },
     manualTransferSwitch: {
       brand: "ABB",
@@ -1575,6 +1619,13 @@ export const offGridProduct: OffGrid = {
     batteryStandPrice: {
       insideHousePrice: 3000,
       outsideHousePerFourBatteriesPrice: 1400,
+    },
+    dollarRate: 1,
+    billingPercentage: {
+      downPaymentPercentage: 0.5,
+      commissionPercentage: 0.05,
+      componentsSupplyPercentage: 0.25,
+      installationPercentage: 0.2,
     },
   },
 };

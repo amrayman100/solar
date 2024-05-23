@@ -13,13 +13,21 @@ import {
   calculateNumberOfOffGridBatteries,
   calculateNumberOfOffGridBatteryStrings,
   calculateNumberOfOffGridPanels,
+  calculateOffGridBatteryCableCosts,
+  calculateOffGridDCCableCost,
+  calculateOffGridFusePrice,
+  calculateOffGridMc4Cost,
+  calculateOffGridMountingStructureCost,
   calculateOffGridSolarEnergyNeeded,
   calculateRealBatteryCapacityInterpolation,
+  calculateSellingCost,
   calculateTotalPower,
   calculateTotalSurgePower,
+  calulateCostOfPanels,
   getGridTiedProposal,
   getInvertorForOffGrid,
   offGridProduct,
+  roundToDec,
 } from "@/models/product";
 import { error } from "console";
 import { eq } from "drizzle-orm";
@@ -41,9 +49,9 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
-  const res1 = await db.insert(productTable).values(offGridProduct);
+  // const res1 = await db.insert(productTable).values(offGridProduct);
 
-  console.log(res1);
+  // console.log(res1);
   const res = await db
     .select()
     .from(productTable)
@@ -157,8 +165,9 @@ export async function createOffGridProposal(
   req: ProposalRequestInfo<OffGridConsumption>
 ): Promise<OffGridProposal> {
   console.log(req.consumptionDetails);
-  const gridTiedProduct = await getOffGridProduct();
-  const params = gridTiedProduct.parameters;
+  const offGridProduct = await getOffGridProduct();
+
+  const params = offGridProduct.parameters;
 
   const totalPower = calculateTotalPower(req.consumptionDetails.deviceLoads);
   const surgePower = calculateTotalSurgePower(
@@ -201,6 +210,11 @@ export async function createOffGridProposal(
 
     let numberOfPanels = 0;
 
+    console.log(
+      "isConnected to grid: ",
+      req.consumptionDetails.isConnectedToGrid
+    );
+
     if (!req.consumptionDetails.isConnectedToGrid) {
       const solarEnergyNeeded = calculateOffGridSolarEnergyNeeded(
         req.consumptionDetails.deviceLoads
@@ -216,9 +230,180 @@ export async function createOffGridProposal(
 
       console.log("numberOfPanels", numberOfPanels);
     }
-  }
 
-  throw error("not implemented yet");
+    const costOfPanels = calulateCostOfPanels(
+      numberOfPanels,
+      params.dollarRate,
+      params.panel
+    );
+    console.log(costOfPanels);
+
+    const inverterBaseCost = inverter.price;
+    console.log("inverterBaseCos: ", inverterBaseCost);
+
+    const inverterAcCableCost =
+      inverter.acCable.price * inverter.acCable.quantity;
+    console.log("inverterAcCableCost: ", inverterAcCableCost);
+
+    const inverterACEarthCableCost =
+      inverter.acCable.acEarthCable.price *
+      inverter.acCable.acEarthCable.quantity;
+    console.log("inverterACEarthCableCost: ", inverterACEarthCableCost);
+
+    const inverterCircuitBreakerCost =
+      inverter.circuitBreaker.price * inverter.circuitBreaker.quantity;
+
+    console.log("inverterCircuitBreakerCost: ", inverterCircuitBreakerCost);
+
+    const batteriesCost = params.battery.price * numberOfBatteries;
+    console.log("batteriesCost: ", batteriesCost);
+
+    const mountingStructureCost = calculateOffGridMountingStructureCost(
+      numberOfPanels,
+      params.mountingPrice,
+      params.panel
+    );
+    console.log("mountingStructureCost: ", mountingStructureCost);
+
+    const dcCableCosts = calculateOffGridDCCableCost(
+      numberOfPanels,
+      params.dcCable
+    );
+    console.log("dcCableCosts: ", dcCableCosts);
+
+    const batteryCableCosts = calculateOffGridBatteryCableCosts(
+      numberOfBatteryStrings,
+      params.battery
+    );
+    console.log("batteryCableCosts: ", batteryCableCosts);
+
+    const labourCost = params.labourCost;
+    console.log("labourCost: ", labourCost);
+
+    const mc4Cost = calculateOffGridMc4Cost(params.mc4, numberOfPanels);
+    console.log("mc4Cost: ", mc4Cost);
+
+    const manualTransferSwitchCost =
+      params.manualTransferSwitch.price * params.manualTransferSwitch.quantity;
+    console.log(manualTransferSwitchCost, manualTransferSwitchCost);
+
+    const batteryCircuitBreakerCost =
+      params.battery.circuitBreaker.price *
+      params.battery.circuitBreaker.quantity;
+    console.log("batteryCircuitBreakerCost: ", batteryCircuitBreakerCost);
+
+    const fuseCost = calculateOffGridFusePrice(params.fuse, numberOfPanels);
+    console.log("fuseCost: ", fuseCost);
+
+    const switchBoxCost = params.panel.switchBox.price;
+    console.log("switchBoxCost: ", switchBoxCost);
+
+    const cleaningToolCost = numberOfPanels > 0 ? params.cleaningToolPrice : 0;
+    console.log("cleaningToolCost: ", cleaningToolCost);
+
+    const batteryStandCost = req.consumptionDetails.placeBatteriesIndoors
+      ? params.batteryStandPrice.insideHousePrice
+      : params.batteryStandPrice.outsideHousePerFourBatteriesPrice;
+    console.log("batteryStandCost: ", batteryStandCost);
+
+    const totalCost =
+      costOfPanels +
+      inverterBaseCost +
+      inverterAcCableCost +
+      inverterACEarthCableCost +
+      inverterCircuitBreakerCost +
+      batteriesCost +
+      mountingStructureCost +
+      dcCableCosts +
+      batteryCableCosts +
+      labourCost +
+      mc4Cost +
+      manualTransferSwitchCost +
+      batteryCircuitBreakerCost +
+      fuseCost +
+      switchBoxCost +
+      cleaningToolCost +
+      batteryStandCost;
+
+    console.log("totalCost :", totalCost);
+
+    const sellingCost = calculateSellingCost(totalCost, params.markup);
+
+    const proposal = {
+      name: req.name,
+      emailAddress: req.email,
+      phoneNumber: req.phoneNumber,
+      productId: offGridProduct.id,
+      addressLatitude: req.lat || 0,
+      addressLongitude: req.long || 0,
+      proposalDetails: {
+        isConnectedToGrid: req.consumptionDetails.isConnectedToGrid,
+        deviceLoads: req.consumptionDetails.deviceLoads,
+        inverter: {
+          inverterInfo: inverter,
+          inverterACCableCost: inverterAcCableCost,
+          inverterACCableEarthCost: inverterACEarthCableCost,
+          inverterCircuitBreaker: inverterCircuitBreakerCost,
+        },
+        costOfPanels: costOfPanels,
+        batteriesCost: batteriesCost,
+        mountingStructureCost: mountingStructureCost,
+        dcCableCosts: dcCableCosts,
+        batteryCableCosts: batteryCableCosts,
+        labourCost: labourCost,
+        mc4Cost: mc4Cost,
+        manualTransferSwitchCost: manualTransferSwitchCost,
+        batteryCircuitBreakerCost: batteryCircuitBreakerCost,
+        fuseCost: fuseCost,
+        switchBoxCost: switchBoxCost,
+        cleaningToolCost: cleaningToolCost,
+        batteryStandCost: batteryStandCost,
+        totalCost: totalCost,
+        sellingCost: sellingCost,
+        billing: {
+          downPaymentFee: roundToDec(
+            params.billingPercentage.downPaymentPercentage * sellingCost
+          ),
+          componentsSupplyFee: roundToDec(
+            params.billingPercentage.componentsSupplyPercentage * sellingCost
+          ),
+          installationFee: roundToDec(
+            params.billingPercentage.installationPercentage * sellingCost
+          ),
+          commissionFee: roundToDec(
+            params.billingPercentage.commissionPercentage * sellingCost
+          ),
+        },
+        battery: params.battery,
+        numberOfBatteries: numberOfBatteries,
+        panel: params.panel,
+        numberOfPanels: numberOfPanels,
+      },
+    };
+
+    const insertResult = await db
+      .insert(productProposalTable)
+      .values({
+        productId: proposal.productId,
+        name: proposal.name,
+        emailAddress: proposal.emailAddress,
+        phoneNumber: proposal.phoneNumber,
+        addressLatitude: req.lat?.toString(),
+        addressLongitude: req.long?.toString(),
+        createdAt: new Date().toLocaleDateString(),
+        createdBy: req.email,
+        proposalDetails: proposal.proposalDetails,
+      })
+      .returning();
+
+    if (insertResult.length < 0) {
+      throw new Error("failed to insert");
+    }
+
+    return proposal;
+  } else {
+    throw error("inverter not found");
+  }
 }
 
 export async function getOffGridProduct() {
@@ -231,6 +416,7 @@ export async function getOffGridProduct() {
 
     const offGridDb = res[0];
     const offGrid = {
+      id: offGridDb.id,
       name: offGridDb.name,
       isEnabled: offGridDb.isEnabled,
       created: {
@@ -247,8 +433,8 @@ export async function getOffGridProduct() {
 
     return offGrid;
   } catch (err) {
-    console.log("err 123", err);
     return {
+      id: 0,
       name: "",
       isEnabled: false,
       created: {

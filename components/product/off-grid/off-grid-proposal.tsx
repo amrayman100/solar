@@ -23,7 +23,7 @@ import {
   Controller,
 } from "react-hook-form";
 
-const hpToWatt = 735.5;
+const hpToWatt = 746;
 
 export function OffGridProposal({ product }: { product: OffGrid }) {
   const [consumptionDetails, setConsumptionDetails] =
@@ -71,20 +71,28 @@ export function OffGridProposal({ product }: { product: OffGrid }) {
 
     const onSubmit: SubmitHandler<OffGridConsumption> = (data) => {
       debugger;
+      if (data.deviceLoads.length == 0) {
+        return;
+      }
       const deviceLoads = data.deviceLoads.map((load) => {
         return {
           ...load,
           powerWatt: load.powerHP ? load.powerHP * hpToWatt : 0,
         };
       });
-      setConsumptionDetails({ ...data, deviceLoads });
+      setConsumptionDetails({
+        ...data,
+        deviceLoads,
+        isConnectedToGrid: data.isConnectedToGrid ? true : false,
+        placeBatteriesIndoors: data.placeBatteriesIndoors ? true : false,
+      });
       props.navigate("next");
     };
 
     return (
-      <div className="w-max">
+      <div className="flex">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-max mb-4">
+          <div className="mb-4">
             <Controller
               name="isConnectedToGrid"
               control={control}
@@ -95,7 +103,7 @@ export function OffGridProposal({ product }: { product: OffGrid }) {
                     Are you connected to a governmental grid?
                   </Label>
                   <RadioGroup
-                    defaultValue="true"
+                    defaultValue={isConnectedToGridField ? "true" : "false"}
                     className="mt-2"
                     {...register(`isConnectedToGrid`, { required: false })}
                   >
@@ -123,7 +131,7 @@ export function OffGridProposal({ product }: { product: OffGrid }) {
 
           <div className="w-max mb-4">
             <Controller
-              name="isConnectedToGrid"
+              name="placeBatteriesIndoors"
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -158,55 +166,111 @@ export function OffGridProposal({ product }: { product: OffGrid }) {
             />
           </div>
           {fields.map((field, i) => (
-            <div className="flex gap-4 mb-4">
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Name</Label>
+            <div
+              className="flex gap-4 mb-4 flex-col lg:flex-row"
+              key={"device-load-container-" + i}
+            >
+              <div
+                className="grid w-full max-w-sm items-center gap-1.5"
+                key={"device-load-grid-" + i}
+              >
+                <Label
+                  htmlFor={"device-load-picture-name-" + i}
+                  key={"device-load-label-name-" + i}
+                >
+                  Name
+                </Label>
                 <Input
                   type="text"
-                  // disabled={true}
-                  key={"deviceLoad-name-input" + i}
+                  key={"device-load-name-input-" + i}
                   {...register(`deviceLoads.${i}.name`)}
                 />
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Power in Horse Power</Label>
+              <div
+                className="grid w-full max-w-sm items-center gap-1.5"
+                key={"device-load-power-grid-" + i}
+              >
+                <Label
+                  htmlFor={"device-load-picture-power-" + i}
+                  key={"device-load-label-power-" + i}
+                >
+                  Power in Horse Power
+                </Label>
                 <Input
                   step={"any"}
                   type="number"
-                  key={"deviceLoad-name-input" + i}
+                  key={"device-load-powerHP-input-" + i}
                   {...register(`deviceLoads.${i}.powerHP`)}
                 />
               </div>
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Quantity</Label>
+              <div
+                className="grid w-full max-w-sm items-center gap-1.5"
+                key={"device-load-quantity-grid-" + i}
+              >
+                <Label
+                  htmlFor={"device-load-picture-quantity-" + i}
+                  key={"device-load-label-quantity-" + i}
+                >
+                  Quantity
+                </Label>
                 <Input
                   type="number"
-                  key={"deviceLoad-quantity-input" + i}
+                  key={"device-load-quantity-input-" + i}
                   {...register(`deviceLoads.${i}.quantity`)}
                 />
               </div>
-              {isConnectedToGridField && (
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="picture">Morning Hours</Label>
+              {!isConnectedToGridField && (
+                <div
+                  className="grid w-full max-w-sm items-center gap-1.5"
+                  key={"device-load-morningHours-grid-" + i}
+                >
+                  <Label
+                    htmlFor={"device-load-picture-morningHours-" + i}
+                    key={"device-load-label-morningHours-" + i}
+                  >
+                    Morning Hours
+                  </Label>
                   <Input
                     type="number"
-                    key={"deviceLoad-morningHours-input" + i}
+                    key={"device-load-morningHours-input-" + i}
                     {...register(`deviceLoads.${i}.morningHours`)}
                   />
                 </div>
               )}
-              {isConnectedToGridField && (
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="picture">Evening Hours</Label>
+              {!isConnectedToGridField && (
+                <div
+                  className="grid w-full max-w-sm items-center gap-1.5"
+                  key={"device-load-eveningHours-grid-" + i}
+                >
+                  <Label
+                    htmlFor={"device-load-picture-eveningHours-" + i}
+                    key={"device-load-label-eveningHours-" + i}
+                  >
+                    Evening Hours
+                  </Label>
                   <Input
                     type="number"
-                    key={"deviceLoad-eveningHours-input" + i}
+                    key={"device-load-eveningHours-input-" + i}
                     {...register(`deviceLoads.${i}.eveningHours`)}
                   />
                 </div>
               )}
+              <div
+                className="flex justify-center align-middle"
+                key={"device-load-remove-button-container-" + i}
+              >
+                <Button
+                  onClick={() => remove(i)}
+                  variant="destructive"
+                  className="justify-center self-end"
+                  key={"device-load-remove-button-" + i}
+                >
+                  Remove
+                </Button>
+              </div>
             </div>
           ))}
+
           <div className="m-10 w-max">
             <DropdownMenu>
               <DropdownMenuTrigger>Add New Device</DropdownMenuTrigger>
@@ -222,7 +286,7 @@ export function OffGridProposal({ product }: { product: OffGrid }) {
                           powerWatt: temp.powerWatt,
                           powerHP:
                             Math.round((temp.powerWatt / hpToWatt) * 100) / 100,
-                          quantity: 0,
+                          quantity: 1,
                           hasManualTransferSwitch: temp.hasManualTransferSwitch,
                           isCustom: false,
                         })
