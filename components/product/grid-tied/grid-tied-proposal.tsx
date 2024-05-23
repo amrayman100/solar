@@ -7,7 +7,7 @@ import { ViewGridTiedProposal } from "./view-grid-tied-proposal";
 import { useReadLocalStorage } from "usehooks-ts";
 import { AddressDescription } from "@/components/map/map";
 
-export function GridTiedProposal() {
+export function NewGridTiedProposal() {
   const localStorageData = useReadLocalStorage<{
     address: AddressDescription;
     monthlyConsumption: number;

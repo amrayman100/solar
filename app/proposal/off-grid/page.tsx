@@ -1,5 +1,5 @@
 import { getOffGridProduct } from "@/actions/proposal";
-import { OffGridProposal } from "@/components/product/off-grid/off-grid-proposal";
+import { NewOffGridProposal } from "@/components/product/off-grid/off-grid-proposal";
 
 export default async function OffGridProposalPage() {
   const product = await getOffGridProduct();
@@ -9,7 +9,7 @@ export default async function OffGridProposalPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="">
-        <OffGridProposal product={product} />
+        <NewOffGridProposal product={product} />
       </div>
     </main>
   );

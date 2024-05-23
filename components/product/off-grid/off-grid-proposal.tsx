@@ -25,7 +25,7 @@ import {
 
 const hpToWatt = 746;
 
-export function OffGridProposal({ product }: { product: OffGrid }) {
+export function NewOffGridProposal({ product }: { product: OffGrid }) {
   const [consumptionDetails, setConsumptionDetails] =
     useState<OffGridConsumption>({
       isConnectedToGrid: true,
