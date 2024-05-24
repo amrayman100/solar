@@ -405,7 +405,8 @@ export function calculateRealBatteryCapacityInterpolation(
   }
 
   if (!isFound || !upperBound || !lowerBound) {
-    return null;
+    lowerBound = battery.capacityVariances[0];
+    upperBound = battery.capacityVariances[1];
   }
 
   const a = (actualC - lowerBound.hoursTillEmpty) * upperBound.capacity;
