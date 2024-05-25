@@ -325,7 +325,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
             <DropdownMenu>
               <DropdownMenuTrigger>Add New Device</DropdownMenuTrigger>
               <DropdownMenuContent>
-                {product?.parameters?.deviceLoadTemplates.map((temp, key) => {
+                {product?.parameters?.deviceLoadTemplates?.map((temp, key) => {
                   return (
                     <DropdownMenuItem
                       key={"template-" + key}
