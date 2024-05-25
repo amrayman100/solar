@@ -423,11 +423,11 @@ export function calculateRealBatteryCapacityInterpolation(
 export function calculateNumberOfOffGridBatteryStrings(
   battery: OffGridBattery,
   inverter: OffGridInverter,
-  surgePower: number,
+  energyNeeded: number,
   realBatteryCapacity: number
 ) {
   return Math.ceil(
-    surgePower /
+    energyNeeded /
       roundToDec(
         inverter.systemVoltage * battery.depthOfDischarge * realBatteryCapacity
       )
@@ -445,14 +445,23 @@ export function calculateNumberOfOffGridBatteries(
 }
 
 export function calculateOffGridSolarEnergyNeeded(
-  deviceLoads: Array<DeviceLoad>
+  deviceLoads: Array<DeviceLoad>,
+  isConnectedToGrid: boolean
 ) {
   let solarEnergyNeeded = 0;
-  deviceLoads.forEach((device) => {
-    const totalPower = device.powerWatt * device.quantity;
-    solarEnergyNeeded +=
-      (device.morningHours || 0 + (device.eveningHours || 0)) * totalPower;
-  });
+  if (isConnectedToGrid) {
+    deviceLoads.forEach((device) => {
+      const totalPower = device.powerWatt * device.quantity;
+      solarEnergyNeeded += (device.workingHours || 0) * totalPower;
+    });
+  } else {
+    deviceLoads.forEach((device) => {
+      const totalPower = device.powerWatt * device.quantity;
+      solarEnergyNeeded +=
+        ((device.morningHours || 0 * 0.3) + (device.eveningHours || 0)) *
+        totalPower;
+    });
+  }
 
   return solarEnergyNeeded;
 }

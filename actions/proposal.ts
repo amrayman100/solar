@@ -191,10 +191,17 @@ export async function createOffGridProposal(
 
     console.log("realBatteryCapacity", realBatteryCapacity);
 
+    const solarEnergyNeeded = calculateOffGridSolarEnergyNeeded(
+      req.consumptionDetails.deviceLoads,
+      req.consumptionDetails.isConnectedToGrid
+    );
+
+    console.log("solarEnergyNeeded", solarEnergyNeeded);
+
     const numberOfBatteryStrings = calculateNumberOfOffGridBatteryStrings(
       params.battery,
       inverter,
-      surgePower,
+      solarEnergyNeeded,
       realBatteryCapacity || 0
     );
 
@@ -216,12 +223,6 @@ export async function createOffGridProposal(
     );
 
     if (!req.consumptionDetails.isConnectedToGrid) {
-      const solarEnergyNeeded = calculateOffGridSolarEnergyNeeded(
-        req.consumptionDetails.deviceLoads
-      );
-
-      console.log("solarEnergyNeeded", solarEnergyNeeded);
-
       numberOfPanels = calculateNumberOfOffGridPanels(
         solarEnergyNeeded,
         params.panel,

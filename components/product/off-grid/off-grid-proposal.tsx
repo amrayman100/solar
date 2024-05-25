@@ -75,10 +75,16 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
         return;
       }
       const deviceLoads = data.deviceLoads.map((load) => {
-        return {
-          ...load,
-          powerWatt: load.powerHP ? load.powerHP * hpToWatt : 0,
-        };
+        if (load.hasSurgePower) {
+          return {
+            ...load,
+            powerWatt: load.powerHP ? load.powerHP * hpToWatt : 0,
+          };
+        } else {
+          return {
+            ...load,
+          };
+        }
       });
       setConsumptionDetails({
         ...data,
@@ -186,23 +192,43 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   {...register(`deviceLoads.${i}.name`)}
                 />
               </div>
-              <div
-                className="grid w-full max-w-sm items-center gap-1.5"
-                key={"device-load-power-grid-" + i}
-              >
-                <Label
-                  htmlFor={"device-load-picture-power-" + i}
-                  key={"device-load-label-power-" + i}
+              {field.hasSurgePower ? (
+                <div
+                  className="grid w-full max-w-sm items-center gap-1.5"
+                  key={"device-load-power-grid-" + i}
                 >
-                  Power in Horse Power
-                </Label>
-                <Input
-                  step={"any"}
-                  type="number"
-                  key={"device-load-powerHP-input-" + i}
-                  {...register(`deviceLoads.${i}.powerHP`)}
-                />
-              </div>
+                  <Label
+                    htmlFor={"device-load-picture-power-" + i}
+                    key={"device-load-label-power-" + i}
+                  >
+                    Power in Horse Power
+                  </Label>
+                  <Input
+                    step={"any"}
+                    type="number"
+                    key={"device-load-powerHP-input-" + i}
+                    {...register(`deviceLoads.${i}.powerHP`)}
+                  />
+                </div>
+              ) : (
+                <div
+                  className="grid w-full max-w-sm items-center gap-1.5"
+                  key={"device-load-power-grid-watt-" + i}
+                >
+                  <Label
+                    htmlFor={"device-load-picture-power-" + i}
+                    key={"device-load-label-power-watt-" + i}
+                  >
+                    Power in Watt
+                  </Label>
+                  <Input
+                    step={"any"}
+                    type="number"
+                    key={"device-load-power-watt-input-" + i}
+                    {...register(`deviceLoads.${i}.powerWatt`)}
+                  />
+                </div>
+              )}
               <div
                 className="grid w-full max-w-sm items-center gap-1.5"
                 key={"device-load-quantity-grid-" + i}
@@ -219,6 +245,24 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   {...register(`deviceLoads.${i}.quantity`)}
                 />
               </div>
+              {isConnectedToGridField && (
+                <div
+                  className="grid w-full max-w-sm items-center gap-1.5"
+                  key={"device-load-workingHours-grid-" + i}
+                >
+                  <Label
+                    htmlFor={"device-load-picture-workingHours-" + i}
+                    key={"device-load-label-workingHours-" + i}
+                  >
+                    Working Hours
+                  </Label>
+                  <Input
+                    type="number"
+                    key={"device-load-workingHours-input-" + i}
+                    {...register(`deviceLoads.${i}.workingHours`)}
+                  />
+                </div>
+              )}
               {!isConnectedToGridField && (
                 <div
                   className="grid w-full max-w-sm items-center gap-1.5"
