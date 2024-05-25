@@ -457,9 +457,11 @@ export function calculateOffGridSolarEnergyNeeded(
   } else {
     deviceLoads.forEach((device) => {
       const totalPower = device.powerWatt * device.quantity;
-      solarEnergyNeeded +=
-        ((device.morningHours || 0 * 0.3) + (device.eveningHours || 0)) *
-        totalPower;
+      console.log(totalPower);
+      const hours =
+        (device.morningHours || 0) * 0.3 + (device.eveningHours || 0);
+      console.log(hours);
+      solarEnergyNeeded += hours * totalPower;
     });
   }
 

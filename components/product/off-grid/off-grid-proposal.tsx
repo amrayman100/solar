@@ -259,7 +259,9 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   <Input
                     type="number"
                     key={"device-load-workingHours-input-" + i}
-                    {...register(`deviceLoads.${i}.workingHours`)}
+                    {...register(`deviceLoads.${i}.workingHours`, {
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
               )}
@@ -277,7 +279,9 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   <Input
                     type="number"
                     key={"device-load-morningHours-input-" + i}
-                    {...register(`deviceLoads.${i}.morningHours`)}
+                    {...register(`deviceLoads.${i}.morningHours`, {
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
               )}
@@ -295,7 +299,9 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   <Input
                     type="number"
                     key={"device-load-eveningHours-input-" + i}
-                    {...register(`deviceLoads.${i}.eveningHours`)}
+                    {...register(`deviceLoads.${i}.eveningHours`, {
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
               )}
