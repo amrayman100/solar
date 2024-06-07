@@ -259,6 +259,7 @@ export type DeviceLoadTemplate = {
   hasSurgePower: boolean;
   powerWatt: number;
   hasManualTransferSwitch: boolean;
+  unit: "hp" | "watt";
 };
 
 export type DeviceLoad = DeviceLoadTemplate & {
@@ -270,6 +271,7 @@ export type DeviceLoad = DeviceLoadTemplate & {
   hasManualTransferSwitch: boolean;
   isCustom: boolean;
   powerHP?: number;
+  unit: "hp" | "watt";
 };
 
 export type CapacityVariance = {
@@ -1128,72 +1130,84 @@ const deviceLoadTemplates: DeviceLoadTemplate[] = [
     powerWatt: 12,
     hasSurgePower: false,
     hasManualTransferSwitch: false,
+    unit: "watt",
   },
   {
     name: "socket",
     powerWatt: 50,
     hasSurgePower: false,
     hasManualTransferSwitch: false,
+    unit: "watt",
   },
   {
     name: "router",
     powerWatt: 50,
     hasSurgePower: false,
     hasManualTransferSwitch: false,
+    unit: "watt",
   },
   {
     name: "tv",
     powerWatt: 200,
     hasSurgePower: false,
     hasManualTransferSwitch: false,
+    unit: "watt",
   },
   {
     name: "fridge",
     powerWatt: 400,
     hasSurgePower: true,
     hasManualTransferSwitch: false,
+    unit: "watt",
   },
   {
     name: "ac",
     powerWatt: 1676.25,
     hasSurgePower: true,
     hasManualTransferSwitch: false,
-  },
-  {
-    name: "fan",
-    powerWatt: 100,
-    hasSurgePower: true,
-    hasManualTransferSwitch: false,
-  },
-  {
-    name: "motor",
-    powerWatt: 745,
-    hasSurgePower: true,
-    hasManualTransferSwitch: false,
-  },
-  {
-    name: "shutter",
-    powerWatt: 330,
-    hasSurgePower: true,
-    hasManualTransferSwitch: false,
-  },
-  {
-    name: "waterHeater",
-    powerWatt: 2000,
-    hasSurgePower: false,
-    hasManualTransferSwitch: false,
-  },
-  {
-    name: "camera",
-    powerWatt: 70,
-    hasSurgePower: false,
-    hasManualTransferSwitch: false,
+    unit: "hp",
   },
   {
     name: "ac-inverter",
     powerWatt: 1676.25,
     hasSurgePower: false,
     hasManualTransferSwitch: false,
+    unit: "hp",
+  },
+  {
+    name: "fan",
+    powerWatt: 100,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+    unit: "watt",
+  },
+  {
+    name: "motor",
+    powerWatt: 745,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+    unit: "hp",
+  },
+  {
+    name: "shutter",
+    powerWatt: 330,
+    hasSurgePower: true,
+    hasManualTransferSwitch: false,
+    unit: "watt",
+  },
+  {
+    name: "waterHeater",
+    powerWatt: 2000,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+    unit: "watt",
+  },
+  {
+    name: "camera",
+    powerWatt: 70,
+    hasSurgePower: false,
+    hasManualTransferSwitch: false,
+    unit: "watt",
   },
 ];
 
@@ -1206,6 +1220,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
   {
     name: "socket",
@@ -1215,6 +1230,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
   {
     name: "router",
@@ -1224,6 +1240,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
   {
     name: "fridge",
@@ -1233,6 +1250,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
   {
     name: "shutter",
@@ -1242,6 +1260,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
   {
     name: "camera",
@@ -1251,6 +1270,7 @@ const devices: DeviceLoad[] = [
     morningHours: 1,
     hasManualTransferSwitch: false,
     isCustom: false,
+    unit: "watt",
   },
 ];
 

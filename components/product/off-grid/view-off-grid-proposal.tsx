@@ -116,9 +116,6 @@ export function ViewOffGridProposal({
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                  <p className="mt-2">
-                    Kindly Note There is an additional utility meter cost
-                  </p>
                 </Table>
               </div>
               <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4">

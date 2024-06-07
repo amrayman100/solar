@@ -192,7 +192,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   {...register(`deviceLoads.${i}.name`)}
                 />
               </div>
-              {field.hasSurgePower ? (
+              {field.unit == "hp" ? (
                 <div
                   className="grid w-full max-w-sm items-center gap-1.5"
                   key={"device-load-power-grid-" + i}
@@ -339,6 +339,10 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                           quantity: 1,
                           hasManualTransferSwitch: temp.hasManualTransferSwitch,
                           isCustom: false,
+                          unit: temp.unit,
+                          morningHours: 1,
+                          eveningHours: 1,
+                          workingHours: 1,
                         })
                       }
                     >
