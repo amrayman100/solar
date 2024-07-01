@@ -11,11 +11,15 @@ export default async function Home() {
         className="bg-cover bg-center w-screen h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
       >
         <div className="flex justify-center h-full">
-          <div className="mt-6 flex flex-col">
-            <TypographyH1
-              text="Get Your Free Solar Quote Instantly"
-              className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
-            />
+          <div className="m-auto flex flex-col">
+            <div>
+              <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white">
+                Get Your Free Solar Quote{" "}
+              </span>
+              <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">
+                Instantly
+              </span>
+            </div>
             <MonthlyConsumptionForm />
           </div>
         </div>
