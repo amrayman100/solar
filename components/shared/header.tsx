@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./theme-button";
-import { TypographyH2, TypographyH4 } from "./typography";
+import { TypographyH2, TypographyH3, TypographyH4 } from "./typography";
 import {
   Sheet,
   SheetContent,
@@ -24,8 +24,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function Header() {
+  const { theme } = useTheme();
+
+  console.log("log", theme);
+
   return (
     <div className="">
       {/* mobile nav menu */}
@@ -33,11 +39,34 @@ export default function Header() {
         <Sheet>
           <div className="flex mt-2 justify-between w-full">
             <div className="flex gap-2">
-              <TypographyH2
-                text={"Bolt Energy"}
-                className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
-              />
-              <Zap className="h-6 w-6 self-center" />
+              <div className="hidden dark:block">
+                <Image
+                  alt="Mountains"
+                  src={"/logo-dark.png"}
+                  blurDataURL={"/logo-dark.png"}
+                  placeholder="blur"
+                  quality={100}
+                  height={80}
+                  width={80}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+              <div className="block dark:hidden">
+                <Image
+                  alt="Mountains"
+                  src={"/logo.png"}
+                  blurDataURL={"/logo.png"}
+                  placeholder="blur"
+                  quality={100}
+                  height={80}
+                  width={80}
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
             </div>
             <SheetTrigger>
               <Menu size={32} className="self-center" cursor={"pointer"} />
@@ -58,12 +87,43 @@ export default function Header() {
       </div>
       {/* desktop nav menu */}
       <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
-        <div className="flex place-items-center gap-2">
-          <TypographyH4
-            text="Bolt Energy"
-            className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text"
-          />
-          <Zap className="h-6 w-6" />
+        <div className="flex place-items-center gap-3">
+          <div className="hidden dark:flex">
+            <Image
+              alt="Mountains"
+              src={"/logo-dark.png"}
+              blurDataURL={"/logo-dark.png"}
+              placeholder="blur"
+              quality={100}
+              height={80}
+              width={80}
+              style={{
+                objectFit: "cover",
+              }}
+            />
+            <TypographyH3
+              text="Bolt Energy"
+              className="font-bold self-center"
+            />
+          </div>
+          <div className="flex dark:hidden">
+            <Image
+              alt="Mountains"
+              src={"/logo.png"}
+              blurDataURL={"/logo.png"}
+              placeholder="blur"
+              quality={100}
+              height={80}
+              width={80}
+              style={{
+                objectFit: "cover",
+              }}
+            />
+            <TypographyH3
+              text="Bolt Energy"
+              className="font-bold self-center"
+            />
+          </div>
           <ModeToggle />
         </div>
         <div className="flex">
@@ -104,7 +164,9 @@ export default function Header() {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Button variant="default">Contact Us</Button>
+          <Button variant="default" className="self-center">
+            Contact Us
+          </Button>
         </div>
       </div>
     </div>

@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { RTLProvider } from "@/components/rtl-provider";
 import { ReactQueryClientProvider } from "@/components/react-query-client-provider";
 import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Bolt Energy",
@@ -22,10 +27,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <ReactQueryClientProvider>
         <RTLProvider>
-          <body className={inter.className}>
+          <body className={poppins.className}>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
+              defaultTheme="dark"
               enableSystem
               disableTransitionOnChange
             >
