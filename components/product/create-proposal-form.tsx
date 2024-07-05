@@ -50,6 +50,8 @@ type CreateProposalProps<A, T> = {
   customFormSteps?: Array<React.FC<CustomFormStepProps>>;
 };
 
+type Steps = "housing" | "contact" | "map";
+
 export function CreateProposal<A, T>({
   consumptionDetails,
   address,
@@ -58,6 +60,9 @@ export function CreateProposal<A, T>({
   ViewProposal,
   customFormSteps,
 }: CreateProposalProps<A, T>) {
+  const directionSet = new Set<Steps>(["housing", "contact"]);
+  const directions = directionSet.entries();
+
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
   const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(

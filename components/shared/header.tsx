@@ -41,7 +41,7 @@ export default function Header() {
             <div className="flex gap-2">
               <div className="hidden dark:block">
                 <Image
-                  alt="Mountains"
+                  alt="Logo"
                   src={"/logo-dark.png"}
                   blurDataURL={"/logo-dark.png"}
                   placeholder="blur"
@@ -55,7 +55,7 @@ export default function Header() {
               </div>
               <div className="block dark:hidden">
                 <Image
-                  alt="Mountains"
+                  alt="Logo"
                   src={"/logo.png"}
                   blurDataURL={"/logo.png"}
                   placeholder="blur"
@@ -90,7 +90,7 @@ export default function Header() {
         <div className="flex place-items-center gap-3">
           <div className="hidden dark:flex">
             <Image
-              alt="Mountains"
+              alt="Logo"
               src={"/logo-dark.png"}
               blurDataURL={"/logo-dark.png"}
               placeholder="blur"
@@ -101,14 +101,11 @@ export default function Header() {
                 objectFit: "cover",
               }}
             />
-            <TypographyH3
-              text="Bolt Energy"
-              className="font-bold self-center"
-            />
+            <TypographyH3 text="Bolt Energy" className="self-center" />
           </div>
           <div className="flex dark:hidden">
             <Image
-              alt="Mountains"
+              alt="Logo"
               src={"/logo.png"}
               blurDataURL={"/logo.png"}
               placeholder="blur"
@@ -119,10 +116,7 @@ export default function Header() {
                 objectFit: "cover",
               }}
             />
-            <TypographyH3
-              text="Bolt Energy"
-              className="font-bold self-center"
-            />
+            <TypographyH3 text="Bolt Energy" className="self-center" />
           </div>
           <ModeToggle />
         </div>
@@ -135,9 +129,10 @@ export default function Header() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                    <ListItem href="/dashboard" title="Components">
-                      Components
-                    </ListItem>
+                    <ListItem
+                      href="/product/solar-irrigation"
+                      title="Solar Irrigation"
+                    ></ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>

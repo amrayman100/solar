@@ -9,6 +9,9 @@ import {
   OffGridParams,
   OffGridProposal,
   ProductProposal,
+  SolarIrrigationConsumption,
+  SolarIrrigationParams,
+  SolarIrrigationProposal,
   calculateActualC,
   calculateNumberOfOffGridBatteries,
   calculateNumberOfOffGridBatteryStrings,
@@ -21,6 +24,7 @@ import {
   calculateOffGridSolarEnergyNeeded,
   calculateRealBatteryCapacityInterpolation,
   calculateSellingCost,
+  calculateSolarIrrigationCost,
   calculateTotalPower,
   calculateTotalSurgePower,
   calulateCostOfPanels,
@@ -28,6 +32,7 @@ import {
   getInvertorForOffGrid,
   offGridProduct,
   roundToDec,
+  solarIrrigation,
 } from "@/models/product";
 import { error } from "console";
 import { eq } from "drizzle-orm";
@@ -49,7 +54,7 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
-  // const res1 = await db.insert(productTable).values(offGridProduct);
+  // const res1 = await db.insert(productTable).values(solarIrrigation);
 
   // console.log(res1);
   const res = await db
@@ -407,6 +412,55 @@ export async function createOffGridProposal(
   }
 }
 
+export async function createSolarIrrigationProposal(
+  req: ProposalRequestInfo<SolarIrrigationConsumption>
+): Promise<SolarIrrigationProposal> {
+  const irrigationProduct = await getSolarIrrigation();
+
+  console.log(irrigationProduct);
+
+  const params = irrigationProduct.parameters;
+
+  const cost = calculateSolarIrrigationCost(
+    req.consumptionDetails.pumpCapacity,
+    params.pricePerkW
+  );
+
+  const proposal = {
+    name: req.name,
+    emailAddress: req.email,
+    phoneNumber: req.phoneNumber,
+    productId: irrigationProduct.id,
+    addressLatitude: req.lat || 0,
+    addressLongitude: req.long || 0,
+    proposalDetails: {
+      cost,
+      pumpCapacity: req.consumptionDetails.pumpCapacity,
+    },
+  };
+
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
+
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  return proposal;
+}
+
 export async function getOffGridProduct() {
   try {
     const res = await db
@@ -448,6 +502,51 @@ export async function getOffGridProduct() {
       },
       currency: "egp",
       parameters: {} as OffGridParams,
+    };
+  }
+}
+
+export async function getSolarIrrigation() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "solar-irrigation"));
+
+    const irrrigationDb = res[0];
+    const irrrigation = {
+      id: irrrigationDb.id,
+      name: irrrigationDb.name,
+      isEnabled: irrrigationDb.isEnabled,
+      created: {
+        by: irrrigationDb.createdBy || "",
+        at: irrrigationDb.createdAt || "",
+      },
+      updated: {
+        by: irrrigationDb.updatedBy || "",
+        at: irrrigationDb.updatedAt || "",
+      },
+      currency: irrrigationDb.currency,
+      parameters: irrrigationDb.parameters as SolarIrrigationParams,
+    };
+
+    return irrrigation;
+  } catch (err) {
+    return {
+      id: 0,
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as SolarIrrigationParams,
     };
   }
 }

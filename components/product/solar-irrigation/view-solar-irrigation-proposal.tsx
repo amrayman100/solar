@@ -1,0 +1,58 @@
+"use client";
+import {
+  TypographyH1,
+  TypographyH2,
+  TypographyH3,
+  TypographyH4,
+  TypographyH5,
+} from "@/components/shared/typography";
+import { GridTiedProposal, SolarIrrigationProposal } from "@/models/product";
+
+export function ViewSolarIrrigationProposal({
+  proposal,
+}: {
+  proposal: SolarIrrigationProposal;
+}) {
+  const details = proposal.proposalDetails;
+
+  return (
+    <div className="m-auto place-items-center">
+      <div
+        style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
+        className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
+      >
+        <div
+          style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
+          className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
+        >
+          <TypographyH1
+            text="Your Solution"
+            className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text mx-3"
+          />
+          <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
+              <TypographyH3 text="Battery" className="font-bold" />
+              <div className="flex-col flex gap-2">
+                <div className="text-center">
+                  <span>{"Cost: "}</span>
+                  <span className="font-bold">{details.cost}</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
+              <TypographyH3 text="Pump Capacity" className="font-bold" />
+              <div className="flex-col flex gap-2">
+                <div>
+                  <TypographyH5
+                    className="font-bold"
+                    text={details.pumpCapacity.toString() + " HP"}
+                  ></TypographyH5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

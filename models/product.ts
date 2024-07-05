@@ -320,13 +320,29 @@ export type OffGridConsumption = {
   placeBatteriesIndoors: boolean;
 };
 
+export type SolarIrrigationParams = {
+  pricePerkW: number;
+};
+
+export type SolarIrrigationProposalDetails = {
+  pumpCapacity: number;
+  cost: number;
+};
+
+export type SolarIrrigationConsumption = { pumpCapacity: number };
+
 export type GridTied = Product<GridTiedParams>;
 
 export type OffGrid = Product<OffGridParams>;
 
+export type SolarIrrigation = Product<SolarIrrigationParams>;
+
 export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
 
 export type OffGridProposal = ProductProposal<OffGridProposalDetails>;
+
+export type SolarIrrigationProposal =
+  ProductProposal<SolarIrrigationProposalDetails>;
 
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
@@ -960,169 +976,12 @@ export function calculateOffGridFusePrice(fuse: Fuse, numberOfPanels: number) {
   return roundToDec((numberOfPanels / 2) * fuse.price);
 }
 
-// off grid
-
-// inputs = { load is a dropdown list of  // air conditoner ///}
-
-// 7agat be mawateer (ac, fridge , fan, water motor , shutter) or not ()
-// ac with invertor is mawteer
-
-//watt -> HP
-
-//hp to watt -> hp * 0.745 * 1000
-
-// total of each item
-
-// each item as surge power
-
-// surge factor
-
-// check #1 total power
-
-// check surge = 1.5 * 5000
-
-/*
-1.75 * 5000 >= surgePower
-
-
-baseline battery => invertor
-12v battery
-
-
-system voltage = for 5000 48 => invertor
-
-numberOFBatteries => system voltage / 12
-
-isElectrictySuppliedByGov => are you connected (utlity grid) to the goverment grid/electricty
-
-
-isElectrictySuppliedByGov yes => working hours
-
-
-isElectrictySuppliedByGov yes => morning hours , evening hours
-
-for each item
-battery capacity need => working hour * total capacity
-
-total battery capacity needed = battery capacity need += (1---n)
-
-battery ( rateBatteryCapacity : 200, volt: 12, real capacites : [(20,200), (10,190)])
-
-1,5,20 => ratedTimeForBatteryToDischarge
-200,190,174,132 -> realratedCapacityBattery
-
-timeForDisachargeBattery: ratedBattery * systemVoltage / total power loaf
-
-
-x = 
-
-real battery capacity = (((x - smallRatedTime) * ratedLarge)) + ((ratedLarge - x) * ratedSmall)) / (largeRated - smallRated )
-
-
-invertor for off grid -> circuit breaker quantity
-manual transfer switch
-
-
-
-*/
-
-/*
-
-
-  #1 do you have a utility grid? (do you have a govermental source of electricty) yes/no    utilityGrid
-  yes => solar panels number = 0
-  no => we will calculate solar panels
-
-  yes => show working hours column only
-  no => show evening hours and morning hours
-
-
-
-  #2 User enters his loads (loads of electricty devices) (use from predefined tables (can edit the power) or other)
-    => then calculate total power (sum) (will be used for the invertor)
-    => surge power (fridge -> shutter) surge power = total power * 3 (will save field hasSurgedMotor)
-    => surge power summation 
-
-  #3 choose invertor
-     invertor power > totalPower && (invertor power * 1.8) > surge power
-
-
-  #4 batteries
-    => invertor power , invertor system voltage
-    => battery calculation => utilityGrid => true =>
-    if(utilityGrid) {
-      energy needed => total power * working hours (for each load)
-      totalEnergyCapacityNeeded = summ( battery capacitty for all loads)
-
-      // Bbattey will will use is 200
-
-      batttery rated C (hours of emptying) = 20, 10, 5, 1
-      battery rated capacity (ma5zoon) = 200, 190, 174, 132
-
-
-      actualC = (batteryCapacity(200 msln) * invertorSystemVoltage) / totalPower
-
-      example actualC = 3
-
-      Interpolation 
-
-      realBatteryCapacity = ((actaulC - 1) * 174 ) + ((5 - actualC) * 132)) / (actualC - 1) + (5 - actualC)
-
-      numberOfStrings = totalEnergyNeeded / round(invertorSystemVoltage * depthOfDischarge * realBatteryCapacity)
-
-      numberOfBatteries =  numberOfStrings * (invertorSystemVoltage * batteryVoltage)
-    } 
-    else {
-
-      energy needed => morning hours * total power * 0.2(variable) + evening hours * total power
-      totalEnergyCapacityNeeded = summ( battery capacitty for all loads)
-
-      actualC = (batteryCapacity(200 msln) * invertorSystemVoltage) / totalPower
-
-      example actualC = 3
-
-      Interpolation 
-
-      realBatteryCapacity = ((actaulC - 1) * 174 ) + ((5 - actualC) * 132)) / (actualC - 1) + (5 - actualC)
-
-      numberOfStrings = totalEnergyNeeded / round(invertorSystemVoltage * depthOfDischarge * realBatteryCapacity)
-
-      numberOfBatteries =  numberOfStrings * (invertorSystemVoltage * batteryVoltage)
-
-
-      // here we need solar //
-
-      solarNeededEngergy = (morning hours + evening hours) * total power (summation for all loads)
-
-      numberOfPanels = solarNeededEnergy / sunHours * panel.powerOutputWatt (panel rating) => lazem yet2sem 3ala 2 law 9 5aly 10
-      (even number)
-
-      if(numberOfPanels * panel.powerOutputWatt  > inverter.Capacity) {
-
-        pricing += chargeController (fixed 5000 geneh)
-      }
-
-
-
-    }
-
-
-
-
-
-
-*/
-
-/*
-
-battery = {
-  batteryCapacity,
-  batteryVoltage
+export function calculateSolarIrrigationCost(
+  pumpCapacity: number,
+  pricePerkW: number
+) {
+  return roundToDec(pumpCapacity * pricePerkW * 0.7457);
 }
-
-panelrating = power output watt / 1000
-
-*/
 
 const deviceLoadTemplates: DeviceLoadTemplate[] = [
   {
@@ -1659,5 +1518,14 @@ export const offGridProduct: OffGrid = {
       componentsSupplyPercentage: 0.25,
       installationPercentage: 0.2,
     },
+  },
+};
+
+export const solarIrrigation: SolarIrrigation = {
+  name: "solar-irrigation",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {
+    pricePerkW: 17000,
   },
 };
