@@ -30,10 +30,8 @@ import { useTheme } from "next-themes";
 export default function Header() {
   const { theme } = useTheme();
 
-  console.log("log", theme);
-
   return (
-    <div className="">
+    <div className="sticky top-0 z-40 bg-white dark:bg-black">
       {/* mobile nav menu */}
       <div className="flex lg:hidden md:hidden">
         <Sheet>
@@ -86,7 +84,7 @@ export default function Header() {
         </Sheet>
       </div>
       {/* desktop nav menu */}
-      <div className="hidden lg:flex md:flex justify-between p-4 lg:mx-12">
+      <div className="sticky top-0 z-40 hidden lg:flex md:flex justify-between p-4 lg:mx-12">
         <div className="flex place-items-center gap-3">
           <div className="hidden dark:flex">
             <Image

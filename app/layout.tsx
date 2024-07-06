@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <ReactQueryClientProvider>
         <RTLProvider>
-          <body className={poppins.className}>
+          <body className={poppins.className + " flex flex-col min-h-screen"}>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
