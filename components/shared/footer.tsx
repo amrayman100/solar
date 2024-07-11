@@ -3,9 +3,9 @@ import Image from "next/image";
 export function Footer() {
   return (
     <>
-      <footer className="bg-white dark:bg-black">
-        <div className="mx-auto w-screen max-w-screen-xl mt-2">
-          <div className="sm:flex sm:items-center sm:justify-between">
+      <footer className="bg-white dark:bg-black w-screen">
+        <div className="mt-2 w-full">
+          <div className="flex justify-between mx-10">
             <div className="flex gap-2">
               <div className="hidden dark:block">
                 <Image
@@ -38,7 +38,7 @@ export function Footer() {
             </div>
             {/* <div>Links</div> */}
           </div>
-          <div className="py-2 bg-white dark:bg-black md:flex md:items-center md:justify-between">
+          <div className="py-2 bg-white dark:bg-black md:flex md:items-center md:justify-between mx-10">
             <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
               © 2024 <a href="https://flowbite.com/">Bolt Energy™</a>. All
               Rights Reserved.
