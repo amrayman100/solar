@@ -131,6 +131,10 @@ export default function Header() {
                       href="/product/solar-irrigation"
                       title="Solar Irrigation"
                     ></ListItem>
+                    <ListItem
+                      href="/product/solar-heating"
+                      title="Solar Heating"
+                    ></ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>

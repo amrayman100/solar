@@ -329,6 +329,35 @@ export type SolarIrrigationProposalDetails = {
   cost: number;
 };
 
+export type SolarHeater = {
+  brand: string;
+  price: number;
+};
+
+export type HouseholdSolarHeater = SolarHeater & {
+  maxNumberOfRooms: number;
+};
+
+export type PoolSolarHeater = SolarHeater & {
+  minVolume: number;
+  maxVolume: number;
+};
+
+export type SolarHeatingParams = {
+  houseHoldHeaters: Array<HouseholdSolarHeater>;
+  poolHeaters: Array<PoolSolarHeater>;
+};
+
+export type SolarHeatingProposalDetails =
+  | {
+      isHousehold: true;
+      heater: HouseholdSolarHeater;
+    }
+  | {
+      isHouseHold: false;
+      heater: PoolSolarHeater;
+    };
+
 export type SolarIrrigationConsumption = { pumpCapacity: number };
 
 export type GridTied = Product<GridTiedParams>;
@@ -343,6 +372,9 @@ export type OffGridProposal = ProductProposal<OffGridProposalDetails>;
 
 export type SolarIrrigationProposal =
   ProductProposal<SolarIrrigationProposalDetails>;
+
+export type SolarHeating = Product<SolarHeatingParams>;
+export type SolarHeatingProposal = Product<SolarHeatingProposalDetails>;
 
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
@@ -1527,5 +1559,45 @@ export const solarIrrigation: SolarIrrigation = {
   isEnabled: true,
   parameters: {
     pricePerkW: 17000,
+  },
+};
+
+export const solarHeating: SolarHeating = {
+  name: "solar-heating",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {
+    houseHoldHeaters: [
+      {
+        brand: "300l",
+        price: 297500,
+        maxNumberOfRooms: 6,
+      },
+      {
+        brand: "300l",
+        price: 493750,
+        maxNumberOfRooms: 0,
+      },
+    ],
+    poolHeaters: [
+      {
+        brand: "Heat Master I",
+        price: 297500,
+        minVolume: 15,
+        maxVolume: 30,
+      },
+      {
+        brand: "Heat Master II X20-26",
+        price: 297500,
+        minVolume: 30,
+        maxVolume: 65,
+      },
+      {
+        brand: "Heat Master III",
+        price: 297500,
+        minVolume: 15,
+        maxVolume: 20,
+      },
+    ],
   },
 };

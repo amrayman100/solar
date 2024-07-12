@@ -50,7 +50,11 @@ type CreateProposalProps<A, T> = {
   customFormSteps?: Array<React.FC<CustomFormStepProps>>;
 };
 
-type Steps = "housing" | "contact" | "map";
+type PropSteps = "housing" | "map";
+
+type Step = "housing" | "map" | "contact";
+
+type StepCounter = Array<[Step]>;
 
 export function CreateProposal<A, T>({
   consumptionDetails,
@@ -60,8 +64,14 @@ export function CreateProposal<A, T>({
   ViewProposal,
   customFormSteps,
 }: CreateProposalProps<A, T>) {
-  const directionSet = new Set<Steps>(["housing", "contact"]);
-  const directions = directionSet.entries();
+  const directionSet = new Set<Step>(["housing", "map"]);
+  const directions = Array.from(directionSet);
+
+  const [currentStepCounter, setCurrentStepCounter] = useState(0);
+  const [currentStep, setCurrentStep] = useState(
+    directions.length > 0 ? directions[0] : null
+  );
+  // const currentStep = directions.
 
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
@@ -81,8 +91,6 @@ export function CreateProposal<A, T>({
       return createProposalFunc({ ...req, consumptionDetails });
     },
   });
-
-  console.log(customFormSteps);
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
@@ -116,6 +124,27 @@ export function CreateProposal<A, T>({
       });
     },
   });
+
+  const moveFromCurrentStep = (move: "N" | "P") => {
+    if (directions.length == currentStepCounter + 1) {
+      setCurrentStep("contact");
+      return;
+    }
+
+    if (move === "N") {
+      const nextStepCounter = currentStepCounter + 1;
+      const nextStep = directions[nextStepCounter];
+
+      setCurrentStep(nextStep);
+      setCurrentStepCounter(nextStepCounter);
+    } else {
+      const nextStepCounter = currentStepCounter - 1;
+      const nextStep = directions[nextStepCounter];
+
+      setCurrentStep(nextStep);
+      setCurrentStepCounter(nextStepCounter);
+    }
+  };
 
   return (
     <>
