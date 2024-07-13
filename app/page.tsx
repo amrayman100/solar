@@ -30,15 +30,16 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-6 gap-5 mb-2">
-          <div className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-4xl">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
             Maximum savings from day one
           </div>
           <TypographyH2
             text="It's time to generate your own energy and save"
-            className="text-3xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
           />
         </div>
-        <div className="flex flex-col lg:flex-row gap-2 mx-3">
+
+        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
             className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
             style={{ flex: "1 1 0px;" }}
@@ -79,6 +80,9 @@ export default async function Home() {
               </span>{" "}
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
             className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
             style={{ flex: "1 1 0px;" }}
@@ -114,6 +118,67 @@ export default async function Home() {
                 {" "}
                 you generate: offset your bill or store It for use as a backup.
               </span>{" "}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+            Different options , for different needs
+          </div>
+          <TypographyH2
+            text="we have multiple procurement options to suit your needs"
+            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+          />
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border">
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4 text="Buy" className="text-center" />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Buy your solution from the beginning with a quick
+              </span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                return on investment
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4 text="Financing" className="text-center" />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Finance your soluion to adjust so you can pay
+              </span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                at your own pace
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4 text="Renting" className="text-center" />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Let your worries slip away. No initial investment
+              </span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                save from day one.
+              </span>
             </div>
           </div>
         </div>
