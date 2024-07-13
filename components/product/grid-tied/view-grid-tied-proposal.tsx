@@ -111,7 +111,7 @@ export function ViewGridTiedProposal({
       >
         <TypographyH1
           text="Your Solution"
-          className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text mx-3"
+          className="bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
         />
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">

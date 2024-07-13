@@ -179,7 +179,7 @@ export function GridTiedForm({ product }: { product: GridTied }) {
         <div>
           <TypographyH2
             text="Grid Tied"
-            className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-transparent bg-clip-text mx-3"
+            className="bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
           />
         </div>
       </Menubar>

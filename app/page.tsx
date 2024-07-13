@@ -1,6 +1,10 @@
 import { MonthlyConsumptionForm } from "@/components/product/grid-tied/monthly-consumption-form";
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
+import { TypographyH2, TypographyH4 } from "@/components/shared/typography";
+import { LuWallet, LuThumbsUp } from "react-icons/lu";
+import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
+import { FiBatteryCharging } from "react-icons/fi";
 
 export default async function Home() {
   return (
@@ -25,7 +29,94 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className=""></div>
+        <div className="flex flex-col place-items-center w-100 justify-center mt-6 gap-5 mb-2">
+          <div className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-4xl">
+            Maximum savings from day one
+          </div>
+          <TypographyH2
+            text="It's time to generate your own energy and save"
+            className="text-3xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+          />
+        </div>
+        <div className="flex flex-col lg:flex-row gap-2 mx-3">
+          <div
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <LuWallet className="text-primary text-4xl" />
+            <TypographyH4 text="Get your bill at 0 EGP" className="" />
+            <div className="text-[0px]">
+              <span className="text-base scroll-m">
+                Thanks to the combination of our careful design services,
+              </span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                we offer savings that can eliminate your entire bill
+              </span>
+              <span className="text-base">
+                {" "}
+                in correspondence to your roofs pace and average consumption.
+              </span>{" "}
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <HiOutlineDevicePhoneMobile className="text-primary text-4xl" />
+            <TypographyH4 text="Cutting-edge technology" className="" />
+            <div className="text-[0px]">
+              <span className="text-base">
+                You will be able to visualize your
+              </span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                production in real time
+              </span>
+              <span className="text-base">
+                {" "}
+                and optimize your consumption to make your home more efficient.
+              </span>{" "}
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <LuThumbsUp className="text-primary text-4xl" />
+            <TypographyH4 text="Pay in installments" className="" />
+            <div className="text-[0px]">
+              <span className="text-base">Pay a</span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                comfortable monthly fee
+              </span>
+              <span className="text-base">
+                {" "}
+                with minimum initial investment, and an all maintenance
+                included.
+              </span>{" "}
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <FiBatteryCharging className="text-primary text-4xl" />
+            <TypographyH4 text="Virtual Battery and Community" className="" />
+            <div className="text-[0px]">
+              <span className="text-base">Choose what to do with the</span>
+              <span className="text-base text-primary font-bold">
+                {" "}
+                surplus energy
+              </span>
+              <span className="text-base">
+                {" "}
+                you generate: offset your bill or store It for use as a backup.
+              </span>{" "}
+            </div>
+          </div>
+        </div>
       </main>
       <Footer />
     </>
