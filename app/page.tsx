@@ -19,6 +19,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default async function Home() {
   return (
@@ -288,6 +294,58 @@ export default async function Home() {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
+        </div>
+        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+            FAQS
+          </div>
+          <Accordion type="single" collapsible className="w-2/3">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Why should I go solar?</AccordionTrigger>
+              <AccordionContent>
+                Photovoltaic energy is emerging as a solid alternative to large
+                electricity companies. The installation of solar panels offers
+                clear benefits, including savings of up to 70% on electricity
+                bills, driving many families towards solar self-consumption in
+                our country. It also provides energy independence, increases the
+                value of the property, contributes to combating climate change,
+                and offers access to various grants and subsidies.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>How do solar panels work?</AccordionTrigger>
+              <AccordionContent>
+                Solar panels convert sunlight into electricity through the
+                photovoltaic process. Solar cells absorb sunlight to generate
+                electricity, then an inverter converts this current into usable
+                form for the home.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>
+                What is the maintenance of solar panels?
+              </AccordionTrigger>
+              <AccordionContent>
+                The care of solar panels is simple and minimal, we can usually
+                take care of them ourselves. They are built to withstand weather
+                conditions and usually only need occasional cleaning and checks
+                to ensure they are working properly and to prevent damage.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>How are solar panels cleaned?</AccordionTrigger>
+              <AccordionContent>
+                Solar panels usually require little maintenance thanks to their
+                glass cover, which tends to keep them clean. Occasionally, if
+                dirt such as leaves or debris accumulates, a gentle wash with
+                water from a hose or using a soft sponge or brush is sufficient.
+                Regular observation is key to identifying build-up that may
+                affect its efficiency. In general, the protective coating on the
+                panels allows rain and sun to keep them clean, minimizing the
+                need for frequent cleaning.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </main>
       <Footer />
