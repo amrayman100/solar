@@ -5,6 +5,20 @@ import { TypographyH2, TypographyH4 } from "@/components/shared/typography";
 import { LuWallet, LuThumbsUp } from "react-icons/lu";
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { FiBatteryCharging } from "react-icons/fi";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default async function Home() {
   return (
@@ -181,6 +195,99 @@ export default async function Home() {
               </span>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+            What our customers think?
+          </div>
+          <Carousel className="w-2/3 max-h-max">
+            <CarouselContent className="-ml-1">
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Walid Bazan</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        {" "}
+                        Bolt Energy are a good start up company, with more
+                        projects under their belt. Over all acceptable
+                        experience the system was delivered and installed and
+                        commissioned as designed and they have good follow up on
+                        trouble shooting and follow up until successful
+                        commissioning was achieved.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Hussein Mourad</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        {" "}
+                        I called a couple of other companies that dealt with
+                        Solar energy in Egypt before stumbling upon Solar
+                        Solutions, but most, if not all of them, were very
+                        unsatisfactory. Bolt Energy on the other hand were
+                        extremely helpful the whole way through, despite
+                        expected hiccups with the government’s electrical
+                        company. The team were professional and were working on
+                        the system as if it were their own. I would recommend
+                        them to anyone, and already did.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Stefano Soldi</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        {" "}
+                        I did not expect to find such a great and professional
+                        people. Bolt Energy team is simply perfect. In few days
+                        I got an offer for my unit, and the installation
+                        procedure had been easy and smooth. I highly recommend
+                        this company to all my friends, neighbors and people
+                        that are interested in invest some money for a better
+                        and green future.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Ali Dessouki</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        {" "}
+                        Everyone was extremely professional and friendly and did
+                        everything to make the experience smooth and easy for
+                        me. I’m extremely satisfied with my experience and would
+                        definitely recommend to anyone.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </main>
       <Footer />
