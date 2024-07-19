@@ -51,7 +51,7 @@ type CreateProposalProps<A, T> = {
   steps?: Set<PropSteps>;
 };
 
-type PropSteps = "housing" | "map";
+export type PropSteps = "housing" | "map";
 
 type Step = "housing" | "map" | "contact";
 
