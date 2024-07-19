@@ -4,7 +4,11 @@ import {
   SolarIrrigationConsumption,
   SolarIrrigationProposal,
 } from "@/models/product";
-import { CreateProposal, CustomFormStepProps } from "../create-proposal-form";
+import {
+  CreateProposal,
+  CustomFormStepProps,
+  PropSteps,
+} from "../create-proposal-form";
 import { memo, useState } from "react";
 import { createSolarIrrigationProposal } from "@/actions/proposal";
 import { ViewSolarIrrigationProposal } from "./view-solar-irrigation-proposal";
@@ -68,6 +72,7 @@ export function NewSolarIrrigationProposal() {
   return (
     <>
       <CreateProposal
+        steps={new Set<PropSteps>(["map"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
         createProposalFunc={createSolarIrrigationProposal}

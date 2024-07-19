@@ -48,13 +48,12 @@ type CreateProposalProps<A, T> = {
   onProposalCreation: (proposal: ProductProposal<T>) => void;
   ViewProposal: React.FC<ViewProps<T>>;
   customFormSteps?: Array<React.FC<CustomFormStepProps>>;
+  steps?: Set<PropSteps>;
 };
 
 type PropSteps = "housing" | "map";
 
 type Step = "housing" | "map" | "contact";
-
-type StepCounter = Array<[Step]>;
 
 export function CreateProposal<A, T>({
   consumptionDetails,
@@ -63,21 +62,18 @@ export function CreateProposal<A, T>({
   onProposalCreation,
   ViewProposal,
   customFormSteps,
+  steps,
 }: CreateProposalProps<A, T>) {
-  const directionSet = new Set<Step>(["housing", "map"]);
+  const directionSet = steps || new Set<Step>(["housing", "map"]);
   const directions = Array.from(directionSet);
 
   const [currentStepCounter, setCurrentStepCounter] = useState(0);
   const [currentStep, setCurrentStep] = useState(
     directions.length > 0 ? directions[0] : null
   );
-  // const currentStep = directions.
 
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
-  const [formStage, setFormStage] = useState<"housing" | "contact" | "map">(
-    "map"
-  );
 
   const [addressSubmit, setAddressSubmit] =
     useState<AddressDescription>(address);
@@ -126,8 +122,10 @@ export function CreateProposal<A, T>({
   });
 
   const moveFromCurrentStep = (move: "N" | "P") => {
-    if (directions.length == currentStepCounter + 1) {
+    if (move === "N" && directions.length == currentStepCounter + 1) {
       setCurrentStep("contact");
+      const nextStepCounter = currentStepCounter + 1;
+      setCurrentStepCounter(nextStepCounter);
       return;
     }
 
@@ -138,6 +136,10 @@ export function CreateProposal<A, T>({
       setCurrentStep(nextStep);
       setCurrentStepCounter(nextStepCounter);
     } else {
+      if (currentStepCounter == 0) {
+        setCustomFormCounter(customFormCounter - 1);
+        return;
+      }
       const nextStepCounter = currentStepCounter - 1;
       const nextStep = directions[nextStepCounter];
 
@@ -175,7 +177,7 @@ export function CreateProposal<A, T>({
         (!customFormSteps?.length ||
           customFormCounter == customFormSteps?.length) && (
           <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
-            {formStage == "map" && (
+            {currentStep == "map" && (
               <div>
                 <div className="flex flex-col space-y-2 mb-4">
                   <TypographyH3
@@ -192,7 +194,8 @@ export function CreateProposal<A, T>({
                               variant="secondary"
                               type="submit"
                               onClick={() =>
-                                setCustomFormCounter(customFormCounter - 1)
+                                // setCustomFormCounter(customFormCounter - 1)
+                                moveFromCurrentStep("P")
                               }
                             >
                               Previous
@@ -200,7 +203,7 @@ export function CreateProposal<A, T>({
                           )}
                           <Button
                             size={"lg"}
-                            onClick={() => setFormStage("housing")}
+                            onClick={() => moveFromCurrentStep("N")}
                           >
                             Next
                           </Button>{" "}
@@ -219,7 +222,7 @@ export function CreateProposal<A, T>({
                 </div>
               </div>
             )}
-            {formStage == "housing" && (
+            {currentStep == "housing" && (
               <>
                 <div>
                   <div className="flex flex-col space-y-2 mb-4 w-100 min-w-0">
@@ -266,14 +269,14 @@ export function CreateProposal<A, T>({
                   </div>
                 </div>
                 <div className="w-full flex place-content-center mb-4 gap-2">
-                  <Button size={"lg"} onClick={() => setFormStage("contact")}>
+                  <Button size={"lg"} onClick={() => moveFromCurrentStep("N")}>
                     Next
                   </Button>
                   <Button
                     size={"lg"}
                     variant="secondary"
                     type="submit"
-                    onClick={() => setFormStage("map")}
+                    onClick={() => moveFromCurrentStep("P")}
                   >
                     Previous
                   </Button>
@@ -281,7 +284,7 @@ export function CreateProposal<A, T>({
               </>
             )}
 
-            {formStage == "contact" && (
+            {currentStep == "contact" && (
               <>
                 <form
                   onSubmit={(e) => {
@@ -378,9 +381,9 @@ export function CreateProposal<A, T>({
                   <div className="w-full flex place-content-center mb-4 gap-2">
                     <Button
                       size={"lg"}
+                      type="button"
                       variant="secondary"
-                      type="submit"
-                      onClick={() => setFormStage("housing")}
+                      onClick={() => moveFromCurrentStep("P")}
                     >
                       Previous
                     </Button>
