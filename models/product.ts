@@ -336,6 +336,7 @@ export type SolarHeater = {
 
 export type HouseholdSolarHeater = SolarHeater & {
   maxNumberOfRooms: number;
+  litres: number;
 };
 
 export type PoolSolarHeater = SolarHeater & {
@@ -348,15 +349,12 @@ export type SolarHeatingParams = {
   poolHeaters: Array<PoolSolarHeater>;
 };
 
-export type SolarHeatingProposalDetails =
-  | {
-      isHousehold: true;
-      heater: HouseholdSolarHeater;
-    }
-  | {
-      isHouseHold: false;
-      heater: PoolSolarHeater;
-    };
+export type SolarHeatingProposalDetails = {
+  type: string;
+  heater: HouseholdSolarHeater | PoolSolarHeater | null;
+  numberOfRooms?: number;
+  poolVolume?: number;
+};
 
 export type SolarIrrigationConsumption = { pumpCapacity: number };
 
@@ -373,8 +371,18 @@ export type OffGridProposal = ProductProposal<OffGridProposalDetails>;
 export type SolarIrrigationProposal =
   ProductProposal<SolarIrrigationProposalDetails>;
 
+export type SolarHeatingConsumption =
+  | {
+      numberOfRooms: number;
+      isHousehold: true;
+    }
+  | {
+      isHousehold: false;
+      poolVolume: number;
+    };
+
 export type SolarHeating = Product<SolarHeatingParams>;
-export type SolarHeatingProposal = Product<SolarHeatingProposalDetails>;
+export type SolarHeatingProposal = ProductProposal<SolarHeatingProposalDetails>;
 
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
@@ -1015,6 +1023,34 @@ export function calculateSolarIrrigationCost(
   return roundToDec(pumpCapacity * pricePerkW * 0.7457);
 }
 
+export function getPoolHeater(
+  poolHeaters: Array<PoolSolarHeater>,
+  poolVolume: number
+): PoolSolarHeater | null {
+  for (let i = 0; i < poolHeaters.length; i++) {
+    const heater = poolHeaters[i];
+    if (heater.minVolume <= poolVolume && poolVolume <= heater.maxVolume) {
+      return heater;
+    }
+  }
+
+  return null;
+}
+
+export function getHouseHoldHeater(
+  houseHoldHeaters: Array<HouseholdSolarHeater>,
+  numberOfRooms: number
+): HouseholdSolarHeater | null {
+  for (let i = 0; i < houseHoldHeaters.length; i++) {
+    const heater = houseHoldHeaters[i];
+    if (numberOfRooms <= heater.maxNumberOfRooms) {
+      return heater;
+    }
+  }
+
+  return null;
+}
+
 const deviceLoadTemplates: DeviceLoadTemplate[] = [
   {
     name: "lamp",
@@ -1570,13 +1606,15 @@ export const solarHeating: SolarHeating = {
     houseHoldHeaters: [
       {
         brand: "300l",
-        price: 297500,
-        maxNumberOfRooms: 6,
+        price: 75000,
+        maxNumberOfRooms: 4,
+        litres: 180,
       },
       {
         brand: "300l",
-        price: 493750,
-        maxNumberOfRooms: 0,
+        price: 95000,
+        maxNumberOfRooms: 7,
+        litres: 300,
       },
     ],
     poolHeaters: [
@@ -1588,15 +1626,27 @@ export const solarHeating: SolarHeating = {
       },
       {
         brand: "Heat Master II X20-26",
-        price: 297500,
+        price: 493750,
         minVolume: 30,
-        maxVolume: 65,
+        maxVolume: 45,
       },
       {
-        brand: "Heat Master III",
-        price: 297500,
-        minVolume: 15,
-        maxVolume: 20,
+        brand: "Heat Master III X20-40T",
+        price: 618750,
+        minVolume: 45,
+        maxVolume: 80,
+      },
+      {
+        brand: "Heat Master IV",
+        price: 847500,
+        minVolume: 80,
+        maxVolume: 120,
+      },
+      {
+        brand: "Heat Master V",
+        price: 1643750,
+        minVolume: 80,
+        maxVolume: 120,
       },
     ],
   },

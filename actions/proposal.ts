@@ -9,6 +9,9 @@ import {
   OffGridParams,
   OffGridProposal,
   ProductProposal,
+  SolarHeatingConsumption,
+  SolarHeatingParams,
+  SolarHeatingProposal,
   SolarIrrigationConsumption,
   SolarIrrigationParams,
   SolarIrrigationProposal,
@@ -29,9 +32,12 @@ import {
   calculateTotalSurgePower,
   calulateCostOfPanels,
   getGridTiedProposal,
+  getHouseHoldHeater,
   getInvertorForOffGrid,
+  getPoolHeater,
   offGridProduct,
   roundToDec,
+  solarHeating,
   solarIrrigation,
 } from "@/models/product";
 import { error } from "console";
@@ -54,9 +60,9 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
-  // const res1 = await db.insert(productTable).values(solarIrrigation);
+  const res1 = await db.insert(productTable).values(solarHeating);
 
-  // console.log(res1);
+  console.log(res1);
   const res = await db
     .select()
     .from(productTable)
@@ -461,6 +467,76 @@ export async function createSolarIrrigationProposal(
   return proposal;
 }
 
+export async function createSolarHeatingProposal(
+  req: ProposalRequestInfo<SolarHeatingConsumption>
+): Promise<SolarHeatingProposal> {
+  const solarHeatingProduct = await getSolarHeating();
+
+  const params = solarHeatingProduct.parameters;
+
+  let proposal;
+  if (req.consumptionDetails.isHousehold) {
+    const heater = getHouseHoldHeater(
+      params.houseHoldHeaters,
+      req.consumptionDetails.numberOfRooms
+    );
+
+    proposal = {
+      name: req.name,
+      emailAddress: req.email,
+      phoneNumber: req.phoneNumber,
+      productId: solarHeatingProduct.id,
+      addressLatitude: req.lat || 0,
+      addressLongitude: req.long || 0,
+      proposalDetails: {
+        type: "house-hold",
+        numberOfRooms: req.consumptionDetails.numberOfRooms,
+        heater,
+      },
+    };
+  } else {
+    const heater = getPoolHeater(
+      params.poolHeaters,
+      req.consumptionDetails.poolVolume
+    );
+
+    proposal = {
+      name: req.name,
+      emailAddress: req.email,
+      phoneNumber: req.phoneNumber,
+      productId: solarHeatingProduct.id,
+      addressLatitude: req.lat || 0,
+      addressLongitude: req.long || 0,
+      proposalDetails: {
+        type: "pool",
+        poolVolume: req.consumptionDetails.poolVolume,
+        heater,
+      },
+    };
+  }
+
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
+
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  return proposal;
+}
+
 export async function getOffGridProduct() {
   try {
     const res = await db
@@ -547,6 +623,51 @@ export async function getSolarIrrigation() {
       },
       currency: "egp",
       parameters: {} as SolarIrrigationParams,
+    };
+  }
+}
+
+export async function getSolarHeating() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "solar-heating"));
+
+    const solarHeatingDb = res[0];
+    const solarHeating = {
+      id: solarHeatingDb.id,
+      name: solarHeatingDb.name,
+      isEnabled: solarHeatingDb.isEnabled,
+      created: {
+        by: solarHeatingDb.createdBy || "",
+        at: solarHeatingDb.createdAt || "",
+      },
+      updated: {
+        by: solarHeatingDb.updatedBy || "",
+        at: solarHeatingDb.updatedAt || "",
+      },
+      currency: solarHeatingDb.currency,
+      parameters: solarHeatingDb.parameters as SolarHeatingParams,
+    };
+
+    return solarHeating;
+  } catch (err) {
+    return {
+      id: 0,
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as SolarHeatingParams,
     };
   }
 }

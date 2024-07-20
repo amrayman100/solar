@@ -25,6 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 export default async function Home() {
   return (
@@ -152,7 +153,7 @@ export default async function Home() {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border">
+        <div className="flex flex-col lg:flex-row gap-20 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border">
           <div
             className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
             style={{ flex: "1 1 0px;" }}
@@ -182,22 +183,6 @@ export default async function Home() {
               <span className="text-base text-primary font-bold">
                 {" "}
                 at your own pace
-              </span>
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4 text="Renting" className="text-center" />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px]">
-              <span className="text-base">
-                Let your worries slip away. No initial investment
-              </span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                save from day one.
               </span>
             </div>
           </div>
@@ -294,6 +279,37 @@ export default async function Home() {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
+        </div>
+        <div className="lg:mt-10 flex flex-col lg:flex-row mx-4 gap-2">
+          <Image
+            alt="logo-bg"
+            src={"/logo-bg.jpg"}
+            blurDataURL={"/logo-bg.jpg"}
+            placeholder="blur"
+            quality={100}
+            height={500}
+            width={500}
+            style={{
+              objectFit: "cover",
+            }}
+          />
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4
+              text="Become a brand ambassador now and earn incentives for every new
+                customer!"
+              className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl"
+            />
+            <div className="text-[0px]">
+              <span className=" text-primary font-bold text-2xl">
+                {" "}
+                Get from 10,000 EGP for every new customer you bring to Bolt
+                Energy
+              </span>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
           <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
