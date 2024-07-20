@@ -79,7 +79,15 @@ export default function Header() {
                 </div>
               </SheetTitle>
             </SheetHeader>
-            <div className="flex flex-col"></div>
+            <div className="flex flex-col mt-2">
+              <TypographyH4 text="Products " />
+              <Link href="/product/solar-irrigation" legacyBehavior passHref>
+                Solar Irrigation
+              </Link>
+              <Link href="/product/solar-heating" legacyBehavior passHref>
+                Solar Heating
+              </Link>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
