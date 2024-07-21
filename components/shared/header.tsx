@@ -143,6 +143,7 @@ export default function Header() {
                       href="/product/solar-heating"
                       title="Solar Heating"
                     ></ListItem>
+                    <ListItem href="/product/ev" title="EV"></ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>

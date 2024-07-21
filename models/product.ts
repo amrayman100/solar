@@ -381,8 +381,29 @@ export type SolarHeatingConsumption =
       poolVolume: number;
     };
 
+export type Charger = {
+  power: number;
+  price: number;
+};
+
+export type EVConsumption = {
+  chargingPower: number;
+};
+
 export type SolarHeating = Product<SolarHeatingParams>;
 export type SolarHeatingProposal = ProductProposal<SolarHeatingProposalDetails>;
+
+export type EVParams = {
+  chargers: Array<Charger>;
+};
+
+export type EVProposalDetails = {
+  chargingPower: number;
+  charger: Charger;
+};
+
+export type EV = Product<EVParams>;
+export type EVProposal = ProductProposal<EVProposalDetails>;
 
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
@@ -1051,6 +1072,21 @@ export function getHouseHoldHeater(
   return null;
 }
 
+export function getEVChargerCost(
+  chargers: Array<Charger>,
+  consumptionChargingPower: number
+) {
+  let cost = 0;
+  for (let i = 0; i++; i < chargers.length) {
+    const charger = chargers[i];
+    if (charger.power == consumptionChargingPower) {
+      cost = charger.price;
+    }
+  }
+
+  return cost;
+}
+
 const deviceLoadTemplates: DeviceLoadTemplate[] = [
   {
     name: "lamp",
@@ -1647,6 +1683,28 @@ export const solarHeating: SolarHeating = {
         price: 1643750,
         minVolume: 80,
         maxVolume: 120,
+      },
+    ],
+  },
+};
+
+export const ev: EV = {
+  name: "ev",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {
+    chargers: [
+      {
+        power: 7,
+        price: 27000,
+      },
+      {
+        power: 11,
+        price: 29000,
+      },
+      {
+        power: 11,
+        price: 29000,
       },
     ],
   },
