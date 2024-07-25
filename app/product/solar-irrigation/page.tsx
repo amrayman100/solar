@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function GridTiedProposalPage() {
+export default async function SolarIrrigationPage() {
   return (
     <>
       <main className="flex-grow">
