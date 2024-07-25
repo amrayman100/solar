@@ -399,7 +399,7 @@ export type EVParams = {
 
 export type EVProposalDetails = {
   chargingPower: number;
-  charger: Charger;
+  charger: Charger | null;
 };
 
 export type EV = Product<EVParams>;
@@ -1072,19 +1072,19 @@ export function getHouseHoldHeater(
   return null;
 }
 
-export function getEVChargerCost(
+export function getEVCharger(
   chargers: Array<Charger>,
   consumptionChargingPower: number
 ) {
-  let cost = 0;
-  for (let i = 0; i++; i < chargers.length) {
+  for (let i = 0; i < chargers.length; i++) {
     const charger = chargers[i];
+    console.log(charger.power, consumptionChargingPower);
     if (charger.power == consumptionChargingPower) {
-      cost = charger.price;
+      return charger;
     }
   }
 
-  return cost;
+  return null;
 }
 
 const deviceLoadTemplates: DeviceLoadTemplate[] = [
@@ -1703,7 +1703,7 @@ export const ev: EV = {
         price: 29000,
       },
       {
-        power: 11,
+        power: 22,
         price: 29000,
       },
     ],

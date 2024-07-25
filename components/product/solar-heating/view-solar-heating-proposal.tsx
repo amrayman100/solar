@@ -42,7 +42,7 @@ export function ViewSolarHeatingProposal({
               )}
               {details.heater && (
                 <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
-                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 w-1/3">
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
                     <TypographyH3 text="Heater" className="font-bold" />
                     <div className="flex-col flex gap-2">
                       <div className="">
@@ -60,7 +60,7 @@ export function ViewSolarHeatingProposal({
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 w-1/3">
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
                     <TypographyH3
                       text="Number Of Rooms"
                       className="font-bold"
@@ -98,7 +98,7 @@ export function ViewSolarHeatingProposal({
               )}
               {details.heater && (
                 <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
-                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 w-1/3">
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
                     <TypographyH3 text="Heater" className="font-bold" />
                     <div className="flex-col flex gap-2">
                       <div className="">
@@ -116,7 +116,7 @@ export function ViewSolarHeatingProposal({
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 w-1/3">
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
                     <TypographyH3 text="Pool Volume" className="font-bold" />
                     <div className="flex-col flex gap-2">
                       <div>

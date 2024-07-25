@@ -83,7 +83,7 @@ export default async function EV() {
                 <div className="mt-4">
                   <Link
                     className="text-2xl scroll-m-20 font-extrabold tracking-tight text-primary"
-                    href={"/proposal/solar-heating"}
+                    href={"/proposal/ev"}
                   >
                     Click here for a free consultation!
                   </Link>

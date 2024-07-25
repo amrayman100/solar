@@ -2,6 +2,9 @@
 import { db } from "@/lib/db";
 import { productProposalTable, productTable } from "@/lib/schema";
 import {
+  EVConsumption,
+  EVParams,
+  EVProposal,
   GridTied,
   GridTiedParams,
   GridTiedProposal,
@@ -31,6 +34,8 @@ import {
   calculateTotalPower,
   calculateTotalSurgePower,
   calulateCostOfPanels,
+  ev,
+  getEVCharger,
   getGridTiedProposal,
   getHouseHoldHeater,
   getInvertorForOffGrid,
@@ -57,6 +62,10 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
+  // const res1 = await db.insert(productTable).values(ev);
+
+  // console.log(res1);
+
   const res = await db
     .select()
     .from(productTable)
@@ -531,6 +540,53 @@ export async function createSolarHeatingProposal(
   return proposal;
 }
 
+export async function createEVProposal(
+  req: ProposalRequestInfo<EVConsumption>
+): Promise<EVProposal> {
+  const product = await getEV();
+
+  const params = product.parameters;
+
+  const charger = getEVCharger(
+    params.chargers,
+    req.consumptionDetails.chargingPower
+  );
+
+  const proposal = {
+    name: req.name,
+    emailAddress: req.email,
+    phoneNumber: req.phoneNumber,
+    productId: product.id,
+    addressLatitude: req.lat || 0,
+    addressLongitude: req.long || 0,
+    proposalDetails: {
+      chargingPower: req.consumptionDetails.chargingPower,
+      charger,
+    },
+  };
+
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
+
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  return proposal;
+}
+
 export async function getOffGridProduct() {
   try {
     const res = await db
@@ -662,6 +718,51 @@ export async function getSolarHeating() {
       },
       currency: "egp",
       parameters: {} as SolarHeatingParams,
+    };
+  }
+}
+
+export async function getEV() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "ev"));
+
+    const evDb = res[0];
+    const ev = {
+      id: evDb.id,
+      name: evDb.name,
+      isEnabled: evDb.isEnabled,
+      created: {
+        by: evDb.createdBy || "",
+        at: evDb.createdAt || "",
+      },
+      updated: {
+        by: evDb.updatedBy || "",
+        at: evDb.updatedAt || "",
+      },
+      currency: evDb.currency,
+      parameters: evDb.parameters as EVParams,
+    };
+
+    return ev;
+  } catch (err) {
+    return {
+      id: 0,
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as EVParams,
     };
   }
 }
