@@ -405,6 +405,58 @@ export type EVProposalDetails = {
 export type EV = Product<EVParams>;
 export type EVProposal = ProductProposal<EVProposalDetails>;
 
+export type WholeSaleMeters = {
+  meterCapacity: number;
+  numberOfMeters: number;
+  type: "mono" | "bi";
+};
+
+export type WholeSaleSolarStreetLight = {
+  lightPowerWatt: number;
+  poleHeight: number;
+  numberOfLights: number;
+};
+
+export type WholeSaleCables = {
+  type: string;
+  thickness: number;
+  make: string;
+  numberOfCables: number;
+};
+
+export type WholeSaleMountingStructure = {
+  type: "alum" | "steel";
+  quantityWattPerMetricTon: number;
+};
+
+export type WholeSalePanels = {
+  inputWatt: number;
+  numberOfPanels: number;
+};
+
+export type WholeSaleInverters = {
+  capacityKW: number;
+  numberOfInverters: number;
+};
+
+export type WholeSaleConsumption = {
+  meters?: WholeSaleMeters;
+  streetLights?: WholeSaleSolarStreetLight;
+  panels?: WholeSalePanels;
+  cables?: WholeSaleCables;
+  inverters?: WholeSaleInverters;
+  companyName?: string;
+  mountingStructures?: WholeSaleMountingStructure;
+};
+
+export type WholeSaleProposalDetails = {
+  order: WholeSaleConsumption;
+};
+
+export type WholeSale = Product<{}>;
+
+export type WholeSaleProposal = ProductProposal<WholeSaleProposalDetails>;
+
 export function calculateTotalPower(deviceLoads: Array<DeviceLoad>) {
   let totalPower = 0;
 
@@ -1708,4 +1760,11 @@ export const ev: EV = {
       },
     ],
   },
+};
+
+export const wholeSale: WholeSale = {
+  name: "whole-sale",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {},
 };

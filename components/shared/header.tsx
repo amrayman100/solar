@@ -142,6 +142,10 @@ export default function Header() {
                       title="Solar Heating"
                     ></ListItem>
                     <ListItem href="/product/ev" title="EV Charging"></ListItem>
+                    <ListItem
+                      href="/proposal/off-grid"
+                      title="Off Grid Batteries"
+                    ></ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -149,6 +153,13 @@ export default function Header() {
                 <Link href="/services" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Services
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/proposal/whole-sale" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Wholesale
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>

@@ -32,9 +32,8 @@ export default async function EV() {
               quality={100}
               height={500}
               width={500}
-              style={{
-                objectFit: "cover",
-              }}
+              sizes="100vw"
+              className="lg:w-1/3 h-auto"
             />
             <div className="flex justify-center h-full">
               <div className="m-auto flex flex-col">

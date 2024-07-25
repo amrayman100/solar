@@ -26,7 +26,7 @@ export default async function Home() {
                 Enhance your solar experience with our expert services, ensuring
                 maximum
               </span>
-              <span className="text-2xl text-primary font-bold">
+              <span className="text-lg text-primary font-bold">
                 {" "}
                 efficiency and durability
               </span>
@@ -77,7 +77,7 @@ export default async function Home() {
               className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl"
             />
             <div className="text-[0px]">
-              <span className="font-normal text-2xl">
+              <span className="font-normal text-lg">
                 Our maintenance service ensures your installation remains in top
                 condition for maximum performance and durability. We will
                 inspect, update, and clean your system to guarantee optimal

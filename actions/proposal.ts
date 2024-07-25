@@ -18,6 +18,8 @@ import {
   SolarIrrigationConsumption,
   SolarIrrigationParams,
   SolarIrrigationProposal,
+  WholeSaleConsumption,
+  WholeSaleProposal,
   calculateActualC,
   calculateNumberOfOffGridBatteries,
   calculateNumberOfOffGridBatteryStrings,
@@ -41,6 +43,7 @@ import {
   getInvertorForOffGrid,
   getPoolHeater,
   roundToDec,
+  wholeSale,
 } from "@/models/product";
 import { error } from "console";
 import { eq } from "drizzle-orm";
@@ -62,7 +65,7 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
-  // const res1 = await db.insert(productTable).values(ev);
+  // const res1 = await db.insert(productTable).values(wholeSale);
 
   // console.log(res1);
 
@@ -587,6 +590,45 @@ export async function createEVProposal(
   return proposal;
 }
 
+export async function createWholesaleProposal(
+  req: ProposalRequestInfo<WholeSaleConsumption>
+): Promise<WholeSaleProposal> {
+  const product = await getWholeSale();
+
+  const proposal = {
+    name: req.name,
+    emailAddress: req.email,
+    phoneNumber: req.phoneNumber,
+    productId: product.id,
+    addressLatitude: req.lat || 0,
+    addressLongitude: req.long || 0,
+    proposalDetails: {
+      order: { ...req.consumptionDetails },
+    },
+  };
+
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
+
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  return proposal;
+}
+
 export async function getOffGridProduct() {
   try {
     const res = await db
@@ -763,6 +805,51 @@ export async function getEV() {
       },
       currency: "egp",
       parameters: {} as EVParams,
+    };
+  }
+}
+
+export async function getWholeSale() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "whole-sale"));
+
+    const evDb = res[0];
+    const ev = {
+      id: evDb.id,
+      name: evDb.name,
+      isEnabled: evDb.isEnabled,
+      created: {
+        by: evDb.createdBy || "",
+        at: evDb.createdAt || "",
+      },
+      updated: {
+        by: evDb.updatedBy || "",
+        at: evDb.updatedAt || "",
+      },
+      currency: evDb.currency,
+      parameters: evDb.parameters as {},
+    };
+
+    return ev;
+  } catch (err) {
+    return {
+      id: 0,
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as {},
     };
   }
 }
