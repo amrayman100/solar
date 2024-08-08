@@ -38,11 +38,11 @@ export default async function Home() {
         >
           <div className="flex justify-center h-full">
             <div className="m-auto flex flex-col">
-              <div>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white">
+              <div className="text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white text-center">
                   Get Your Free Solar Quote{" "}
                 </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary text-center">
                   Instantly
                 </span>
               </div>
@@ -51,12 +51,12 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-6 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
             Maximum savings from day one
           </div>
           <TypographyH2
             text="It's time to generate your own energy and save"
-            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3 text-center"
           />
         </div>
 
@@ -144,12 +144,12 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
             Different options , for different needs
           </div>
           <TypographyH2
             text="we have multiple procurement options to suit your needs"
-            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+            className="text-center text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
           />
         </div>
 
@@ -187,8 +187,8 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
             What our customers think?
           </div>
           <Carousel className="w-2/3 max-h-max">
