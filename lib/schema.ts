@@ -90,3 +90,12 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const contactTable = pgTable("contact", {
+  id: serial("id").primaryKey().notNull(),
+  name: text("name").notNull(),
+  createdAt: date("created_at"),
+  createdBy: text("created_by"),
+  emailAddress: text("email_address"),
+  phoneNumber: text("phone_number").notNull(),
+});

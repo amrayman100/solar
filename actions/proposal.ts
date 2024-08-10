@@ -36,14 +36,12 @@ import {
   calculateTotalPower,
   calculateTotalSurgePower,
   calulateCostOfPanels,
-  ev,
   getEVCharger,
   getGridTiedProposal,
   getHouseHoldHeater,
   getInvertorForOffGrid,
   getPoolHeater,
   roundToDec,
-  wholeSale,
 } from "@/models/product";
 import { error } from "console";
 import { eq } from "drizzle-orm";

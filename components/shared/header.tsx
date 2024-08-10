@@ -26,9 +26,11 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { theme } = useTheme();
+  const router = useRouter();
 
   return (
     <div className="sticky top-0 z-40 bg-white dark:bg-black">
@@ -172,7 +174,11 @@ export default function Header() {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Button variant="default" className="self-center">
+          <Button
+            variant="default"
+            className="self-center"
+            onClick={() => router.push("/contact-us")}
+          >
             Contact Us
           </Button>
         </div>

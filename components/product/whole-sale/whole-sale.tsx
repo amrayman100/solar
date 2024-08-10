@@ -20,7 +20,11 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ViewWholeSaleProposal } from "./view-whole-sale";
-import { TypographyH4Light } from "@/components/shared/typography";
+import {
+  TypographyH1,
+  TypographyH2,
+  TypographyH4Light,
+} from "@/components/shared/typography";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export function NewWholeSaleProposal() {
@@ -52,8 +56,12 @@ export function NewWholeSaleProposal() {
 
     return (
       <div className="flex">
-        <div className="m-10 w-max">
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="m-10 mx-auto">
+          <TypographyH2
+            text="Please enter your order details"
+            className="mb-4"
+          />
+          <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="grid w-full max-w-sm items-center gap-1.5 mb-4">
               <Label htmlFor={"device-load-picture-name-"}>
                 Company Name (optional)
@@ -82,8 +90,6 @@ export function NewWholeSaleProposal() {
                     {...register(`meters.numberOfMeters`)}
                   />
                 </div>
-              </div>
-              <div className="flex gap-4 my-4 flex-col lg:flex-row">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                   <Controller
                     name="meters.type"
@@ -147,11 +153,10 @@ export function NewWholeSaleProposal() {
                     {...register(`streetLights.poleHeight`)}
                   />
                 </div>
-              </div>
-              <div className="flex gap-4 my-4 flex-col lg:flex-row">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                   <Label htmlFor={"device-load-picture-name-"}>Quantity</Label>
                   <Input
+                    defaultValue={0}
                     step={"any"}
                     type="number"
                     {...register(`streetLights.numberOfLights`)}
@@ -170,13 +175,12 @@ export function NewWholeSaleProposal() {
                   <Label htmlFor={"device-load-picture-name-"}>Thickness</Label>
                   <Input type="string" {...register(`cables.thickness`)} />
                 </div>
-              </div>
-              <div className="flex gap-4 my-4 flex-col lg:flex-row">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                   <Label htmlFor={"device-load-picture-name-"}>Make</Label>
                   <Input type="string" {...register(`cables.make`)} />
                 </div>
-
+              </div>
+              <div className="flex gap-4 my-4 flex-col lg:flex-row">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                   <Label htmlFor={"device-load-picture-name-"}>Quantity</Label>
                   <Input
@@ -289,7 +293,7 @@ export function NewWholeSaleProposal() {
                 </div>
               </div>
             </div>
-            <div className="w-max mt-4">
+            <div className="w-max mt-10">
               <div className="flex justify-center align-middle">
                 <Button type="submit">Next</Button>
               </div>

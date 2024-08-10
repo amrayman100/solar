@@ -152,7 +152,7 @@ export function CreateProposal<A, T>({
     <>
       {customFormSteps?.length &&
         customFormCounter < customFormSteps?.length && (
-          <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
+          <div className="mx-auto lg:mt-5 md:mt-5 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
             {customFormSteps.map((Step, i) => {
               if (i !== customFormCounter) {
                 return null;
@@ -176,7 +176,7 @@ export function CreateProposal<A, T>({
       {mode == "submit" &&
         (!customFormSteps?.length ||
           customFormCounter == customFormSteps?.length) && (
-          <div className="mx-auto lg:mt-24 md:mt-24 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
+          <div className="mx-auto lg:mt-5 md:mt-5 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
             {currentStep == "map" && (
               <div>
                 <div className="flex flex-col space-y-2 mb-4">
