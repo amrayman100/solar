@@ -105,16 +105,6 @@ export function ViewOffGridProposal({
                         ).toLocaleString("en", { useGrouping: true })}
                       </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        Cost Of Batteries
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {Math.round(
-                          proposal.proposalDetails.batteriesCost
-                        ).toLocaleString("en", { useGrouping: true })}
-                      </TableCell>
-                    </TableRow>
                   </TableBody>
                 </Table>
               </div>
