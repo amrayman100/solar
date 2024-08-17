@@ -8,6 +8,7 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
+  OffGrid,
   OffGridConsumption,
   OffGridParams,
   OffGridProposal,
@@ -40,6 +41,7 @@ import {
   getGridTiedProposal,
   getHouseHoldHeater,
   getInvertorForOffGrid,
+  getOffGridProposal,
   getPoolHeater,
   roundToDec,
 } from "@/models/product";
@@ -182,244 +184,28 @@ export async function createOffGridProposal(
   console.log(req.consumptionDetails);
   const offGridProduct = await getOffGridProduct();
 
-  const params = offGridProduct.parameters;
+  const proposal = getOffGridProposal(req, offGridProduct.id, offGridProduct);
 
-  const totalPower = calculateTotalPower(req.consumptionDetails.deviceLoads);
-  const surgePower = calculateTotalSurgePower(
-    req.consumptionDetails.deviceLoads
-  );
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
 
-  const inverter = getInvertorForOffGrid(
-    params.inverters,
-    totalPower,
-    surgePower
-  );
-
-  if (inverter) {
-    const actaulC1 = calculateActualC(params.battery, inverter, totalPower);
-    console.log("actual C", actaulC1);
-
-    const realBatteryCapacity = calculateRealBatteryCapacityInterpolation(
-      params.battery,
-      actaulC1
-    );
-
-    console.log("realBatteryCapacity", realBatteryCapacity);
-
-    const solarEnergyNeeded = calculateOffGridSolarEnergyNeeded(
-      req.consumptionDetails.deviceLoads,
-      req.consumptionDetails.isConnectedToGrid
-    );
-
-    console.log("solarEnergyNeeded", solarEnergyNeeded);
-
-    const numberOfBatteryStrings = calculateNumberOfOffGridBatteryStrings(
-      params.battery,
-      inverter,
-      solarEnergyNeeded,
-      realBatteryCapacity || 0
-    );
-
-    console.log("numberOfBatteryStrings", numberOfBatteryStrings);
-
-    const numberOfBatteries = calculateNumberOfOffGridBatteries(
-      numberOfBatteryStrings,
-      params.battery,
-      inverter
-    );
-
-    console.log("numberOfBatteries", numberOfBatteries);
-
-    let numberOfPanels = 0;
-
-    console.log(
-      "isConnected to grid: ",
-      req.consumptionDetails.isConnectedToGrid
-    );
-
-    if (!req.consumptionDetails.isConnectedToGrid) {
-      numberOfPanels = calculateNumberOfOffGridPanels(
-        solarEnergyNeeded,
-        params.panel,
-        4.5
-      );
-
-      console.log("numberOfPanels", numberOfPanels);
-    }
-
-    const costOfPanels = calulateCostOfPanels(
-      numberOfPanels,
-      params.dollarRate,
-      params.panel
-    );
-    console.log(costOfPanels);
-
-    const inverterBaseCost = inverter.price;
-    console.log("inverterBaseCos: ", inverterBaseCost);
-
-    const inverterAcCableCost =
-      inverter.acCable.price * inverter.acCable.quantity;
-    console.log("inverterAcCableCost: ", inverterAcCableCost);
-
-    const inverterACEarthCableCost =
-      inverter.acCable.acEarthCable.price *
-      inverter.acCable.acEarthCable.quantity;
-    console.log("inverterACEarthCableCost: ", inverterACEarthCableCost);
-
-    const inverterCircuitBreakerCost =
-      inverter.circuitBreaker.price * inverter.circuitBreaker.quantity;
-
-    console.log("inverterCircuitBreakerCost: ", inverterCircuitBreakerCost);
-
-    const batteriesCost = params.battery.price * numberOfBatteries;
-    console.log("batteriesCost: ", batteriesCost);
-
-    const mountingStructureCost = calculateOffGridMountingStructureCost(
-      numberOfPanels,
-      params.mountingPrice,
-      params.panel
-    );
-    console.log("mountingStructureCost: ", mountingStructureCost);
-
-    const dcCableCosts = calculateOffGridDCCableCost(
-      numberOfPanels,
-      params.dcCable
-    );
-    console.log("dcCableCosts: ", dcCableCosts);
-
-    const batteryCableCosts = calculateOffGridBatteryCableCosts(
-      numberOfBatteryStrings,
-      params.battery
-    );
-    console.log("batteryCableCosts: ", batteryCableCosts);
-
-    const labourCost = params.labourCost;
-    console.log("labourCost: ", labourCost);
-
-    const mc4Cost = calculateOffGridMc4Cost(params.mc4, numberOfPanels);
-    console.log("mc4Cost: ", mc4Cost);
-
-    const manualTransferSwitchCost =
-      params.manualTransferSwitch.price * params.manualTransferSwitch.quantity;
-    console.log(manualTransferSwitchCost, manualTransferSwitchCost);
-
-    const batteryCircuitBreakerCost =
-      params.battery.circuitBreaker.price *
-      params.battery.circuitBreaker.quantity;
-    console.log("batteryCircuitBreakerCost: ", batteryCircuitBreakerCost);
-
-    const fuseCost = calculateOffGridFusePrice(params.fuse, numberOfPanels);
-    console.log("fuseCost: ", fuseCost);
-
-    const switchBoxCost = params.panel.switchBox.price;
-    console.log("switchBoxCost: ", switchBoxCost);
-
-    const cleaningToolCost = numberOfPanels > 0 ? params.cleaningToolPrice : 0;
-    console.log("cleaningToolCost: ", cleaningToolCost);
-
-    const batteryStandCost = req.consumptionDetails.placeBatteriesIndoors
-      ? params.batteryStandPrice.insideHousePrice
-      : params.batteryStandPrice.outsideHousePerFourBatteriesPrice;
-    console.log("batteryStandCost: ", batteryStandCost);
-
-    const totalCost =
-      costOfPanels +
-      inverterBaseCost +
-      inverterAcCableCost +
-      inverterACEarthCableCost +
-      inverterCircuitBreakerCost +
-      batteriesCost +
-      mountingStructureCost +
-      dcCableCosts +
-      batteryCableCosts +
-      labourCost +
-      mc4Cost +
-      manualTransferSwitchCost +
-      batteryCircuitBreakerCost +
-      fuseCost +
-      switchBoxCost +
-      cleaningToolCost +
-      batteryStandCost;
-
-    console.log("totalCost :", totalCost);
-
-    const sellingCost = calculateSellingCost(totalCost, params.markup);
-
-    const proposal = {
-      name: req.name,
-      emailAddress: req.email,
-      phoneNumber: req.phoneNumber,
-      productId: offGridProduct.id,
-      addressLatitude: req.lat || 0,
-      addressLongitude: req.long || 0,
-      proposalDetails: {
-        isConnectedToGrid: req.consumptionDetails.isConnectedToGrid,
-        deviceLoads: req.consumptionDetails.deviceLoads,
-        inverter: {
-          inverterInfo: inverter,
-          inverterACCableCost: inverterAcCableCost,
-          inverterACCableEarthCost: inverterACEarthCableCost,
-          inverterCircuitBreaker: inverterCircuitBreakerCost,
-        },
-        costOfPanels: costOfPanels,
-        batteriesCost: batteriesCost,
-        mountingStructureCost: mountingStructureCost,
-        dcCableCosts: dcCableCosts,
-        batteryCableCosts: batteryCableCosts,
-        labourCost: labourCost,
-        mc4Cost: mc4Cost,
-        manualTransferSwitchCost: manualTransferSwitchCost,
-        batteryCircuitBreakerCost: batteryCircuitBreakerCost,
-        fuseCost: fuseCost,
-        switchBoxCost: switchBoxCost,
-        cleaningToolCost: cleaningToolCost,
-        batteryStandCost: batteryStandCost,
-        totalCost: totalCost,
-        sellingCost: sellingCost,
-        billing: {
-          downPaymentFee: roundToDec(
-            params.billingPercentage.downPaymentPercentage * sellingCost
-          ),
-          componentsSupplyFee: roundToDec(
-            params.billingPercentage.componentsSupplyPercentage * sellingCost
-          ),
-          installationFee: roundToDec(
-            params.billingPercentage.installationPercentage * sellingCost
-          ),
-          commissionFee: roundToDec(
-            params.billingPercentage.commissionPercentage * sellingCost
-          ),
-        },
-        battery: params.battery,
-        numberOfBatteries: numberOfBatteries,
-        panel: params.panel,
-        numberOfPanels: numberOfPanels,
-      },
-    };
-
-    const insertResult = await db
-      .insert(productProposalTable)
-      .values({
-        productId: proposal.productId,
-        name: proposal.name,
-        emailAddress: proposal.emailAddress,
-        phoneNumber: proposal.phoneNumber,
-        addressLatitude: req.lat?.toString(),
-        addressLongitude: req.long?.toString(),
-        createdAt: new Date().toLocaleDateString(),
-        createdBy: req.email,
-        proposalDetails: proposal.proposalDetails,
-      })
-      .returning();
-
-    if (insertResult.length < 0) {
-      throw new Error("failed to insert");
-    }
-
-    return proposal;
-  } else {
-    throw error("inverter not found");
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
   }
+
+  return proposal;
 }
 
 export async function createSolarIrrigationProposal(

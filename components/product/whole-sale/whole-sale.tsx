@@ -1,27 +1,19 @@
 "use client";
 
-import {
-  Charger,
-  EVConsumption,
-  EVProposal,
-  WholeSaleConsumption,
-  WholeSaleProposal,
-} from "@/models/product";
+import { WholeSaleConsumption, WholeSaleProposal } from "@/models/product";
 import {
   CreateProposal,
   CustomFormStepProps,
   PropSteps,
 } from "../create-proposal-form";
 import { memo, useState } from "react";
-import { createEVProposal, createWholesaleProposal } from "@/actions/proposal";
+import { createWholesaleProposal } from "@/actions/proposal";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { IoIosArrowDropdown } from "react-icons/io";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ViewWholeSaleProposal } from "./view-whole-sale";
 import {
-  TypographyH1,
   TypographyH2,
   TypographyH4Light,
 } from "@/components/shared/typography";
@@ -30,9 +22,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 export function NewWholeSaleProposal() {
   const [consumptionDetails, setConsumptionDetails] =
     useState<WholeSaleConsumption>({});
-
-  const [chargingPower, setChargingPower] = useState(0);
-  const [customMode, setCustomMode] = useState(false);
 
   const MemoziedLoadsConsumptionForm = memo(function LoadsConsumptionForm(
     props: CustomFormStepProps

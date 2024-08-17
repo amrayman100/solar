@@ -42,8 +42,6 @@ export function NewEVProposal({ chargers }: { chargers: Array<Charger> }) {
     });
 
     const onSubmit: SubmitHandler<{}> = (data) => {
-      debugger;
-
       setConsumptionDetails({
         chargingPower,
       });

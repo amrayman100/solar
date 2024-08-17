@@ -6,6 +6,7 @@ export async function createContactEntry(req: {
   name: string;
   email: string;
   phoneNumber: string;
+  type: string;
 }) {
   const res = await db.insert(contactTable).values({ ...req });
   return res;

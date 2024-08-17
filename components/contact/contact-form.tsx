@@ -11,11 +11,19 @@ import { useMutation } from "@tanstack/react-query";
 import { createContactEntry } from "@/actions/contact";
 import { useRouter } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 type ContactForm = {
   email: string;
   name: string;
   phoneNumber: string;
+  type: string;
 };
 
 const formFactory = createFormFactory<ContactForm>({
@@ -23,6 +31,7 @@ const formFactory = createFormFactory<ContactForm>({
     email: "",
     name: "",
     phoneNumber: "",
+    type: "",
   },
 });
 
@@ -45,7 +54,6 @@ export function ContactForm() {
 
   return (
     <>
-      {" "}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -116,7 +124,7 @@ export function ContactForm() {
           name="phoneNumber"
           validatorAdapter={zodValidator}
           validators={{
-            onChange: z.string().regex(phoneRegex, "Invalid phoneNumber"),
+            onChange: z.string().regex(phoneRegex, "Invalid Phone Number"),
           }}
         >
           {(field) => (
@@ -127,7 +135,7 @@ export function ContactForm() {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 className="bg-background mb-4"
-                placeholder="Phone phoneNumber"
+                placeholder="Phone number"
               />
               {field.state.meta.errors ? (
                 <p role="alert" className="text-red-500 mb-2">
@@ -137,7 +145,75 @@ export function ContactForm() {
             </>
           )}
         </form.Field>
-        <div className="w-full flex place-content-center mb-4 gap-2">
+        <form.Field
+          name="type"
+          validatorAdapter={zodValidator}
+          validators={{
+            onChange: ({ value }) =>
+              !value ? "Subject is required" : undefined,
+          }}
+        >
+          {(field) => (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+                  Choose Subject <IoIosArrowDropdown className="mx-3" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("grid-tied");
+                    }}
+                  >
+                    Grid Tied Panels
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("solar-heating");
+                    }}
+                  >
+                    Solar Heating
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("solar-irrigation");
+                    }}
+                  >
+                    Solar Irrigation
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("off-grid");
+                    }}
+                  >
+                    Off Grid Batteries
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("ev-charging");
+                    }}
+                  >
+                    EV Charging
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    key={"template-custom"}
+                    onClick={() => {
+                      field.handleChange("other");
+                    }}
+                  >
+                    Other
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {field.state.meta.errors ? (
+                <p role="alert" className="text-red-500 mt-2">
+                  {field.state.meta.errors.join(", ")}
+                </p>
+              ) : null}
+            </>
+          )}
+        </form.Field>
+        <div className="w-full flex mt-10 gap-2 place-content-center">
           <Button variant="default" type="submit" size={"lg"}>
             Submit
             {mutation.isPending && (

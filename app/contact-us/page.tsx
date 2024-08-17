@@ -1,14 +1,28 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
+import Image from "next/image";
 
 export default async function ContactUs() {
   return (
     <>
       <main className="flex-grow">
         <Header />
-        <div className="m-10 w-1/3 mx-auto mx-auto lg:mt-5 md:mt-5 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
-          <ContactForm />
+        <div className="flex mx-auto align-center justify-center mt-10">
+          <div className="m-10 w-1/3 lg:mt-5 md:mt-5 p-10">
+            <ContactForm />
+          </div>
+          <Image
+            alt="Contact Man"
+            src={"/contact-man.jpeg"}
+            blurDataURL={"/contact-man.jpeg"}
+            placeholder="blur"
+            quality={100}
+            height={400}
+            width={400}
+            sizes="100vw"
+            className="lg:w-1/3 h-auto"
+          />
         </div>
       </main>
       <Footer />

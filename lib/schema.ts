@@ -97,5 +97,6 @@ export const contactTable = pgTable("contact", {
   createdAt: date("created_at"),
   createdBy: text("created_by"),
   emailAddress: text("email_address"),
+  type: text("type"),
   phoneNumber: text("phone_number").notNull(),
 });

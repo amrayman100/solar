@@ -77,7 +77,6 @@ export default function Header() {
               <SheetTitle>
                 <div className="flex justify-between mt-8">
                   <TypographyH4 text={"Menu"} className="self-center" />
-                  <ModeToggle />
                 </div>
               </SheetTitle>
             </SheetHeader>
@@ -126,7 +125,6 @@ export default function Header() {
             />
             <TypographyH3 text="Bolt Energy" className="self-center" />
           </div>
-          <ModeToggle />
         </div>
         <div className="flex">
           <NavigationMenu>

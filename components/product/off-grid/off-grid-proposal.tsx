@@ -1,6 +1,12 @@
 "use client";
 
-import { OffGrid, OffGridConsumption, OffGridProposal } from "@/models/product";
+import {
+  OffGrid,
+  OffGridConsumption,
+  OffGridProposal,
+  getOffGridProposal,
+  offGridProduct,
+} from "@/models/product";
 import { createOffGridProposal } from "@/actions/proposal";
 import { CreateProposal, CustomFormStepProps } from "../create-proposal-form";
 import { ViewOffGridProposal } from "./view-off-grid-proposal";
@@ -22,6 +28,7 @@ import {
   useFieldArray,
   Controller,
 } from "react-hook-form";
+import { TypographyH5 } from "@/components/shared/typography";
 
 const hpToWatt = 746;
 
@@ -46,10 +53,13 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
     } = useForm<OffGridConsumption>({
       defaultValues: consumptionDetails,
     });
+
     const { fields, append, remove } = useFieldArray({
       control,
       name: "deviceLoads",
     });
+
+    const consumptionWatch = watch();
 
     const isConnectedToGridField = watch("isConnectedToGrid");
 
@@ -95,81 +105,169 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
       props.navigate("next");
     };
 
-    return (
-      <div className="flex">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <Controller
-              name="isConnectedToGrid"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <>
-                  <Label className="mb-4">
-                    Are you connected to a governmental grid?
-                  </Label>
-                  <RadioGroup
-                    defaultValue={isConnectedToGridField ? "true" : "false"}
-                    className="mt-2"
-                    {...register(`isConnectedToGrid`, { required: false })}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="true"
-                        id="r1"
-                        onClick={() => field.onChange(true)}
-                      />
-                      <Label htmlFor="r1">Yes</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="false"
-                        id="r2"
-                        onClick={() => field.onChange(false)}
-                      />
-                      <Label htmlFor="r2">No</Label>
-                    </div>
-                  </RadioGroup>
-                </>
-              )}
-            />
-          </div>
+    function Status() {
+      try {
+        const proposal = getOffGridProposal(
+          {
+            consumptionDetails: consumptionWatch,
+            city: "",
+            name: "",
+            phoneNumber: "",
+          },
+          1,
+          offGridProduct
+        );
 
-          <div className="w-max mb-4">
-            <Controller
-              name="placeBatteriesIndoors"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <>
-                  <Label className="mb-4">
-                    Do you want to place batteries indoors?
-                  </Label>
-                  <RadioGroup
-                    defaultValue="false"
-                    className="mt-2"
-                    {...register(`placeBatteriesIndoors`, { required: false })}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="true"
-                        id="r3"
-                        onClick={() => field.onChange(true)}
-                      />
-                      <Label htmlFor="r1">Yes</Label>
+        const details = proposal.proposalDetails;
+
+        return (
+          <>
+            <TypographyH5 text="Current Status:" />
+            <div className="flex gap-2 mt-1 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
+              <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
+                <div className="flex-col flex gap-2">
+                  <div className="">
+                    <span>{"Number of Batteries: "}</span>
+                    <span className="font-bold">
+                      {details.numberOfBatteries || 0}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {!proposal.proposalDetails.isConnectedToGrid && (
+                <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
+                  <div className="flex-col flex gap-2">
+                    <div className="">
+                      <span>{"Number of Panels: "}</span>
+                      <span className="font-bold">
+                        {details.numberOfPanels || 0}
+                      </span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="false"
-                        id="r4"
-                        onClick={() => field.onChange(false)}
-                      />
-                      <Label htmlFor="r2">No</Label>
-                    </div>
-                  </RadioGroup>
-                </>
+                  </div>
+                </div>
               )}
-            />
+            </div>
+          </>
+        );
+      } catch (err) {
+        return (
+          <>
+            <TypographyH5 text="Your current usage will need a custom solution" />
+          </>
+        );
+      }
+    }
+
+    return (
+      <div className="flex w-[80vw]">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex mb-4 gap-4">
+            <div>
+              <Controller
+                name="isConnectedToGrid"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <>
+                    <Label className="mb-4">
+                      Are you connected to a governmental grid?
+                    </Label>
+                    <RadioGroup
+                      defaultValue={isConnectedToGridField ? "true" : "false"}
+                      className="mt-2"
+                      {...register(`isConnectedToGrid`, { required: false })}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="true"
+                          id="r1"
+                          onClick={() => field.onChange(true)}
+                        />
+                        <Label htmlFor="r1">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="false"
+                          id="r2"
+                          onClick={() => field.onChange(false)}
+                        />
+                        <Label htmlFor="r2">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </>
+                )}
+              />
+            </div>
+            <div>
+              <Controller
+                name="placeBatteriesIndoors"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <>
+                    <Label className="mb-4">
+                      Do you want to place batteries indoors?
+                    </Label>
+                    <RadioGroup
+                      defaultValue="false"
+                      className="mt-2"
+                      {...register(`placeBatteriesIndoors`, {
+                        required: false,
+                      })}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="true"
+                          id="r3"
+                          onClick={() => field.onChange(true)}
+                        />
+                        <Label htmlFor="r1">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="false"
+                          id="r4"
+                          onClick={() => field.onChange(false)}
+                        />
+                        <Label htmlFor="r2">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </>
+                )}
+              />
+            </div>
+          </div>
+          <div className="mt-10 mb-2 w-max">
+            <DropdownMenu>
+              <DropdownMenuTrigger>Add New Device</DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {product?.parameters?.deviceLoadTemplates?.map((temp, key) => {
+                  return (
+                    <DropdownMenuItem
+                      key={"template-" + key}
+                      onClick={() =>
+                        append({
+                          name: temp.name,
+                          hasSurgePower: temp.hasSurgePower,
+                          powerWatt: temp.powerWatt,
+                          powerHP:
+                            Math.round((temp.powerWatt / hpToWatt) * 100) / 100,
+                          quantity: 1,
+                          hasManualTransferSwitch: temp.hasManualTransferSwitch,
+                          isCustom: false,
+                          unit: temp.unit,
+                          morningHours: 1,
+                          eveningHours: 1,
+                          workingHours: 1,
+                        })
+                      }
+                    >
+                      {temp.name}
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           {fields.map((field, i) => (
             <div
@@ -320,39 +418,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
               </div>
             </div>
           ))}
-
-          <div className="m-10 w-max">
-            <DropdownMenu>
-              <DropdownMenuTrigger>Add New Device</DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {product?.parameters?.deviceLoadTemplates?.map((temp, key) => {
-                  return (
-                    <DropdownMenuItem
-                      key={"template-" + key}
-                      onClick={() =>
-                        append({
-                          name: temp.name,
-                          hasSurgePower: temp.hasSurgePower,
-                          powerWatt: temp.powerWatt,
-                          powerHP:
-                            Math.round((temp.powerWatt / hpToWatt) * 100) / 100,
-                          quantity: 1,
-                          hasManualTransferSwitch: temp.hasManualTransferSwitch,
-                          isCustom: false,
-                          unit: temp.unit,
-                          morningHours: 1,
-                          eveningHours: 1,
-                          workingHours: 1,
-                        })
-                      }
-                    >
-                      {temp.name}
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <div className="my-4">{Status()}</div>
           <Button type="submit">Next</Button>
         </form>
       </div>
