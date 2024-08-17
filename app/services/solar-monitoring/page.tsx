@@ -1,17 +1,12 @@
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import {
-  TypographyH1,
-  TypographyH2,
   TypographyH3,
-  TypographyH4,
   TypographyH4Light,
-  TypographyH5,
 } from "@/components/shared/typography";
 import Image from "next/image";
-import Link from "next/link";
 
-export default async function SolarIrrigationPage() {
+export default async function SolarMonitoring() {
   return (
     <>
       <main className="flex-grow">

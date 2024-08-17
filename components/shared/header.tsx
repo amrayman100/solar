@@ -154,11 +154,19 @@ export default function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/services" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Services
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                    <ListItem
+                      href="/services/maintenance"
+                      title="Maintenance"
+                    ></ListItem>
+                    <ListItem
+                      href="/services/solar-monitoring"
+                      title="Solar Monitoring"
+                    ></ListItem>
+                  </ul>
+                </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/proposal/whole-sale" legacyBehavior passHref>
