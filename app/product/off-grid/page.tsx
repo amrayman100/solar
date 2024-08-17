@@ -89,7 +89,7 @@ export default async function OffGrid() {
                 />
                 <div className="mt-4">
                   <span className="text-2xl font-semibold tracking-tight">
-                    Ready to take control of your energy future? Let's discuss
+                    Ready to take control of your energy future? Let us discuss
                     how a backup solar off-grid system can benefit you!
                   </span>
                 </div>
