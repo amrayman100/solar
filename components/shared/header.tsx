@@ -94,7 +94,10 @@ export default function Header() {
       </div>
       {/* desktop nav menu */}
       <div className="sticky top-0 z-40 hidden lg:flex md:flex justify-between p-4 lg:mx-12">
-        <div className="flex place-items-center gap-3">
+        <div
+          className="flex place-items-center gap-3 cursor-pointer"
+          onClick={() => router.push("/")}
+        >
           <div className="hidden dark:flex">
             <Image
               alt="Logo"
@@ -172,13 +175,6 @@ export default function Header() {
                 <Link href="/proposal/whole-sale" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Wholesale
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Home
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
