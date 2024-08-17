@@ -147,7 +147,7 @@ export default function Header() {
                     ></ListItem>
                     <ListItem href="/product/ev" title="EV Charging"></ListItem>
                     <ListItem
-                      href="/proposal/off-grid"
+                      href="/product/off-grid"
                       title="Off Grid Batteries"
                     ></ListItem>
                   </ul>
