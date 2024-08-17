@@ -146,6 +146,16 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                   </div>
                 </div>
               )}
+              <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
+                <div className="flex-col flex gap-2">
+                  <div className="">
+                    <span>{"Cost: "}</span>
+                    <span className="font-bold">
+                      {details.sellingCost || 0}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         );
@@ -408,6 +418,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                 key={"device-load-remove-button-container-" + i}
               >
                 <Button
+                  type="button"
                   onClick={() => remove(i)}
                   variant="destructive"
                   className="justify-center self-end"
