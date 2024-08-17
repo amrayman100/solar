@@ -80,15 +80,43 @@ export default function Header() {
                 </div>
               </SheetTitle>
             </SheetHeader>
-            <div className="flex flex-col mt-2">
-              <TypographyH4 text="Products " />
+            <Link href="/" legacyBehavior passHref>
+              <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Home
+              </a>
+            </Link>
+            <div className="flex flex-col">
+              <TypographyH4 text="Products" />
+              <Link href="/product/solar-irrigation" legacyBehavior passHref>
+                Grid Tied
+              </Link>
               <Link href="/product/solar-irrigation" legacyBehavior passHref>
                 Solar Irrigation
               </Link>
               <Link href="/product/solar-heating" legacyBehavior passHref>
                 Solar Heating
               </Link>
+              <Link href="/product/ev" legacyBehavior passHref>
+                EV Charging
+              </Link>
+              <Link href="/product/off-grid" legacyBehavior passHref>
+                Off Grid Batteries
+              </Link>
             </div>
+            <div className="flex flex-col mt-2">
+              <TypographyH4 text="Services" />
+              <Link href="/services/maintenance" legacyBehavior passHref>
+                Maintenance
+              </Link>
+              <Link href="/services/solar-monitoring" legacyBehavior passHref>
+                Solar Monitoring
+              </Link>
+            </div>
+            <Link href="/proposal/whole-sale" legacyBehavior passHref>
+              <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Whole Sale
+              </a>
+            </Link>
           </SheetContent>
         </Sheet>
       </div>

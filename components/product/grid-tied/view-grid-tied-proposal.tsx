@@ -47,7 +47,12 @@ export function ViewGridTiedProposal({
     },
     {
       name: "New Bill",
-      bill: firstYearMonthlyBill < 0 ? 0 : firstYearMonthlyBill,
+      bill:
+        firstYearMonthlyBill < 0
+          ? 0
+          : Math.round(firstYearMonthlyBill).toLocaleString("en", {
+              useGrouping: true,
+            }),
     },
   ];
 
@@ -59,7 +64,7 @@ export function ViewGridTiedProposal({
     {
       name: "5 year",
       savings: calculateCumulativeSavings(
-        10,
+        5,
         details.firstYearSavings,
         details.panelDegradation,
         details.tarifEscalation
@@ -111,7 +116,7 @@ export function ViewGridTiedProposal({
       >
         <TypographyH1
           text="Your Solution"
-          className="bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+          className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
         />
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
@@ -166,16 +171,6 @@ export function ViewGridTiedProposal({
                     <TableCell className="text-right font-bold">
                       {Math.round(
                         proposal.proposalDetails.sellingCost
-                      ).toLocaleString("en", { useGrouping: true })}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">
-                      Price Per Watt
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {Math.round(
-                        proposal.proposalDetails.pricePerWatt
                       ).toLocaleString("en", { useGrouping: true })}
                     </TableCell>
                   </TableRow>
@@ -264,7 +259,9 @@ export function ViewGridTiedProposal({
                     <Tooltip />
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis />
+                    <YAxis
+                      tickFormatter={(value) => value && value.toLocaleString()}
+                    />
                     <Bar
                       dataKey="bill"
                       fill="#82ca9d"
@@ -296,10 +293,16 @@ export function ViewGridTiedProposal({
                         bottom: 5,
                       }}
                     >
-                      <Tooltip />
+                      <Tooltip
+                        formatter={(value) => value && value.toLocaleString()}
+                      />
                       <CartesianGrid stroke="#f5f5f5" />
                       <XAxis dataKey="name" scale="band" />
-                      <YAxis />
+                      <YAxis
+                        tickFormatter={(value) =>
+                          value && value.toLocaleString()
+                        }
+                      />
                       <Bar dataKey="savings" barSize={20} fill="#413ea0" />
                       <Line
                         tooltipType="none"

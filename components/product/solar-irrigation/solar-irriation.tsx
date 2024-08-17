@@ -49,7 +49,7 @@ export function NewSolarIrrigationProposal() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor={"device-load-picture-power-"}>
-              Pump Capacity in horse power
+              Enter your Pump Capacity in horse power
             </Label>
             <Input
               min={1}

@@ -16,10 +16,10 @@ export function ViewSolarHeatingProposal({
   const details = proposal.proposalDetails;
 
   return (
-    <div className="m-auto place-items-center h-screen p-20 ">
+    <div className="m-auto place-items-center h-screen p-20 w-max">
       <div
         // style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
-        className="flex flex-col lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border"
+        className="flex flex-col lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border w-max"
       >
         <div
           //   style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
@@ -79,6 +79,13 @@ export function ViewSolarHeatingProposal({
                   </div>
                 </div>
               )}
+              <div className="text-center mt-2">
+                <TypographyH3
+                  text="Our team will get in contact
+                    within 48 hours"
+                  className="mt-4"
+                />
+              </div>
             </>
           )}
           {details.type == "pool" && (
@@ -129,6 +136,13 @@ export function ViewSolarHeatingProposal({
                   </div>
                 </div>
               )}
+              <div className="text-center mt-2">
+                <TypographyH3
+                  text="Our team will get in contact
+                    within 48 hours"
+                  className="mt-4"
+                />
+              </div>
             </>
           )}
         </div>
