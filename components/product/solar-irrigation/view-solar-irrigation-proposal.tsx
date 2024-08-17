@@ -31,7 +31,7 @@ export function ViewSolarIrrigationProposal({
           />
           <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
             <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
-              <TypographyH3 text="Battery" className="font-bold" />
+              <TypographyH3 text="Irrigation Unit" className="font-bold" />
               <div className="flex-col flex gap-2">
                 <div className="text-center">
                   <span>{"Cost: "}</span>
