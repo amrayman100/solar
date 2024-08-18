@@ -75,7 +75,7 @@ export function CreateProposal<A, T>({
     phoneNumber: string;
   } | null>("user-proposal-info", null);
 
-  const directionSet = steps || new Set<Step>(["housing", "map"]);
+  const directionSet = steps || new Set<Step>([]);
   const directions = Array.from(directionSet);
 
   const [currentStepCounter, setCurrentStepCounter] = useState(0);
@@ -144,6 +144,7 @@ export function CreateProposal<A, T>({
   });
 
   const moveFromCurrentStep = (move: "N" | "P") => {
+    debugger;
     if (move === "N" && directions.length == currentStepCounter + 1) {
       setCurrentStep("contact");
       const nextStepCounter = currentStepCounter + 1;
@@ -188,6 +189,10 @@ export function CreateProposal<A, T>({
                       setCustomFormCounter(customFormCounter + 1);
                     } else {
                       setCustomFormCounter(customFormCounter - 1);
+                    }
+
+                    if (directions.length == 0) {
+                      setCurrentStep("contact");
                     }
                   }}
                 />

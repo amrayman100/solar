@@ -126,7 +126,6 @@ export function NewEVProposal({ chargers }: { chargers: Array<Charger> }) {
   return (
     <>
       <CreateProposal
-        steps={new Set<PropSteps>(["map"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
         createProposalFunc={createEVProposal}

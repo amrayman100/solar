@@ -8,7 +8,11 @@ import {
   offGridProduct,
 } from "@/models/product";
 import { createOffGridProposal } from "@/actions/proposal";
-import { CreateProposal, CustomFormStepProps } from "../create-proposal-form";
+import {
+  CreateProposal,
+  CustomFormStepProps,
+  PropSteps,
+} from "../create-proposal-form";
 import { ViewOffGridProposal } from "./view-off-grid-proposal";
 import { Button } from "@/components/ui/button";
 import { memo, useEffect, useState } from "react";
@@ -439,6 +443,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
   return (
     <>
       <CreateProposal
+        steps={new Set<PropSteps>(["map", "housing"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
         createProposalFunc={createOffGridProposal}

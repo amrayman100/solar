@@ -2,7 +2,7 @@
 
 import { GridTiedProposal } from "@/models/product";
 import { createGridTiedProposal } from "@/actions/proposal";
-import { CreateProposal } from "../create-proposal-form";
+import { CreateProposal, PropSteps } from "../create-proposal-form";
 import { ViewGridTiedProposal } from "./view-grid-tied-proposal";
 import { useReadLocalStorage } from "usehooks-ts";
 import { AddressDescription } from "@/components/map/map";
@@ -20,6 +20,7 @@ export function NewGridTiedProposal() {
     <>
       {
         <CreateProposal
+          steps={new Set<PropSteps>(["map", "housing"])}
           consumptionDetails={{
             monthlyConsumption: localStorageData?.monthlyConsumption || 0,
           }}

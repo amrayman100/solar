@@ -72,7 +72,7 @@ export function NewSolarIrrigationProposal() {
   return (
     <>
       <CreateProposal
-        steps={new Set<PropSteps>(["map"])}
+        // steps={new Set<PropSteps>(["map"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
         createProposalFunc={createSolarIrrigationProposal}
