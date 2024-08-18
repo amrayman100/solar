@@ -129,7 +129,7 @@ export function NewSolarHeatingProposal() {
   });
 
   return (
-    <div className="w-full p-10 flex">
+    <div className="w-full flex">
       <CreateProposal
         steps={new Set<PropSteps>(["map"])}
         consumptionDetails={consumptionDetails}

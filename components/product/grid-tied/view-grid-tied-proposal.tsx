@@ -28,6 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
+import Header from "@/components/shared/header";
+import { Footer } from "@/components/shared/footer";
 
 export function ViewGridTiedProposal({
   proposal,
@@ -110,14 +113,21 @@ export function ViewGridTiedProposal({
 
   return (
     <div>
+      <Header />
       <div
         style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
         className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
       >
-        <TypographyH1
-          text="Your Solution"
-          className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
-        />
+        <div className="flex pt-4 flex-col">
+          <TypographyH1
+            text="Your Solution"
+            className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
+          />
+          <TypographyH5
+            text="We will contact you in 48 hours"
+            className="text-white mx-3 my-auto font-bold"
+          />
+        </div>
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
             <TypographyH3 text="Solar Panels" className="font-bold" />
@@ -231,6 +241,15 @@ export function ViewGridTiedProposal({
                 </TableBody>
               </Table>
             </div>
+            <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
+              Need Off Grid Batteries to store excess energy?{"  "}
+              <Link
+                className="scroll-m-20 font-extrabold tracking-tight text-primary"
+                href={"/proposal/off-grid"}
+              >
+                Click here for a quote
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -318,6 +337,7 @@ export function ViewGridTiedProposal({
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

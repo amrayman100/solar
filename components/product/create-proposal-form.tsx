@@ -14,7 +14,11 @@ import { useState } from "react";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
-import { useMediaQuery } from "usehooks-ts";
+import {
+  useLocalStorage,
+  useMediaQuery,
+  useReadLocalStorage,
+} from "usehooks-ts";
 import { phoneRegex } from "@/lib/utils";
 import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
@@ -64,6 +68,13 @@ export function CreateProposal<A, T>({
   customFormSteps,
   steps,
 }: CreateProposalProps<A, T>) {
+  const [localStorageData, setLocalStorageData] = useLocalStorage<{
+    address: AddressDescription;
+    email: string;
+    name: string;
+    phoneNumber: string;
+  } | null>("user-proposal-info", null);
+
   const directionSet = steps || new Set<Step>(["housing", "map"]);
   const directions = Array.from(directionSet);
 
@@ -75,8 +86,9 @@ export function CreateProposal<A, T>({
   const [mode, setMode] = useState<"submit" | "view">("submit");
   const [housingType, setHousingType] = useState<"single" | "multi">("single");
 
-  const [addressSubmit, setAddressSubmit] =
-    useState<AddressDescription>(address);
+  const [addressSubmit, setAddressSubmit] = useState<AddressDescription>(
+    localStorageData?.address || address
+  );
 
   const [customFormCounter, setCustomFormCounter] = useState(0);
 
@@ -89,6 +101,11 @@ export function CreateProposal<A, T>({
   });
 
   const form = formFactory.useForm({
+    defaultValues: {
+      name: localStorageData?.name || "",
+      email: localStorageData?.email || "",
+      number: localStorageData?.phoneNumber || "",
+    },
     onSubmit: async ({ value }) => {
       let addressSubmitReq: { lat: number; long: number; city: string };
       if (!addressSubmit) {
@@ -105,7 +122,12 @@ export function CreateProposal<A, T>({
         };
       }
 
-      debugger;
+      setLocalStorageData({
+        address: addressSubmit,
+        name: value.name,
+        email: value.email || "",
+        phoneNumber: value.number,
+      });
 
       const res = mutation.mutateAsync({
         consumptionDetails: consumptionDetails,
