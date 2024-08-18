@@ -62,7 +62,7 @@ export default async function Home() {
 
         <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-[50%]"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <LuWallet className="text-primary text-4xl" />
@@ -82,7 +82,7 @@ export default async function Home() {
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  w-[50%]"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <HiOutlineDevicePhoneMobile className="text-primary text-4xl" />
@@ -105,7 +105,7 @@ export default async function Home() {
 
         <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  w-[50%]"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <LuThumbsUp className="text-primary text-4xl" />
@@ -124,7 +124,7 @@ export default async function Home() {
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  w-[50%]"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <FiBatteryCharging className="text-primary text-4xl" />
