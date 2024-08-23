@@ -9,7 +9,7 @@ export default async function ContactUs() {
       <main className="flex-grow">
         <Header />
         <div className="flex mx-auto align-center justify-center mt-10">
-          <div className="m-10 w-1/3 lg:mt-5 md:mt-5 p-10">
+          <div className="m-10 lg:w-1/3 lg:mt-5 md:mt-5 p-10">
             <ContactForm />
           </div>
           <Image
@@ -21,7 +21,7 @@ export default async function ContactUs() {
             height={400}
             width={400}
             sizes="100vw"
-            className="lg:w-1/3 h-auto"
+            className="lg:w-1/3 hidden lg:block h-auto"
           />
         </div>
       </main>
