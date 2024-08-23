@@ -35,6 +35,7 @@ export const productProposalTable = pgTable("product_proposals", {
   addressLongitude: numeric("address_longitude"),
   emailAddress: text("email_address"),
   phoneNumber: text("phone_number").notNull(),
+  isInterested: boolean("is_interested"),
   proposalDetails: jsonb("proposal_details").notNull(),
 });
 

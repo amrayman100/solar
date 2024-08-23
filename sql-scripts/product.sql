@@ -19,6 +19,7 @@ create TABLE product_proposals (
     address_longitude numeric,
     created_by text,
     created_at date,
+    is_interested boolean,
     proposal_details jsonb NOT NULL,
     FOREIGN KEY(product_id) REFERENCES products(id)
 )

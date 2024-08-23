@@ -8,7 +8,6 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
-  OffGrid,
   OffGridConsumption,
   OffGridParams,
   OffGridProposal,
@@ -21,31 +20,13 @@ import {
   SolarIrrigationProposal,
   WholeSaleConsumption,
   WholeSaleProposal,
-  calculateActualC,
-  calculateNumberOfOffGridBatteries,
-  calculateNumberOfOffGridBatteryStrings,
-  calculateNumberOfOffGridPanels,
-  calculateOffGridBatteryCableCosts,
-  calculateOffGridDCCableCost,
-  calculateOffGridFusePrice,
-  calculateOffGridMc4Cost,
-  calculateOffGridMountingStructureCost,
-  calculateOffGridSolarEnergyNeeded,
-  calculateRealBatteryCapacityInterpolation,
-  calculateSellingCost,
   calculateSolarIrrigationCost,
-  calculateTotalPower,
-  calculateTotalSurgePower,
-  calulateCostOfPanels,
   getEVCharger,
   getGridTiedProposal,
   getHouseHoldHeater,
-  getInvertorForOffGrid,
   getOffGridProposal,
   getPoolHeater,
-  roundToDec,
 } from "@/models/product";
-import { error } from "console";
 import { eq } from "drizzle-orm";
 
 export type ProposalRequestInfo<T> = {
@@ -130,6 +111,8 @@ export async function createGridTiedProposal(
     throw new Error("failed to insert");
   }
 
+  proposal.id = insertResult[0].id;
+
   return proposal;
 }
 
@@ -189,6 +172,7 @@ export async function createOffGridProposal(
   const insertResult = await db
     .insert(productProposalTable)
     .values({
+      id: 0,
       productId: proposal.productId,
       name: proposal.name,
       emailAddress: proposal.emailAddress,
@@ -204,6 +188,8 @@ export async function createOffGridProposal(
   if (insertResult.length < 0) {
     throw new Error("failed to insert");
   }
+
+  proposal.id = insertResult[0].id;
 
   return proposal;
 }
@@ -223,6 +209,7 @@ export async function createSolarIrrigationProposal(
   );
 
   const proposal = {
+    id: 0,
     name: req.name,
     emailAddress: req.email,
     phoneNumber: req.phoneNumber,
@@ -254,6 +241,8 @@ export async function createSolarIrrigationProposal(
     throw new Error("failed to insert");
   }
 
+  proposal.id = insertResult[0].id;
+
   return proposal;
 }
 
@@ -272,6 +261,7 @@ export async function createSolarHeatingProposal(
     );
 
     proposal = {
+      id: 0,
       name: req.name,
       emailAddress: req.email,
       phoneNumber: req.phoneNumber,
@@ -291,6 +281,7 @@ export async function createSolarHeatingProposal(
     );
 
     proposal = {
+      id: 0,
       name: req.name,
       emailAddress: req.email,
       phoneNumber: req.phoneNumber,
@@ -324,6 +315,8 @@ export async function createSolarHeatingProposal(
     throw new Error("failed to insert");
   }
 
+  proposal.id = insertResult[0].id;
+
   return proposal;
 }
 
@@ -340,6 +333,7 @@ export async function createEVProposal(
   );
 
   const proposal = {
+    id: 0,
     name: req.name,
     emailAddress: req.email,
     phoneNumber: req.phoneNumber,
@@ -371,6 +365,8 @@ export async function createEVProposal(
     throw new Error("failed to insert");
   }
 
+  proposal.id = insertResult[0].id;
+
   return proposal;
 }
 
@@ -380,6 +376,7 @@ export async function createWholesaleProposal(
   const product = await getWholeSale();
 
   const proposal = {
+    id: 0,
     name: req.name,
     emailAddress: req.email,
     phoneNumber: req.phoneNumber,
@@ -409,6 +406,8 @@ export async function createWholesaleProposal(
   if (insertResult.length < 0) {
     throw new Error("failed to insert");
   }
+
+  proposal.id = insertResult[0].id;
 
   return proposal;
 }
@@ -635,5 +634,20 @@ export async function getWholeSale() {
       currency: "egp",
       parameters: {} as {},
     };
+  }
+}
+
+export async function setProductProposalInterest(
+  id: number,
+  isInterested: boolean
+) {
+  try {
+    return await db
+      .update(productProposalTable)
+      .set({ isInterested: isInterested })
+      .where(eq(productProposalTable.id, id))
+      .returning({ updatedId: productProposalTable.id });
+  } catch (err) {
+    return err;
   }
 }

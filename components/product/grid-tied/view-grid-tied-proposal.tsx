@@ -31,6 +31,7 @@ import {
 import Link from "next/link";
 import Header from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
+import { ContactMe } from "../contact-me";
 
 export function ViewGridTiedProposal({
   proposal,
@@ -62,11 +63,11 @@ export function ViewGridTiedProposal({
   const cumulativeSavingsBarChartData = [
     {
       name: "1 year",
-      savings: details.firstYearSavings,
+      Savings: details.firstYearSavings,
     },
     {
       name: "5 year",
-      savings: calculateCumulativeSavings(
+      Savings: calculateCumulativeSavings(
         5,
         details.firstYearSavings,
         details.panelDegradation,
@@ -75,7 +76,7 @@ export function ViewGridTiedProposal({
     },
     {
       name: "10 years",
-      savings: calculateCumulativeSavings(
+      Savings: calculateCumulativeSavings(
         10,
         details.firstYearSavings,
         details.panelDegradation,
@@ -84,7 +85,7 @@ export function ViewGridTiedProposal({
     },
     {
       name: "15 years",
-      savings: calculateCumulativeSavings(
+      Savings: calculateCumulativeSavings(
         15,
         details.firstYearSavings,
         details.panelDegradation,
@@ -93,7 +94,7 @@ export function ViewGridTiedProposal({
     },
     {
       name: "20 years",
-      savings: calculateCumulativeSavings(
+      Savings: calculateCumulativeSavings(
         20,
         details.firstYearSavings,
         details.panelDegradation,
@@ -102,7 +103,7 @@ export function ViewGridTiedProposal({
     },
     {
       name: "25 years",
-      savings: calculateCumulativeSavings(
+      Savings: calculateCumulativeSavings(
         25,
         details.firstYearSavings,
         details.panelDegradation,
@@ -123,10 +124,12 @@ export function ViewGridTiedProposal({
             text="Your Solution"
             className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
           />
-          <TypographyH5
-            text="We will contact you in 48 hours"
-            className="text-white mx-3 my-auto font-bold"
-          />
+          <div className="mx-6 mt-2">
+            <ContactMe
+              proposalId={proposal.id}
+              caption="Interested in going solar?"
+            />
+          </div>
         </div>
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
@@ -176,7 +179,7 @@ export function ViewGridTiedProposal({
                 <TableBody>
                   <TableRow>
                     <TableCell className="font-bold">
-                      Total System Price
+                      Total System Cost
                     </TableCell>
                     <TableCell className="text-right font-bold">
                       {Math.round(
@@ -313,7 +316,10 @@ export function ViewGridTiedProposal({
                       }}
                     >
                       <Tooltip
-                        formatter={(value) => value && value.toLocaleString()}
+                        label="Savings"
+                        formatter={(value) =>
+                          value && value.toLocaleString() + " EGP"
+                        }
                       />
                       <CartesianGrid stroke="#f5f5f5" />
                       <XAxis dataKey="name" scale="band" />
@@ -322,12 +328,18 @@ export function ViewGridTiedProposal({
                           value && value.toLocaleString()
                         }
                       />
-                      <Bar dataKey="savings" barSize={20} fill="#413ea0" />
+                      <Bar
+                        dataKey="Savings"
+                        barSize={20}
+                        fill="#413ea0"
+                        label="Savings"
+                      />
                       <Line
                         tooltipType="none"
                         type="monotone"
-                        dataKey="savings"
+                        dataKey="Savings"
                         stroke="#ff7300"
+                        label="Savings"
                       />
                     </ComposedChart>
                   </ResponsiveContainer>

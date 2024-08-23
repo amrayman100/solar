@@ -19,8 +19,8 @@ export default async function GridTied() {
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
               alt="Grid Tied"
-              src={"/drone-2.jpg"}
-              blurDataURL={"/drone-2.jpg"}
+              src={"/grid-tied.jpeg"}
+              blurDataURL={"/grid-tied.jpeg"}
               placeholder="blur"
               quality={100}
               height={500}

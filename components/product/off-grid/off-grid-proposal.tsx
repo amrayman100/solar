@@ -153,9 +153,13 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
               <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
                 <div className="flex-col flex gap-2">
                   <div className="">
-                    <span>{"Cost: "}</span>
+                    <span>{"Price: "}</span>
                     <span className="font-bold">
-                      {details.sellingCost || 0}
+                      {details.sellingCost
+                        ? Math.round(details.sellingCost).toLocaleString("en", {
+                            useGrouping: true,
+                          }) + " E£"
+                        : 0}
                     </span>
                   </div>
                 </div>
@@ -184,7 +188,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                 render={({ field }) => (
                   <>
                     <Label className="mb-4">
-                      Are you connected to a governmental grid?
+                      Are you connected to the governmental grid?
                     </Label>
                     <RadioGroup
                       defaultValue={isConnectedToGridField ? "true" : "false"}

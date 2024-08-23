@@ -23,6 +23,7 @@ export type Product<T> = {
 
 export type ProductProposal<T> = {
   name: string;
+  id: number;
   emailAddress?: string;
   phoneNumber: string;
   productId: number;
@@ -994,6 +995,7 @@ export function getGridTiedProposal(
   );
 
   const proposal: GridTiedProposal = {
+    id: 0,
     name: name,
     emailAddress: email,
     phoneNumber: phoneNumber,
@@ -1310,6 +1312,7 @@ export function getOffGridProposal(
     const sellingCost = calculateSellingCost(totalCost, params.markup);
 
     const proposal = {
+      id: 0,
       name: req.name,
       emailAddress: req.email,
       phoneNumber: req.phoneNumber,
