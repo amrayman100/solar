@@ -9,6 +9,7 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { EVProposal } from "@/models/product";
+import { ContactMe } from "../contact-me";
 
 export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
   const details = proposal.proposalDetails;
@@ -35,11 +36,12 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                 />
                 {!details.charger && (
                   <div>
-                    <TypographyH3
-                      text=" You’ll need a custom solution, our team will get in contact
-                    within 48 hours"
-                      className="mt-4"
-                    />
+                    <div className="">
+                      <ContactMe
+                        proposalId={proposal.id}
+                        caption="You’ll need a custom solution"
+                      />
+                    </div>
                   </div>
                 )}
                 {details.charger && (
@@ -62,11 +64,12 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                         </div>
                       </div>
                     </div>
-                    <TypographyH3
-                      text="Our team will get in contact
-                    within 48 hours"
-                      className="mt-4"
-                    />
+                    <div className="">
+                      <ContactMe
+                        proposalId={proposal.id}
+                        caption="Interested in going solar?"
+                      />
+                    </div>
                   </div>
                 )}
               </div>

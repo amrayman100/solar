@@ -9,6 +9,7 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { GridTiedProposal, SolarIrrigationProposal } from "@/models/product";
+import { ContactMe } from "../contact-me";
 
 export function ViewSolarIrrigationProposal({
   proposal,
@@ -31,10 +32,12 @@ export function ViewSolarIrrigationProposal({
                 text="Your Solution"
                 className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
               />
-              <TypographyH5
-                text="We will contact you in 48 hours"
-                className="text-white mx-3 my-auto font-bold"
-              />
+              <div className="mx-3">
+                <ContactMe
+                  proposalId={proposal.id}
+                  caption="Interested in going solar?"
+                />
+              </div>
             </div>
             <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
               <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">

@@ -9,6 +9,7 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { SolarHeatingProposal } from "@/models/product";
+import { ContactMe } from "../contact-me";
 
 export function ViewSolarHeatingProposal({
   proposal,
@@ -38,11 +39,11 @@ export function ViewSolarHeatingProposal({
                       className="mx-3"
                     />
                     {!details.heater && (
-                      <div>
-                        <TypographyH3
-                          text=" You’ll need a custom solution, our team will get in contact
-                    within 48 hours"
-                          className="mt-4"
+                      <div className="flex mx-auto justify-center mt-2">
+                        <ContactMe
+                          darkMode
+                          proposalId={proposal.id}
+                          caption="You need a custom solution"
                         />
                       </div>
                     )}
@@ -83,15 +84,15 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
+                        <div className="text-center mt-2">
+                          <ContactMe
+                            darkMode
+                            proposalId={proposal.id}
+                            caption="Interested in going solar?"
+                          />
+                        </div>
                       </div>
                     )}
-                    <div className="text-center mt-2">
-                      <TypographyH3
-                        text="Our team will get in contact
-                    within 48 hours"
-                        className="mt-4"
-                      />
-                    </div>
                   </>
                 )}
                 {details.type == "pool" && (
@@ -145,15 +146,15 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
+                        <div className="text-center mt-2">
+                          <ContactMe
+                            darkMode
+                            proposalId={proposal.id}
+                            caption="Interested in going solar?"
+                          />
+                        </div>
                       </div>
                     )}
-                    <div className="text-center mt-2">
-                      <TypographyH3
-                        text="Our team will get in contact
-                    within 48 hours"
-                        className="mt-4"
-                      />
-                    </div>
                   </>
                 )}
               </div>
