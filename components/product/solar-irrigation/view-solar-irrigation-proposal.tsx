@@ -8,7 +8,7 @@ import {
   TypographyH4,
   TypographyH5,
 } from "@/components/shared/typography";
-import { GridTiedProposal, SolarIrrigationProposal } from "@/models/product";
+import { SolarIrrigationProposal } from "@/models/product";
 import { ContactMe } from "../contact-me";
 
 export function ViewSolarIrrigationProposal({

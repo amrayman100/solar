@@ -33,16 +33,16 @@ export default async function Home() {
       <main className="flex-grow w-screen">
         <Header />
         <div
-          style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
+          style={{ backgroundImage: `url(${"/drone-3.jpg"})` }}
           className="bg-cover bg-center w-full h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
         >
           <div className="flex justify-center h-full">
-            <div className="m-auto flex flex-col">
+            <div className=" flex flex-col p-10 rounded-lg to-primary w-fit">
               <div className="text-center">
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-white text-white text-center">
                   Get Your Free Solar Quote{" "}
                 </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white text-center">
                   Instantly
                 </span>
               </div>
@@ -51,7 +51,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-6 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
             Maximum savings from day one
           </div>
           <TypographyH2
@@ -144,7 +144,7 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
             Different options , for different needs
           </div>
           <TypographyH2
@@ -188,7 +188,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
             What our customers think?
           </div>
           <Carousel className="w-2/3 max-h-max">
@@ -300,7 +300,7 @@ export default async function Home() {
             <TypographyH4
               text="Become a brand ambassador now and earn incentives for every new
                 customer!"
-              className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl"
+              className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-emerald-950"
             />
             <div className="text-[0px]">
               <span className=" text-primary font-bold text-2xl">
@@ -312,7 +312,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-emerald-950">
             FAQS
           </div>
           <Accordion type="single" collapsible className="w-2/3">
