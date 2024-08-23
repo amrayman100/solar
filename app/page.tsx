@@ -197,7 +197,7 @@ export default async function Home() {
                     <CardContent className="flex p-6">
                       <span className="">
                         {" "}
-                        Bolt Energy are a good start up company, with more
+                        Bolt Energy is a good start up company, with more
                         projects under their belt. Over all acceptable
                         experience the system was delivered and installed and
                         commissioned as designed and they have good follow up on
@@ -218,7 +218,7 @@ export default async function Home() {
                       <span className="">
                         {" "}
                         I called a couple of other companies that dealt with
-                        Solar energy in Egypt before stumbling upon Solar
+                        Bolt Energy in Egypt before stumbling upon Solar
                         Solutions, but most, if not all of them, were very
                         unsatisfactory. Bolt Energy on the other hand were
                         extremely helpful the whole way through, despite

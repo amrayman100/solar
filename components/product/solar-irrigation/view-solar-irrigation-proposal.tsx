@@ -24,7 +24,7 @@ export function ViewSolarIrrigationProposal({
         <Header />
         <div>
           <div
-            style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
+            style={{ backgroundImage: `url(${"/drone-7.jpeg"})` }}
             className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
           >
             <div className="flex pt-4 flex-col">
@@ -45,7 +45,11 @@ export function ViewSolarIrrigationProposal({
                 <div className="flex-col flex gap-2">
                   <div className="text-center">
                     <span>{"Cost: "}</span>
-                    <span className="font-bold">{details.cost}</span>
+                    <span className="font-bold">
+                      {details?.cost.toLocaleString("en", {
+                        useGrouping: true,
+                      }) + " EGP"}
+                    </span>
                   </div>
                 </div>
               </div>
