@@ -28,7 +28,7 @@ export default async function Home() {
       <main className="flex-grow w-screen">
         <Header />
         <div
-          style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
+          style={{ backgroundImage: `url(${"/drone-4-1.jpeg"})` }}
           className="bg-cover bg-center w-full h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
         >
           <div className="flex justify-center h-full">

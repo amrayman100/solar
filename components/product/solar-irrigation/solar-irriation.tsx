@@ -45,7 +45,10 @@ export function NewSolarIrrigationProposal() {
     };
 
     return (
-      <div className="flex">
+      <div
+      // style={{ backgroundImage: `url(${"/drone-4-1.jpeg"})` }}
+      // className="bg-cover bg-center "
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor={"device-load-picture-power-"}>

@@ -175,29 +175,31 @@ export function CreateProposal<A, T>({
     <>
       {customFormSteps?.length &&
         customFormCounter < customFormSteps?.length && (
-          <div className="mx-auto lg:mt-5 md:mt-5 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
-            {customFormSteps.map((Step, i) => {
-              if (i !== customFormCounter) {
-                return null;
-              }
+          <div className="flex m-auto justify-center align-middle">
+            <div className="lg:mt-40 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
+              {customFormSteps.map((Step, i) => {
+                if (i !== customFormCounter) {
+                  return null;
+                }
 
-              return (
-                <Step
-                  key={"custom-form-step-" + i}
-                  navigate={(dir: "next" | "previous") => {
-                    if (dir === "next") {
-                      setCustomFormCounter(customFormCounter + 1);
-                    } else {
-                      setCustomFormCounter(customFormCounter - 1);
-                    }
+                return (
+                  <Step
+                    key={"custom-form-step-" + i}
+                    navigate={(dir: "next" | "previous") => {
+                      if (dir === "next") {
+                        setCustomFormCounter(customFormCounter + 1);
+                      } else {
+                        setCustomFormCounter(customFormCounter - 1);
+                      }
 
-                    if (directions.length == 0) {
-                      setCurrentStep("contact");
-                    }
-                  }}
-                />
-              );
-            })}
+                      if (directions.length == 0) {
+                        setCurrentStep("contact");
+                      }
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
       {mode == "submit" &&
