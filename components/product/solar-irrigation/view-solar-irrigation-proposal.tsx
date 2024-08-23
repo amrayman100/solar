@@ -25,7 +25,7 @@ export function ViewSolarIrrigationProposal({
         <div>
           <div
             style={{ backgroundImage: `url(${"/drone-7.jpeg"})` }}
-            className="bg-cover bg-center w-screen h-max relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
+            className="bg-cover bg-center w-screen h-[70vh] relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
           >
             <div className="flex pt-4 flex-col">
               <TypographyH1
