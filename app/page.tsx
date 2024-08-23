@@ -5,13 +5,7 @@ import { TypographyH2, TypographyH4 } from "@/components/shared/typography";
 import { LuWallet, LuThumbsUp } from "react-icons/lu";
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { FiBatteryCharging } from "react-icons/fi";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -26,6 +20,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Image from "next/image";
+import { BrandAmbassadorForm } from "@/components/brand-ambassador/brand-ambassador-form";
 
 export default async function Home() {
   return (
@@ -275,6 +270,51 @@ export default async function Home() {
                   </Card>
                 </div>
               </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Fady Iskandar</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        The level of professionalism was exemplary. All promises
+                        were fulfilled and there were no surprises. The
+                        installation process was seamless
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Hussein Mourad</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        Very professional and experienced team
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Mohamed Fekry Aziz Saber Khalil</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex p-6">
+                      <span className="">
+                        Professional company with good service and competitive
+                        prices
+                      </span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
@@ -309,6 +349,7 @@ export default async function Home() {
                 Energy
               </span>
             </div>
+            <BrandAmbassadorForm />
           </div>
         </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">

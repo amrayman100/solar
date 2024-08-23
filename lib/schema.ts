@@ -101,3 +101,12 @@ export const contactTable = pgTable("contact", {
   type: text("type"),
   phoneNumber: text("phone_number").notNull(),
 });
+
+export const brandAmbassador = pgTable("brand_ambassador", {
+  id: serial("id").primaryKey().notNull(),
+  name: text("name").notNull(),
+  createdAt: date("created_at"),
+  createdBy: text("created_by"),
+  emailAddress: text("email_address"),
+  phoneNumber: text("phone_number").notNull(),
+});

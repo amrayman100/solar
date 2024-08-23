@@ -34,3 +34,15 @@ create TABLE contact (
     name text NOT NULL,
     phone_number text NOT NULL
 )
+
+
+create TABLE brand_ambassador (
+    id serial NOT NULL PRIMARY KEY,
+    created_by text,
+    created_at date,
+    updated_by text,
+    updated_at date,
+    email_address text,
+    name text NOT NULL,
+    phone_number text NOT NULL
+)
