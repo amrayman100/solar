@@ -22,8 +22,8 @@ export default async function EV() {
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
               alt="EV Chargers"
-              src={"/ev.jpg"}
-              blurDataURL={"/ev.jpg"}
+              src={"/ev-1.jpeg"}
+              blurDataURL={"/ev-1.jpeg"}
               placeholder="blur"
               quality={100}
               height={500}

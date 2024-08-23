@@ -55,7 +55,7 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                           </span>
                         </div>
                         <div className="">
-                          <span>{"Cost: "}</span>
+                          <span>{"Price: "}</span>
                           <span className="">
                             {details.charger?.price.toLocaleString("en", {
                               useGrouping: true,

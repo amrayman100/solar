@@ -44,7 +44,7 @@ export function ViewSolarIrrigationProposal({
                 <TypographyH3 text="Irrigation Unit" className="font-bold" />
                 <div className="flex-col flex gap-2">
                   <div className="text-center">
-                    <span>{"Cost: "}</span>
+                    <span>{"Price: "}</span>
                     <span className="font-bold">
                       {details?.cost.toLocaleString("en", {
                         useGrouping: true,

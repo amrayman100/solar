@@ -58,7 +58,7 @@ export function ViewSolarHeatingProposal({
                               </span>
                             </div>
                             <div className="">
-                              <span>{"Cost: "}</span>
+                              <span>{"Price: "}</span>
                               <span className="">
                                 {details.heater?.price.toLocaleString("en", {
                                   useGrouping: true,
@@ -121,7 +121,7 @@ export function ViewSolarHeatingProposal({
                               </span>
                             </div>
                             <div className="">
-                              <span>{"Cost: "}</span>
+                              <span>{"Price: "}</span>
                               <span className="">
                                 {details.heater?.price.toLocaleString("en", {
                                   useGrouping: true,
