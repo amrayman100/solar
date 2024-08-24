@@ -8,7 +8,7 @@ import {
   TypographyH4,
   TypographyH5,
 } from "@/components/shared/typography";
-import { EVProposal, WholeSaleProposal } from "@/models/product";
+import { WholeSaleProposal } from "@/models/product";
 
 export function ViewWholeSaleProposal({
   proposal,
@@ -18,8 +18,8 @@ export function ViewWholeSaleProposal({
   return (
     <>
       <div className="flex flex-col justify-between h-[100vh] w-[100vw]">
+        <Header />
         <div className="place-items-center items-center justify-center text-center">
-          <Header />
           <div
             style={{ backgroundImage: `url(${"/warehouse.jpeg"})` }}
             className="bg-cover bg-center w-screen h-[70vh] pt-1"

@@ -99,6 +99,7 @@ export const contactTable = pgTable("contact", {
   createdBy: text("created_by"),
   emailAddress: text("email_address"),
   type: text("type"),
+  contactDesc: text("conatct_desc"),
   phoneNumber: text("phone_number").notNull(),
 });
 

@@ -31,6 +31,8 @@ create TABLE contact (
     updated_by text,
     updated_at date,
     email_address text,
+    type text,
+    conatct_desc text,
     name text NOT NULL,
     phone_number text NOT NULL
 )

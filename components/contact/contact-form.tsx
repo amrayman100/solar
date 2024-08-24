@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createContactEntry } from "@/actions/contact";
 import { useRouter } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +25,7 @@ type ContactForm = {
   name: string;
   phoneNumber: string;
   type: string;
+  contactDesc?: string;
 };
 
 const formFactory = createFormFactory<ContactForm>({
@@ -32,6 +34,7 @@ const formFactory = createFormFactory<ContactForm>({
     name: "",
     phoneNumber: "",
     type: "",
+    contactDesc: "",
   },
 });
 
@@ -46,11 +49,20 @@ export function ContactForm() {
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      mutation.mutateAsync(value).then(() => {
-        router.push("/");
-      });
+      mutation.mutate(value);
     },
   });
+
+  if (mutation.isSuccess) {
+    return (
+      <>
+        <TypographyH3
+          text="We will contact you in 48 hours"
+          className="font-bold"
+        />
+      </>
+    );
+  }
 
   return (
     <>
@@ -159,6 +171,10 @@ export function ContactForm() {
                 <DropdownMenuTrigger className="bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                   Choose Subject <IoIosArrowDropdown className="mx-3" />
                 </DropdownMenuTrigger>
+                <TypographyH4
+                  text={form.getFieldValue("type")}
+                  className="my-2"
+                />
                 <DropdownMenuContent>
                   <DropdownMenuItem
                     onClick={() => {
@@ -213,6 +229,24 @@ export function ContactForm() {
             </>
           )}
         </form.Field>
+        <form.Field name="contactDesc">
+          {(field) => (
+            <>
+              <Textarea
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Type your inquiry here."
+                className="bg-background mb-4 mt-4"
+              />
+              {field.state.meta.errors ? (
+                <p role="alert" className="text-red-500 mb-2">
+                  {field.state.meta.errors.join(", ")}
+                </p>
+              ) : null}
+            </>
+          )}
+        </form.Field>
         <div className="w-full flex mt-10 gap-2 place-content-center">
           <Button variant="default" type="submit" size={"lg"}>
             Submit
@@ -222,11 +256,6 @@ export function ContactForm() {
           </Button>
         </div>
       </form>
-      {/* {mutation.isSuccess && (
-        <div className="mt-4">
-          <div>Your Request is saved</div>
-        </div>
-      )} */}
     </>
   );
 }
