@@ -33,11 +33,7 @@ export default async function EV() {
             />
             <div className="flex justify-center h-full">
               <div className="m-auto flex flex-col">
-                <TypographyH3 text="Power Up Your Ride in a Flash: All About EV Chargers!" />
-                <TypographyH3
-                  text="Bolt construction is Bolt’s civil and implementation arm."
-                  className="font-normal mt-2"
-                />
+                <TypographyH3 text="Bolt construction is Bolt’s civil and implementation arm." />
                 <TypographyH3
                   text="Our services are spread across three segments:"
                   className="font-normal mt-2"

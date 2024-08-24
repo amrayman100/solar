@@ -217,66 +217,70 @@ export function NewConstructionProposal() {
             </form>
           )}
           {type === "homeFinishing" && (
-            <form
-              onSubmit={homeFinishingForm.handleSubmit(onHomeFinishingSubmit)}
-            >
-              <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                <Label className="text-center mb-4">Home Finishing</Label>
-                <Label>Enter your home area in sq meters</Label>
-                <Input
-                  type="number"
-                  min="1"
-                  className=""
-                  placeholder="Home Area"
-                  {...homeFinishingForm.register(`m2`, {
-                    required: true,
+            <>
+              <Label className="text-center mb-4">Home Finishing</Label>
+              <div className="mt-2">
+                <Label className="mb-4">Finishing Type</Label>
+                <RadioGroup
+                  defaultValue={finishingType}
+                  className="mt-2"
+                  {...homeFinishingForm.register(`finishingType`, {
+                    required: false,
                   })}
-                />
-                <div className="mt-2">
-                  <Label className="mb-4">Finishing Type</Label>
-                  <RadioGroup
-                    defaultValue={finishingType}
-                    className="mt-2"
-                    {...homeFinishingForm.register(`finishingType`, {
-                      required: false,
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="basic"
+                      id="r1"
+                      onClick={() => setFinishingType("basic")}
+                    />
+                    <Label htmlFor="r1">Basic</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="premium"
+                      id="r2"
+                      onClick={() => {
+                        // debugger;
+                        setFinishingType("premium");
+                      }}
+                    />
+                    <Label htmlFor="r2">Premium</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="luxury"
+                      id="r3"
+                      onClick={() => setFinishingType("luxury")}
+                    />
+                    <Label htmlFor="r3">Luxury</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+              <form
+                onSubmit={homeFinishingForm.handleSubmit(onHomeFinishingSubmit)}
+              >
+                <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                  <Label>Enter your home area in sq meters</Label>
+                  <Input
+                    //   value={homeFinishingForm.watch("m2")}
+                    type="number"
+                    min="1"
+                    className=""
+                    placeholder="Home Area"
+                    {...homeFinishingForm.register(`m2`, {
+                      required: true,
                     })}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="basic"
-                        id="r1"
-                        onClick={() => setFinishingType("basic")}
-                      />
-                      <Label htmlFor="r1">Basic</Label>
+                  />
+
+                  <div className="w-max mt-4">
+                    <div className="flex justify-center align-middle">
+                      <Button type="submit">Next</Button>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="premium"
-                        id="r2"
-                        onClick={() => {
-                          // debugger;
-                          setFinishingType("premium");
-                        }}
-                      />
-                      <Label htmlFor="r2">Premium</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="luxury"
-                        id="r3"
-                        onClick={() => setFinishingType("luxury")}
-                      />
-                      <Label htmlFor="r3">Luxury</Label>
-                    </div>
-                  </RadioGroup>
-                </div>
-                <div className="w-max mt-4">
-                  <div className="flex justify-center align-middle">
-                    <Button type="submit">Next</Button>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </>
           )}
         </div>
       </div>
