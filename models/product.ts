@@ -371,6 +371,47 @@ export type GridTiedProposal = ProductProposal<GridTiedProposalDetails>;
 
 export type OffGridProposal = ProductProposal<OffGridProposalDetails>;
 
+export type ConstructionParams = {
+  homeFinishingPerM2: {
+    basic: number;
+    premiuim: number;
+    luxury: number;
+  };
+};
+
+export type ConstructionProposalDetails =
+  | {
+      type: "homeFinishing";
+      finishingType: string;
+      cost: number;
+    }
+  | {
+      type: "generalContracting";
+      subject: string;
+    }
+  | {
+      type: "solar-panel-installations";
+      plantSizeKws: number;
+    };
+
+export type ConstructionConsumption =
+  | {
+      type: "homeFinishing";
+      finishingType: "basic" | "premium" | "luxury";
+      m2: number;
+    }
+  | {
+      type: "solar-panel-installations";
+      plantSizeKws: number;
+    }
+  | {
+      type: "generalContracting";
+      subject: string;
+    };
+
+export type Construction = Product<ConstructionParams>;
+export type ConstructionProposal = ProductProposal<ConstructionProposalDetails>;
+
 export type SolarIrrigationProposal =
   ProductProposal<SolarIrrigationProposalDetails>;
 
@@ -1370,6 +1411,60 @@ export function getOffGridProposal(
   }
 }
 
+export function getConstructionProposal(
+  req: ProposalRequestInfo<ConstructionConsumption>,
+  id: number,
+  construction: Construction
+): ConstructionProposal {
+  const proposal = {
+    id: 0,
+    name: req.name,
+    emailAddress: req.email,
+    phoneNumber: req.phoneNumber,
+    productId: id,
+    addressLatitude: req.lat || 0,
+    addressLongitude: req.long || 0,
+    proposalDetails: {
+      type: "",
+    } as any,
+  };
+
+  console.log(req.consumptionDetails);
+
+  if (req.consumptionDetails.type === "homeFinishing") {
+    let cost = 0;
+    if (req.consumptionDetails.finishingType === "basic") {
+      cost =
+        construction.parameters.homeFinishingPerM2.basic *
+        req.consumptionDetails.m2;
+    } else if (req.consumptionDetails.finishingType === "luxury") {
+      cost =
+        construction.parameters.homeFinishingPerM2.luxury *
+        req.consumptionDetails.m2;
+    } else if (req.consumptionDetails.finishingType === "premium") {
+      cost =
+        construction.parameters.homeFinishingPerM2.premiuim *
+        req.consumptionDetails.m2;
+    }
+    proposal.proposalDetails.type = "homeFinishing";
+    proposal.proposalDetails.finishingType =
+      req.consumptionDetails.finishingType;
+    proposal.proposalDetails.cost = cost;
+  }
+
+  if (req.consumptionDetails.type === "solar-panel-installations") {
+    proposal.proposalDetails.type = "solar-panel-installations";
+    proposal.proposalDetails.plantSizeKws = req.consumptionDetails.plantSizeKws;
+  }
+
+  if (req.consumptionDetails.type === "generalContracting") {
+    proposal.proposalDetails.type = "generalContracting";
+    proposal.proposalDetails.subject = req.consumptionDetails.subject;
+  }
+
+  return proposal;
+}
+
 const deviceLoadTemplates: DeviceLoadTemplate[] = [
   {
     name: "lamp",
@@ -1998,4 +2093,17 @@ export const wholeSale: WholeSale = {
   currency: "EGP",
   isEnabled: true,
   parameters: {},
+};
+
+export const construction: Construction = {
+  name: "construction",
+  currency: "EGP",
+  isEnabled: true,
+  parameters: {
+    homeFinishingPerM2: {
+      basic: 6000,
+      premiuim: 10000,
+      luxury: 14000,
+    },
+  },
 };

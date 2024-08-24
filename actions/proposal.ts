@@ -2,6 +2,11 @@
 import { db } from "@/lib/db";
 import { productProposalTable, productTable } from "@/lib/schema";
 import {
+  Construction,
+  ConstructionConsumption,
+  ConstructionParams,
+  ConstructionProposal,
+  ConstructionProposalDetails,
   EVConsumption,
   EVParams,
   EVProposal,
@@ -21,6 +26,7 @@ import {
   WholeSaleConsumption,
   WholeSaleProposal,
   calculateSolarIrrigationCost,
+  getConstructionProposal,
   getEVCharger,
   getGridTiedProposal,
   getHouseHoldHeater,
@@ -411,6 +417,36 @@ export async function createWholesaleProposal(
   return proposal;
 }
 
+export async function createConstructionProposal(
+  req: ProposalRequestInfo<ConstructionConsumption>
+): Promise<ConstructionProposal> {
+  const product = await getBoltConstruction();
+  const proposal = getConstructionProposal(req, product.id, product);
+
+  const insertResult = await db
+    .insert(productProposalTable)
+    .values({
+      productId: proposal.productId,
+      name: proposal.name,
+      emailAddress: proposal.emailAddress,
+      phoneNumber: proposal.phoneNumber,
+      addressLatitude: req.lat?.toString(),
+      addressLongitude: req.long?.toString(),
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: req.email,
+      proposalDetails: proposal.proposalDetails,
+    })
+    .returning();
+
+  if (insertResult.length < 0) {
+    throw new Error("failed to insert");
+  }
+
+  proposal.id = insertResult[0].id;
+
+  return proposal;
+}
+
 export async function getOffGridProduct() {
   try {
     const res = await db
@@ -632,6 +668,51 @@ export async function getWholeSale() {
       },
       currency: "egp",
       parameters: {} as {},
+    };
+  }
+}
+
+export async function getBoltConstruction() {
+  try {
+    const res = await db
+      .select()
+      .from(productTable)
+      .limit(1)
+      .where(eq(productTable.name, "construction"));
+
+    const constructionDb = res[0];
+    const construction = {
+      id: constructionDb.id,
+      name: constructionDb.name,
+      isEnabled: constructionDb.isEnabled,
+      created: {
+        by: constructionDb.createdBy || "",
+        at: constructionDb.createdAt || "",
+      },
+      updated: {
+        by: constructionDb.updatedBy || "",
+        at: constructionDb.updatedAt || "",
+      },
+      currency: constructionDb.currency,
+      parameters: constructionDb.parameters as ConstructionParams,
+    };
+
+    return construction;
+  } catch (err) {
+    return {
+      id: 0,
+      name: "",
+      isEnabled: false,
+      created: {
+        by: "",
+        at: "",
+      },
+      updated: {
+        by: "",
+        at: "",
+      },
+      currency: "egp",
+      parameters: {} as ConstructionParams,
     };
   }
 }

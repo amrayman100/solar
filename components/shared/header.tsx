@@ -72,22 +72,27 @@ export default function Header() {
               <Menu size={32} className="self-center" cursor={"pointer"} />
             </SheetTrigger>
           </div>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>
-                <div className="flex justify-between mt-8">
-                  <TypographyH4 text={"Menu"} className="self-center" />
+          <SheetContent className="text-center">
+            <SheetHeader className="text-center">
+              {/* <SheetTitle className="text-center">
+                <div className="flex justify-between mt-8 text-center">
+                  <TypographyH4 text={"Menu"} className="text-center" />
                 </div>
-              </SheetTitle>
+              </SheetTitle> */}
             </SheetHeader>
-            <Link href="/" legacyBehavior passHref>
+            <Link href="/" legacyBehavior passHref className="mt-10">
               <a className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Home
               </a>
             </Link>
             <div className="flex flex-col">
+              <Link href="/contact-us" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  Contact Us
+                </a>
+              </Link>
               <TypographyH4 text="Products" />
-              <Link href="/product/solar-irrigation" legacyBehavior passHref>
+              <Link href="/product/grid-tied" legacyBehavior passHref>
                 Grid Tied
               </Link>
               <Link href="/product/solar-irrigation" legacyBehavior passHref>
@@ -109,14 +114,21 @@ export default function Header() {
                 Maintenance
               </Link>
               <Link href="/services/solar-monitoring" legacyBehavior passHref>
-                Solar Monitoring
+                Smart Monitoring
               </Link>
             </div>
-            <Link href="/proposal/whole-sale" legacyBehavior passHref>
-              <a className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Whole Sale
-              </a>
-            </Link>
+            <div className="flex flex-col mt-2">
+              <Link href="/product/construction" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  Bolt Construction
+                </a>
+              </Link>
+              <Link href="/proposal/whole-sale" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  Whole Sale
+                </a>
+              </Link>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
@@ -198,10 +210,17 @@ export default function Header() {
                     ></ListItem>
                     <ListItem
                       href="/services/solar-monitoring"
-                      title="Solar Monitoring"
+                      title="Smart Monitoring"
                     ></ListItem>
                   </ul>
                 </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/product/construction" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Bolt Construction
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/proposal/whole-sale" legacyBehavior passHref>
