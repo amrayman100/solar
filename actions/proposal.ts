@@ -172,7 +172,6 @@ export async function createOffGridProposal(
   const insertResult = await db
     .insert(productProposalTable)
     .values({
-      id: 0,
       productId: proposal.productId,
       name: proposal.name,
       emailAddress: proposal.emailAddress,

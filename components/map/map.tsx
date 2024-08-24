@@ -274,7 +274,7 @@ export function MapView(props: MapViewProps) {
       >
         <AdvancedMarker ref={markerRef} position={markerPos} />
       </Map>
-      <div className="w-full flex place-content-center mb-4 gap-2 pt-2">
+      <div className="flex lg:flex-row flex-col mb-4 gap-2 pt-2">
         <LocateMeButton
           isGeocodeAPILoaded={isPlacesAPILoaded}
           setAddressDescription={(addressDescription: AddressDescription) =>

@@ -127,7 +127,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
         return (
           <>
             <TypographyH5 text="Current Status:" />
-            <div className="flex gap-2 mt-1 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
+            <div className="flex lg:flex-row flex-col gap-2 mt-1 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
               <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
                 <div className="flex-col flex gap-2">
                   <div className="">
