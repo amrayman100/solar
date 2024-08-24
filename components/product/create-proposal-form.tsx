@@ -19,7 +19,7 @@ import {
   useMediaQuery,
   useReadLocalStorage,
 } from "usehooks-ts";
-import { phoneRegex } from "@/lib/utils";
+import { cn, phoneRegex } from "@/lib/utils";
 import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
 
@@ -53,6 +53,7 @@ type CreateProposalProps<A, T> = {
   ViewProposal: React.FC<ViewProps<T>>;
   customFormSteps?: Array<React.FC<CustomFormStepProps>>;
   steps?: Set<PropSteps>;
+  customStepsClassName?: string;
 };
 
 export type PropSteps = "housing" | "map";
@@ -67,6 +68,7 @@ export function CreateProposal<A, T>({
   ViewProposal,
   customFormSteps,
   steps,
+  customStepsClassName,
 }: CreateProposalProps<A, T>) {
   const [localStorageData, setLocalStorageData] = useLocalStorage<{
     address: AddressDescription;
@@ -176,7 +178,12 @@ export function CreateProposal<A, T>({
       {customFormSteps?.length &&
         customFormCounter < customFormSteps?.length && (
           <div className="flex m-auto justify-center align-middle">
-            <div className="lg:mt-40 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow">
+            <div
+              className={cn(
+                "lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow",
+                customStepsClassName
+              )}
+            >
               {customFormSteps.map((Step, i) => {
                 if (i !== customFormCounter) {
                   return null;

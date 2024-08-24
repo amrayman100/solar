@@ -447,6 +447,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
   return (
     <>
       <CreateProposal
+        customStepsClassName="lg:mt-20"
         steps={new Set<PropSteps>(["map", "housing"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
