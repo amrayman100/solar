@@ -29,15 +29,15 @@ export default async function Home() {
         <Header />
         <div
           style={{ backgroundImage: `url(${"/drone-4-1.jpeg"})` }}
-          className="bg-cover bg-center w-full h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary"
+          className="bg-cover bg-center w-full h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary p-1"
         >
-          <div className="flex justify-center h-full">
-            <div className=" flex flex-col p-10 rounded-lg to-primary w-fit">
-              <div className="text-center">
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-white text-white text-center">
+          <div className="flex mx-auto mt-2 justify-cente lg:w-max">
+            <div className="flex flex-col p-10 rounded-lg to-primary w-fit">
+              <div className="text-center rounded-xl lg:border lg:bg-white shadow lg:p-4">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
                   Get Your Free Solar Quote{" "}
                 </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-white text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
                   Instantly
                 </span>
               </div>
