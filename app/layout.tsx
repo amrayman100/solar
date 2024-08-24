@@ -15,7 +15,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Bolt Energy",
-  description: "Solar Clean Energy",
+  description: "Solar Clean Energy Solutions",
 };
 
 export default function RootLayout({
