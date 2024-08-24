@@ -25,21 +25,24 @@ export function ViewSolarIrrigationProposal({
         <div>
           <div
             style={{ backgroundImage: `url(${"/drone-7.jpeg"})` }}
-            className="bg-cover bg-center w-screen h-[70vh] relative bg-gradient-to-r from-primary via-yellow-400 to-primary pb-10"
+            className="bg-cover bg-center w-screen lg:h-[70vh] pt-1"
           >
-            <div className="flex pt-4 flex-col">
-              <TypographyH1
-                text="Your Solution"
-                className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
-              />
-              <div className="mx-3">
-                <ContactMe
-                  proposalId={proposal.id}
-                  caption="Interested in going solar?"
+            <div className="mt-3 h-max">
+              <div className="flex-col rounded-xl border bg-card w-max p-4 mx-4 h-max">
+                <TypographyH1
+                  text="Your Solution"
+                  className="bg-gradient-to-r from-primary via-green-400 to-primary bg-clip-text mx-3"
                 />
+                <div className="mx-3">
+                  <ContactMe
+                    darkMode
+                    proposalId={proposal.id}
+                    caption="Interested in going solar?"
+                  />
+                </div>
               </div>
             </div>
-            <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
+            <div className="lg:flex-row flex-col flex gap-6 justify-center h-full p-4">
               <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
                 <TypographyH3 text="Irrigation Unit" className="font-bold" />
                 <div className="flex-col flex gap-2">

@@ -4,11 +4,7 @@ import {
   SolarIrrigationConsumption,
   SolarIrrigationProposal,
 } from "@/models/product";
-import {
-  CreateProposal,
-  CustomFormStepProps,
-  PropSteps,
-} from "../create-proposal-form";
+import { CreateProposal, CustomFormStepProps } from "../create-proposal-form";
 import { memo, useState } from "react";
 import { createSolarIrrigationProposal } from "@/actions/proposal";
 import { ViewSolarIrrigationProposal } from "./view-solar-irrigation-proposal";
@@ -36,8 +32,6 @@ export function NewSolarIrrigationProposal() {
     });
 
     const onSubmit: SubmitHandler<SolarIrrigationConsumption> = (data) => {
-      debugger;
-
       setConsumptionDetails({
         ...data,
       });
@@ -45,10 +39,7 @@ export function NewSolarIrrigationProposal() {
     };
 
     return (
-      <div
-      // style={{ backgroundImage: `url(${"/drone-4-1.jpeg"})` }}
-      // className="bg-cover bg-center "
-      >
+      <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor={"device-load-picture-power-"}>
