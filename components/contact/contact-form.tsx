@@ -212,6 +212,20 @@ export function ContactForm() {
                     EV Charging
                   </DropdownMenuItem>
                   <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("smart-monitoring");
+                    }}
+                  >
+                    Smart Monitoring
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      field.handleChange("maintenance");
+                    }}
+                  >
+                    Maintenance
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
                     key={"template-custom"}
                     onClick={() => {
                       field.handleChange("other");
