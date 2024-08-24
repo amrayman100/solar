@@ -20,9 +20,7 @@ export function ContactMe({ proposalId, caption, darkMode }: Props) {
     },
   });
 
-  const buttonStyling = darkMode ? cva("text-black") : cva("text-white");
-
-  console.log(darkMode);
+  const textStyling = darkMode ? cva("text-black") : cva("text-white");
 
   return (
     <>
@@ -30,11 +28,11 @@ export function ContactMe({ proposalId, caption, darkMode }: Props) {
         {mutation.isSuccess ? (
           <TypographyH4
             text="We will Contact you in 48 hours!"
-            className="text-white"
+            className={textStyling()}
           />
         ) : (
           <>
-            <TypographyH3 text={caption} className={buttonStyling()} />
+            <TypographyH3 text={caption} className={textStyling()} />
             <Button className="mt-2" onClick={() => mutation.mutate(true)}>
               Contact Me
             </Button>

@@ -20,23 +20,17 @@ export function ViewSolarHeatingProposal({
 
   return (
     <>
-      <div className="flex flex-col justify-between h-[100vh] w-[100vw] mt-0">
+      <div className="flex flex-col justify-between lg:h-[100vh] lg:w-[100vw] md:w-[100vw] mt-0">
         <div>
           <Header />
-          <div className="place-items-center items-center justify-center">
-            <div
-              // style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
-              className="lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10 border-solid rounded-xl border w-max mx-auto"
-            >
-              <div
-                //   style={{ backgroundImage: `url(${"/drone-4.jpeg"})` }}
-                className="bg-cover bg-center h-max relative to-primary pb-10"
-              >
+          <div className="place-items-center items-center justify-center lg:mt-16">
+            <div className="lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10 border-solid rounded-xl border lg:w-[100vw] mx-auto">
+              <div className="bg-cover bg-center h-max relative to-primary pb-10">
                 {details.type == "house-hold" && (
                   <>
                     <TypographyH1
                       text="Your House Hold Heating Solution"
-                      className="mx-3"
+                      className="mx-3 text-center"
                     />
                     {!details.heater && (
                       <div className="flex mx-auto justify-center mt-2">
@@ -49,7 +43,7 @@ export function ViewSolarHeatingProposal({
                     )}
                     {details.heater && (
                       <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
-                        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
+                        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
                           <TypographyH3 text="Heater" className="font-bold" />
                           <div className="flex-col flex gap-2">
                             <div className="">
@@ -67,7 +61,7 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
-                        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
+                        <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:max">
                           <TypographyH3
                             text="Number Of Rooms"
                             className="font-bold"
@@ -84,15 +78,15 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
-                        <div className="text-center mt-2">
-                          <ContactMe
-                            darkMode
-                            proposalId={proposal.id}
-                            caption="Interested in going solar?"
-                          />
-                        </div>
                       </div>
                     )}
+                    <div className="text-center mt-6 mx-auto w-max">
+                      <ContactMe
+                        darkMode
+                        proposalId={proposal.id}
+                        caption="Interested in going solar?"
+                      />
+                    </div>
                   </>
                 )}
                 {details.type == "pool" && (
@@ -103,11 +97,13 @@ export function ViewSolarHeatingProposal({
                     />
                     {!details.heater && (
                       <div>
-                        <TypographyH3
-                          text=" You’ll need a custom solution, our team will get in contact
-                    within 48 hours"
-                          className="mt-4"
-                        />
+                        <div className="flex mx-auto justify-center mt-2">
+                          <ContactMe
+                            darkMode
+                            proposalId={proposal.id}
+                            caption="You need a custom solution"
+                          />
+                        </div>
                       </div>
                     )}
                     {details.heater && (
@@ -146,15 +142,15 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
-                        <div className="text-center mt-2">
-                          <ContactMe
-                            darkMode
-                            proposalId={proposal.id}
-                            caption="Interested in going solar?"
-                          />
-                        </div>
                       </div>
                     )}
+                    <div className="text-center mt-6 mx-auto w-max">
+                      <ContactMe
+                        darkMode
+                        proposalId={proposal.id}
+                        caption="Interested in going solar?"
+                      />
+                    </div>
                   </>
                 )}
               </div>
