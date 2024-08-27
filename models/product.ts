@@ -1991,7 +1991,7 @@ export const offGridProduct: OffGrid = {
     cleaningToolPrice: 800,
     batteryStandPrice: {
       insideHousePrice: 3000,
-      outsideHousePerFourBatteriesPrice: 1400,
+      outsideHousePerFourBatteriesPrice: 14000,
     },
     dollarRate: 1,
     billingPercentage: {

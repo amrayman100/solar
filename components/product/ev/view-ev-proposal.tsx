@@ -54,7 +54,7 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                           <span className="">
                             {details.charger?.price.toLocaleString("en", {
                               useGrouping: true,
-                            })}
+                            }) + " EGP"}
                           </span>
                         </div>
                       </div>

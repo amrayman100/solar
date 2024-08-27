@@ -88,10 +88,10 @@ export function ViewConstructionProposal({
                       <div className="flex-col flex gap-2">
                         <div className="">
                           <span>{"Price: "}</span>
-                          <span className="">
+                          <span className="font-bold">
                             {details?.cost.toLocaleString("en", {
                               useGrouping: true,
-                            })}
+                            }) + " EGP"}
                           </span>
                         </div>
                       </div>

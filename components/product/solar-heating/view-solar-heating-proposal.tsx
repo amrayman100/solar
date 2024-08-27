@@ -51,12 +51,12 @@ export function ViewSolarHeatingProposal({
                                 {details.heater?.brand}
                               </span>
                             </div>
-                            <div className="">
+                            <div className="font-bold">
                               <span>{"Price: "}</span>
                               <span className="">
                                 {details.heater?.price.toLocaleString("en", {
                                   useGrouping: true,
-                                })}
+                                }) + " EGP"}
                               </span>
                             </div>
                           </div>
@@ -69,7 +69,7 @@ export function ViewSolarHeatingProposal({
                           <div className="flex-col flex gap-2 mt-6">
                             <div>
                               <TypographyH5
-                                className=""
+                                className="font-bold"
                                 text={
                                   (details.numberOfRooms?.toString() || "0") +
                                   " bathrooms and kitchens"
@@ -118,13 +118,16 @@ export function ViewSolarHeatingProposal({
                             </div>
                             <div className="">
                               <span>{"Price: "}</span>
-                              <span className="">
+                              <span className="font-bold">
                                 {details.heater?.price.toLocaleString("en", {
                                   useGrouping: true,
-                                })}
+                                }) + " EGP"}
                               </span>
                             </div>
                           </div>
+                          <span className="">
+                            Prices may vary upon site assessment
+                          </span>
                         </div>
                         <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
                           <TypographyH3
@@ -134,9 +137,10 @@ export function ViewSolarHeatingProposal({
                           <div className="flex-col flex gap-2">
                             <div>
                               <TypographyH5
-                                className=""
+                                className="font-bold"
                                 text={
-                                  details.poolVolume?.toString() || "0" + " mm3"
+                                  details.poolVolume?.toString() + " mm3" ||
+                                  "0" + " mm3"
                                 }
                               ></TypographyH5>
                             </div>

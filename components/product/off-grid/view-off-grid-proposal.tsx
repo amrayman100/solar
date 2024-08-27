@@ -115,9 +115,7 @@ export function ViewOffGridProposal({
                     </TableHeader>
                     <TableBody>
                       <TableRow>
-                        <TableCell className="font-bold">
-                          Selling Cost
-                        </TableCell>
+                        <TableCell className="font-bold">Price</TableCell>
                         <TableCell className="text-right font-bold">
                           {Math.round(
                             proposal.proposalDetails.sellingCost

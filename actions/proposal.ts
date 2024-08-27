@@ -32,6 +32,7 @@ import {
   getHouseHoldHeater,
   getOffGridProposal,
   getPoolHeater,
+  offGridProduct,
 } from "@/models/product";
 import { eq } from "drizzle-orm";
 
@@ -52,7 +53,7 @@ export type CreateProposalServerFunction<A, T> = (
 export async function createGridTiedProposal(
   req: ProposalRequestInfo<{ monthlyConsumption: number }>
 ): Promise<GridTiedProposal> {
-  // const res1 = await db.insert(productTable).values(wholeSale);
+  // const res1 = await db.insert(productTable).values(offGridProduct);
 
   // console.log(res1);
 

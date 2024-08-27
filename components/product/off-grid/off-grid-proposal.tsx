@@ -158,7 +158,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
                       {details.sellingCost
                         ? Math.round(details.sellingCost).toLocaleString("en", {
                             useGrouping: true,
-                          }) + " E£"
+                          }) + " EGP"
                         : 0}
                     </span>
                   </div>
