@@ -45,12 +45,6 @@ export function ViewOffGridProposal({
                 text="Your Solution"
                 className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
               />
-              <div className="mx-3">
-                <ContactMe
-                  proposalId={proposal.id}
-                  caption="Interested in going solar?"
-                />
-              </div>
             </div>
             <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
               <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
@@ -139,7 +133,7 @@ export function ViewOffGridProposal({
                     <TableBody>
                       <TableRow>
                         <TableCell className="font-medium">
-                          Down payment
+                          Down Payment
                         </TableCell>
                         <TableCell className="text-right">
                           {Math.round(
@@ -149,7 +143,7 @@ export function ViewOffGridProposal({
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">
-                          Upon components supply
+                          Upon Components Supply
                         </TableCell>
                         <TableCell className="text-right">
                           {Math.round(
@@ -170,7 +164,7 @@ export function ViewOffGridProposal({
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-medium">
-                          Upon commissioning
+                          Upon Commissioning
                         </TableCell>
                         <TableCell className="text-right">
                           {Math.round(
@@ -184,6 +178,13 @@ export function ViewOffGridProposal({
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex mx-auto mt-4 align-center justify-center">
+          <ContactMe
+            darkMode
+            proposalId={proposal.id}
+            caption="Interested in going solar?"
+          />
         </div>
       </div>
       <Footer />

@@ -33,7 +33,7 @@ export function ViewWholeSaleProposal({
                 {
                   <div>
                     <TypographyH3
-                      text="Your request has been sent and our team will get in contact within 48 hours"
+                      text="Your request has been sent and our team will get in contact within 72 hours"
                       className="mt-4"
                     />
                   </div>

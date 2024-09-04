@@ -14,11 +14,7 @@ import { useState } from "react";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
-import {
-  useLocalStorage,
-  useMediaQuery,
-  useReadLocalStorage,
-} from "usehooks-ts";
+import { useLocalStorage, useMediaQuery } from "usehooks-ts";
 import { cn, phoneRegex } from "@/lib/utils";
 import { AddressDescription, MapView } from "@/components/map/map";
 import { ProductProposal } from "@/models/product";
@@ -54,6 +50,8 @@ type CreateProposalProps<A, T> = {
   customFormSteps?: Array<React.FC<CustomFormStepProps>>;
   steps?: Set<PropSteps>;
   customStepsClassName?: string;
+  submitFromCache?: boolean;
+  setLoadingSpinner?: (bool: boolean) => void;
 };
 
 export type PropSteps = "housing" | "map";
@@ -69,6 +67,8 @@ export function CreateProposal<A, T>({
   customFormSteps,
   steps,
   customStepsClassName,
+  submitFromCache,
+  setLoadingSpinner,
 }: CreateProposalProps<A, T>) {
   const [localStorageData, setLocalStorageData] = useLocalStorage<{
     address: AddressDescription;
@@ -145,6 +145,43 @@ export function CreateProposal<A, T>({
     },
   });
 
+  const submitCache = () => {
+    let addressSubmitReq: {
+      lat: number;
+      long: number;
+      city: string;
+    };
+    if (!addressSubmit) {
+      addressSubmitReq = {
+        lat: address?.lat,
+        long: address?.lng,
+        city: address.city,
+      };
+    } else {
+      addressSubmitReq = {
+        lat: addressSubmit?.lat,
+        long: addressSubmit?.lng,
+        city: addressSubmit.city,
+      };
+    }
+
+    setLoadingSpinner && setLoadingSpinner(true);
+    const res = mutation.mutateAsync({
+      consumptionDetails: consumptionDetails,
+      name: localStorageData?.name || "",
+      email: localStorageData?.email || "",
+      phoneNumber: localStorageData?.phoneNumber || "",
+      ...addressSubmitReq,
+    });
+    res.then((res) => {
+      setMode("view");
+      onProposalCreation(res);
+      setLoadingSpinner && setLoadingSpinner(false);
+    });
+
+    res.finally(() => setLoadingSpinner && setLoadingSpinner(false));
+  };
+
   const moveFromCurrentStep = (move: "N" | "P") => {
     debugger;
     if (move === "N" && directions.length == currentStepCounter + 1) {
@@ -175,7 +212,8 @@ export function CreateProposal<A, T>({
 
   return (
     <>
-      {customFormSteps?.length &&
+      {mode == "submit" &&
+        customFormSteps?.length &&
         customFormCounter < customFormSteps?.length && (
           <div className="flex m-auto justify-center align-middle">
             <div
@@ -193,6 +231,10 @@ export function CreateProposal<A, T>({
                   <Step
                     key={"custom-form-step-" + i}
                     navigate={(dir: "next" | "previous") => {
+                      if (submitFromCache) {
+                        submitCache();
+                        return;
+                      }
                       if (dir === "next") {
                         setCustomFormCounter(customFormCounter + 1);
                       } else {

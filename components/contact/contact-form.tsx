@@ -57,7 +57,7 @@ export function ContactForm() {
     return (
       <>
         <TypographyH3
-          text="We will contact you in 48 hours"
+          text="We will contact you in 72 hours"
           className="font-bold"
         />
       </>

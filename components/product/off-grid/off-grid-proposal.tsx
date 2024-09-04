@@ -33,6 +33,8 @@ import {
   Controller,
 } from "react-hook-form";
 import { TypographyH5 } from "@/components/shared/typography";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useSearchParams } from "next/navigation";
 
 const hpToWatt = 746;
 
@@ -43,6 +45,14 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
       placeBatteriesIndoors: false,
       deviceLoads: [],
     });
+
+  const [isLoading, setIsloading] = useState(false);
+
+  const searchParams = useSearchParams();
+
+  const useCache = searchParams.get("useCache");
+
+  console.log("cache", useCache, searchParams);
 
   const MemoziedLoadsConsumptionForm = memo(function LoadsConsumptionForm(
     props: CustomFormStepProps
@@ -66,8 +76,6 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
     const consumptionWatch = watch();
 
     const isConnectedToGridField = watch("isConnectedToGrid");
-
-    console.log(errors);
 
     useEffect(() => {
       if (!isConnectedToGridField) {
@@ -126,7 +134,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
 
         return (
           <>
-            <TypographyH5 text="Current Status:" />
+            <TypographyH5 text="Current Simulation:" />
             <div className="flex lg:flex-row flex-col gap-2 mt-1 lg:border lg:border-solid p-10 lg:rounded-xl bg-card text-card-foreground shadow w-max">
               <div className="mt-1 lg:mt-1 rounded-xl border bg-card text-card-foreground shadow p-4 w-max">
                 <div className="flex-col flex gap-2">
@@ -438,7 +446,10 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
             </div>
           ))}
           <div className="my-4">{Status()}</div>
-          <Button type="submit">Next</Button>
+          <Button type="submit">
+            Next
+            {isLoading && <ReloadIcon className="ml-2 h-4 w-4 animate-spin" />}
+          </Button>
         </form>
       </div>
     );
@@ -447,7 +458,9 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
   return (
     <>
       <CreateProposal
-        customStepsClassName="lg:mt-20"
+        setLoadingSpinner={(bool) => setIsloading(bool)}
+        submitFromCache={useCache ? true : false}
+        customStepsClassName="lg:mt-40"
         steps={new Set<PropSteps>(["map", "housing"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}

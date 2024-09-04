@@ -37,7 +37,7 @@ export default async function Home() {
                 <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
                   Get Your Free Solar Quote{" "}
                 </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-green-500 text-green-500 text-center">
                   Instantly
                 </span>
               </div>
@@ -182,6 +182,78 @@ export default async function Home() {
             </div>
           </div>
         </div>
+        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
+          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
+            Your installation in 4 simple steps
+          </div>
+          <TypographyH2
+            text="We will accompany you through the whole process to make your path to clean energy as easy as possible."
+            className="text-center text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
+          />
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-20 mt-6 p-10  lg:mx-60 mx-10">
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4
+              text=" 
+Calculate your quote"
+              className="text-center"
+            />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Run your solar simulation or contact our solar specialists.
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4 text="Your study at 0 cost" className="text-center" />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Get a personalized study of the installation you need
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4
+              text="We perform the technical visit"
+              className="text-center"
+            />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                We will schedule a technical visit to examine the feasibility of
+                the project
+              </span>
+            </div>
+          </div>
+          <div
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fi border-green-400"
+            style={{ flex: "1 1 0px;" }}
+          >
+            <TypographyH4
+              text="Bring your bill to 0 EGP"
+              className="text-center"
+            />
+            <div className="text-[0px]"></div>
+            <div className="text-[0px]">
+              <span className="text-base">
+                Schedule the installation in less than two weeks and bring your
+                bill to 0 EGP{" "}
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5">
           <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
             What our customers think?
@@ -290,7 +362,7 @@ export default async function Home() {
                 <div className="p-1">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Hussein Mourad</CardTitle>
+                      <CardTitle>Amr Ayman</CardTitle>
                     </CardHeader>
                     <CardContent className="flex p-6">
                       <span className="">

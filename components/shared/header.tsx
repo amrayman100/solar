@@ -13,6 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
+  navigationMenuTriggerStyleVariant,
 } from "@/components/ui/navigation-menu";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./theme-button";
@@ -93,7 +94,10 @@ export default function Header() {
               </Link>
               <TypographyH4 text="Products" />
               <Link href="/product/grid-tied" legacyBehavior passHref>
-                Grid Tied
+                Grid-Tied
+              </Link>
+              <Link href="/product/off-grid" legacyBehavior passHref>
+                Off-Grid
               </Link>
               <Link href="/product/solar-irrigation" legacyBehavior passHref>
                 Solar Irrigation
@@ -103,9 +107,6 @@ export default function Header() {
               </Link>
               <Link href="/product/ev" legacyBehavior passHref>
                 EV Charging
-              </Link>
-              <Link href="/product/off-grid" legacyBehavior passHref>
-                Off Grid Batteries
               </Link>
             </div>
             <div className="flex flex-col mt-2">
@@ -151,7 +152,10 @@ export default function Header() {
                 objectFit: "cover",
               }}
             />
-            <TypographyH3 text="Bolt Energy" className="self-center" />
+            <TypographyH3
+              text="Bolt Energy"
+              className="self-center text-emerald-950"
+            />
           </div>
           <div className="flex dark:hidden">
             <Image
@@ -166,7 +170,10 @@ export default function Header() {
                 objectFit: "cover",
               }}
             />
-            <TypographyH3 text="Bolt Energy" className="self-center" />
+            <TypographyH3
+              text="Bolt Energy"
+              className="self-center text-emerald-950"
+            />
           </div>
         </div>
         <div className="flex">
@@ -183,6 +190,10 @@ export default function Header() {
                       title="Grid Tied"
                     ></ListItem>
                     <ListItem
+                      href="/product/off-grid"
+                      title="Off-Grid"
+                    ></ListItem>
+                    <ListItem
                       href="/product/solar-irrigation"
                       title="Solar Irrigation"
                     ></ListItem>
@@ -191,10 +202,6 @@ export default function Header() {
                       title="Solar Heating"
                     ></ListItem>
                     <ListItem href="/product/ev" title="EV Charging"></ListItem>
-                    <ListItem
-                      href="/product/off-grid"
-                      title="Off Grid Batteries"
-                    ></ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -216,16 +223,20 @@ export default function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/product/construction" legacyBehavior passHref>
+                <Link href="/proposal/whole-sale" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Bolt Construction
+                    Wholesale
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/proposal/whole-sale" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Wholesale
+                <Link href="/product/construction" legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className={
+                      navigationMenuTriggerStyleVariant() + " text-yellow-500"
+                    }
+                  >
+                    Bolt Construction
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>

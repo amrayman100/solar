@@ -124,12 +124,6 @@ export function ViewGridTiedProposal({
             text="Your Solution"
             className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
           />
-          <div className="mx-6 mt-2">
-            <ContactMe
-              proposalId={proposal.id}
-              caption="Interested in going solar?"
-            />
-          </div>
         </div>
         <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
           <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
@@ -204,7 +198,7 @@ export function ViewGridTiedProposal({
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-medium">Down payment</TableCell>
+                    <TableCell className="font-medium">Down Payment</TableCell>
                     <TableCell className="text-right">
                       {Math.round(
                         proposal.proposalDetails.billing?.downPaymentFee
@@ -213,7 +207,7 @@ export function ViewGridTiedProposal({
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">
-                      Upon components supply
+                      Upon Components Supply
                     </TableCell>
                     <TableCell className="text-right">
                       {Math.round(
@@ -233,7 +227,7 @@ export function ViewGridTiedProposal({
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">
-                      Upon commissioning
+                      Upon Commissioning
                     </TableCell>
                     <TableCell className="text-right">
                       {Math.round(
@@ -248,13 +242,23 @@ export function ViewGridTiedProposal({
               Need Off Grid Batteries to store excess energy?{"  "}
               <Link
                 className="scroll-m-20 font-extrabold tracking-tight text-primary"
-                href={"/proposal/off-grid"}
+                href={{
+                  pathname: "/proposal/off-grid",
+                  query: { useCache: true },
+                }}
               >
                 Click here for a quote
               </Link>
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex mx-auto mt-4 align-center justify-center">
+        <ContactMe
+          darkMode
+          proposalId={proposal.id}
+          caption="Interested in going solar?"
+        />
       </div>
       <div className="bg-cover bg-center w-screen h-max relative pb-10">
         <div className="p-4">

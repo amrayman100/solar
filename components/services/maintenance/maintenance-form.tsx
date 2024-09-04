@@ -9,16 +9,20 @@ import { z } from "zod";
 import { phoneRegex } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createContactEntry } from "@/actions/contact";
+import { useRouter } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { createBrandAmbassadorEntry } from "@/actions/brand-ambassador";
 
-type BrandAmbassadorForm = {
+type ContactForm = {
   email: string;
   name: string;
   phoneNumber: string;
+  type: string;
+  contactDesc?: string;
 };
 
-const formFactory = createFormFactory<BrandAmbassadorForm>({
+const formFactory = createFormFactory<
+  Omit<ContactForm, "type" | "contactDesc">
+>({
   defaultValues: {
     email: "",
     name: "",
@@ -26,23 +30,28 @@ const formFactory = createFormFactory<BrandAmbassadorForm>({
   },
 });
 
-export function BrandAmbassadorForm() {
+export function MainentanceForm() {
+  const router = useRouter();
+
   const mutation = useMutation({
-    mutationFn: (req: BrandAmbassadorForm) => {
-      return createBrandAmbassadorEntry(req);
+    mutationFn: (req: ContactForm) => {
+      return createContactEntry(req);
     },
   });
 
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      mutation.mutate(value);
+      mutation.mutate({ ...value, type: "maintenance" });
     },
   });
 
   if (mutation.isSuccess) {
     return (
       <>
-        <TypographyH3 text="We will contact you in 72 hours" />
+        <TypographyH3
+          text="We will contact you in 72 hours"
+          className="font-bold"
+        />
       </>
     );
   }
@@ -149,11 +158,6 @@ export function BrandAmbassadorForm() {
           </Button>
         </div>
       </form>
-      {/* {mutation.isSuccess && (
-        <div className="mt-4">
-          <div>Your Request is saved</div>
-        </div>
-      )} */}
     </>
   );
 }

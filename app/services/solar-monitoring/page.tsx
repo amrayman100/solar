@@ -1,3 +1,4 @@
+import { MonitoringForm } from "@/components/services/monitoring/monitoring-form";
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import {
@@ -75,6 +76,10 @@ export default async function SolarMonitoring() {
                       Start monitoring your energy use today and take control of
                       your bills and your environmental impact.
                     </span>{" "}
+                  </div>
+
+                  <div className="lg:w-[80%] mt-5">
+                    <MonitoringForm />
                   </div>
                 </div>
               </div>

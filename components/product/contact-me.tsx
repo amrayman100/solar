@@ -27,7 +27,7 @@ export function ContactMe({ proposalId, caption, darkMode }: Props) {
       <div className="flex-col text-center w-max">
         {mutation.isSuccess ? (
           <TypographyH4
-            text="We will Contact you in 48 hours!"
+            text="We will Contact you in 72 hours!"
             className={textStyling()}
           />
         ) : (
