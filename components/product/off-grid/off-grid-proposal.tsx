@@ -15,7 +15,7 @@ import {
 } from "../create-proposal-form";
 import { ViewOffGridProposal } from "./view-off-grid-proposal";
 import { Button } from "@/components/ui/button";
-import { memo, useEffect, useState } from "react";
+import { memo, Suspense, useEffect, useState } from "react";
 import React from "react";
 import {
   DropdownMenu,
@@ -457,20 +457,27 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
 
   return (
     <>
-      <CreateProposal
-        setLoadingSpinner={(bool) => setIsloading(bool)}
-        submitFromCache={useCache ? true : false}
-        customStepsClassName="lg:mt-40"
-        steps={new Set<PropSteps>(["map", "housing"])}
-        consumptionDetails={consumptionDetails}
-        address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
-        createProposalFunc={createOffGridProposal}
-        onProposalCreation={(proposal: OffGridProposal) =>
-          console.log(proposal)
-        }
-        ViewProposal={ViewOffGridProposal}
-        customFormSteps={[MemoziedLoadsConsumptionForm]}
-      />
+      <Suspense>
+        <CreateProposal
+          setLoadingSpinner={(bool) => setIsloading(bool)}
+          submitFromCache={useCache ? true : false}
+          customStepsClassName="lg:mt-40"
+          steps={new Set<PropSteps>(["map", "housing"])}
+          consumptionDetails={consumptionDetails}
+          address={{
+            lat: 30,
+            lng: 30,
+            city: "Cairo Governate",
+            fullAddress: "",
+          }}
+          createProposalFunc={createOffGridProposal}
+          onProposalCreation={(proposal: OffGridProposal) =>
+            console.log(proposal)
+          }
+          ViewProposal={ViewOffGridProposal}
+          customFormSteps={[MemoziedLoadsConsumptionForm]}
+        />
+      </Suspense>
     </>
   );
 }
