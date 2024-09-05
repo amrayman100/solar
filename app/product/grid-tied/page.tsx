@@ -77,7 +77,10 @@ export default async function GridTied() {
                 <div className="mt-4">
                   <Link
                     className="text-2xl scroll-m-20 font-extrabold tracking-tight text-primary"
-                    href={"/proposal/grid-tied"}
+                    href={{
+                      pathname: "/proposal/grid-tied",
+                      query: { startFromBeginning: true },
+                    }}
                   >
                     Contact us today for a free consultation!
                   </Link>

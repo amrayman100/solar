@@ -37,7 +37,7 @@ export default async function Home() {
                 <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
                   Get Your Free Solar Quote{" "}
                 </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-green-500 text-green-500 text-center">
+                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-primary text-primary text-center">
                   Instantly
                 </span>
               </div>

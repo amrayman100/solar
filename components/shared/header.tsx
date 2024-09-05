@@ -172,7 +172,7 @@ export default function Header() {
             />
             <TypographyH3
               text="Bolt Energy"
-              className="self-center text-emerald-950"
+              className="self-center text-primary"
             />
           </div>
         </div>
@@ -187,7 +187,7 @@ export default function Header() {
                   <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
                     <ListItem
                       href="/product/grid-tied"
-                      title="Grid Tied"
+                      title="Grid-Tied"
                     ></ListItem>
                     <ListItem
                       href="/product/off-grid"

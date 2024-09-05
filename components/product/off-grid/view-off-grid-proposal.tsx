@@ -42,7 +42,7 @@ export function ViewOffGridProposal({
           >
             <div className="flex pt-4 flex-col">
               <TypographyH1
-                text="Your Solution"
+                text="Your Preliminary Solution"
                 className="bg-gradient-to-r from-primary via-green-400 to-primary text-white bg-clip-text mx-3"
               />
             </div>

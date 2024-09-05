@@ -25,7 +25,7 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
             <div className="lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10 border-solid rounded-xl border lg:w-[100vw] mx-auto">
               <div className="bg-cover bg-center h-max relative to-primary pb-10">
                 <TypographyH1
-                  text="Your EV Charging Solution"
+                  text="Your EV Charging Preliminary Solution"
                   className="mx-3 text-center"
                 />
                 {!details.charger && (
@@ -34,7 +34,7 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                       <ContactMe
                         darkMode
                         proposalId={proposal.id}
-                        caption="You’ll need a custom solution"
+                        caption="You’ll need a custom Preliminary Solution"
                       />
                     </div>
                   </div>
@@ -63,7 +63,7 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                       <ContactMe
                         darkMode
                         proposalId={proposal.id}
-                        caption="Interested in going solar?"
+                        caption="Interested energizing your vehicle?"
                       />
                     </div>
                   </div>

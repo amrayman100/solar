@@ -178,7 +178,7 @@ export function NewOffGridProposal({ product }: { product: OffGrid }) {
       } catch (err) {
         return (
           <>
-            <TypographyH5 text="Your current usage will need a custom solution" />
+            <TypographyH5 text="Your current usage will need a custom Preliminary Solution" />
           </>
         );
       }

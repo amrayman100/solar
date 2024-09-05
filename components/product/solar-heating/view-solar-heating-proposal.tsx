@@ -29,7 +29,7 @@ export function ViewSolarHeatingProposal({
                 {details.type == "house-hold" && (
                   <>
                     <TypographyH1
-                      text="Your House Hold Heating Solution"
+                      text="Your House Hold Heating Preliminary Solution"
                       className="mx-3 text-center"
                     />
                     {!details.heater && (
@@ -37,7 +37,7 @@ export function ViewSolarHeatingProposal({
                         <ContactMe
                           darkMode
                           proposalId={proposal.id}
-                          caption="You need a custom solution"
+                          caption="You need a custom Preliminary Solution"
                         />
                       </div>
                     )}
@@ -80,19 +80,21 @@ export function ViewSolarHeatingProposal({
                         </div>
                       </div>
                     )}
-                    <div className="text-center mt-6 mx-auto w-max">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Interested in going solar?"
-                      />
-                    </div>
+                    {details.heater && (
+                      <div className="text-center mt-6 mx-auto w-max">
+                        <ContactMe
+                          darkMode
+                          proposalId={proposal.id}
+                          caption="Interested in going solar?"
+                        />
+                      </div>
+                    )}
                   </>
                 )}
                 {details.type == "pool" && (
                   <>
                     <TypographyH1
-                      text="Your Pool Heating Solution"
+                      text="Your Pool Heating Preliminary Solution"
                       className="mx-3"
                     />
                     {!details.heater && (
@@ -101,7 +103,7 @@ export function ViewSolarHeatingProposal({
                           <ContactMe
                             darkMode
                             proposalId={proposal.id}
-                            caption="You need a custom solution"
+                            caption="You need a custom Preliminary Solution"
                           />
                         </div>
                       </div>
@@ -148,13 +150,15 @@ export function ViewSolarHeatingProposal({
                         </div>
                       </div>
                     )}
-                    <div className="text-center mt-6 mx-auto w-max">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Interested in going solar?"
-                      />
-                    </div>
+                    {details.heater && (
+                      <div className="text-center mt-6 mx-auto w-max">
+                        <ContactMe
+                          darkMode
+                          proposalId={proposal.id}
+                          caption="Interested in going solar?"
+                        />
+                      </div>
+                    )}
                   </>
                 )}
               </div>

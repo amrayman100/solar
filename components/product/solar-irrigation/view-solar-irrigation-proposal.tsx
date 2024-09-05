@@ -30,41 +30,48 @@ export function ViewSolarIrrigationProposal({
             <div className="mt-3 h-max">
               <div className="flex-col rounded-xl border bg-card w-max p-4 mx-4 h-max">
                 <TypographyH1
-                  text="Your Solution"
+                  text="Your Preliminary Solution"
                   className="bg-gradient-to-r from-primary via-green-400 to-primary bg-clip-text mx-3"
                 />
-                <div className="mx-3">
+              </div>
+            </div>
+            <div>
+              <div className="">
+                <div className="lg:flex-row flex-col flex gap-6 justify-center h-full p-4">
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
+                    <TypographyH3
+                      text="Irrigation Unit"
+                      className="font-bold"
+                    />
+                    <div className="flex-col flex gap-2">
+                      <div className="text-center">
+                        <span>{"Price: "}</span>
+                        <span className="font-bold">
+                          {details?.cost.toLocaleString("en", {
+                            useGrouping: true,
+                          }) + " EGP"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
+                    <TypographyH3 text="Pump Capacity" className="font-bold" />
+                    <div className="flex-col flex gap-2">
+                      <div>
+                        <TypographyH5
+                          className="font-bold"
+                          text={details.pumpCapacity.toString() + " HP"}
+                        ></TypographyH5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-col rounded-xl border bg-card w-max p-4 mx-auto h-max">
                   <ContactMe
                     darkMode
                     proposalId={proposal.id}
                     caption="Interested in going solar?"
                   />
-                </div>
-              </div>
-            </div>
-            <div className="lg:flex-row flex-col flex gap-6 justify-center h-full p-4">
-              <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
-                <TypographyH3 text="Irrigation Unit" className="font-bold" />
-                <div className="flex-col flex gap-2">
-                  <div className="text-center">
-                    <span>{"Price: "}</span>
-                    <span className="font-bold">
-                      {details?.cost.toLocaleString("en", {
-                        useGrouping: true,
-                      }) + " EGP"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
-                <TypographyH3 text="Pump Capacity" className="font-bold" />
-                <div className="flex-col flex gap-2">
-                  <div>
-                    <TypographyH5
-                      className="font-bold"
-                      text={details.pumpCapacity.toString() + " HP"}
-                    ></TypographyH5>
-                  </div>
                 </div>
               </div>
             </div>

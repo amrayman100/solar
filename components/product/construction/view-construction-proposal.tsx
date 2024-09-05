@@ -29,27 +29,15 @@ export function ViewConstructionProposal({
             <div className="lg:flex-row gap-2 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10 border-solid rounded-xl border w-[100vw] mx-auto">
               <div className="bg-cover bg-center h-max relative to-primary pb-10">
                 <TypographyH1
-                  text="Your Solution"
+                  text="Your Preliminary Solution"
                   className="mx-3 text-center"
                 />
                 {details.type === "generalContracting" && (
                   <div className="flex-col flex gap-6 justify-center h-full items-center">
                     <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
                       <TypographyH3
-                        text="General Contracting"
+                        text="We will contact you in 72 hours"
                         className="font-bold"
-                      />
-                      <div className="flex-col flex gap-2">
-                        <div className="">
-                          <span className="font-bold">{details.subject}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Do you want us to contact you?"
                       />
                     </div>
                   </div>
@@ -58,22 +46,8 @@ export function ViewConstructionProposal({
                   <div className="flex-col flex gap-6 justify-center h-full items-center">
                     <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
                       <TypographyH3
-                        text="Solar Panel Installations"
+                        text="We will contact you in 72 hours"
                         className="font-bold"
-                      />
-                      <div className="flex-col flex gap-2">
-                        <div className="">
-                          <span className="font-bold">
-                            {details.plantSizeKws} KW
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Do you want us to contact you?"
                       />
                     </div>
                   </div>

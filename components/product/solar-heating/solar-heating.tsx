@@ -131,6 +131,7 @@ export function NewSolarHeatingProposal() {
   return (
     <div className="w-full flex">
       <CreateProposal
+        customStepsClassName="lg:mt-40"
         steps={new Set<PropSteps>(["map"])}
         consumptionDetails={consumptionDetails}
         address={{ lat: 30, lng: 30, city: "Cairo Governate", fullAddress: "" }}
