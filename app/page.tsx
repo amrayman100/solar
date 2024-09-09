@@ -192,9 +192,9 @@ export default async function Home() {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-20 mt-6 p-10  lg:mx-60 mx-10">
+        <div className="flex flex-col lg:flex-row gap-20 mt-6 p-10  lg:mx-80 mx-10">
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4
@@ -210,7 +210,7 @@ Calculate your quote"
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4 text="Your study at 0 cost" className="text-center" />
@@ -222,7 +222,7 @@ Calculate your quote"
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit border-green-400"
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4
@@ -238,7 +238,7 @@ Calculate your quote"
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fi border-green-400"
+            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4
