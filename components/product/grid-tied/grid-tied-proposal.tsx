@@ -29,6 +29,8 @@ export function NewGridTiedProposal() {
     monthlyConsumption: number;
   };
 
+  console.log(localStorageData);
+
   const [consumptionDetails, setConsumptionDetails] = useState<{
     monthlyConsumption: number;
   }>({
@@ -63,7 +65,6 @@ export function NewGridTiedProposal() {
               min={1}
               step={"any"}
               type="number"
-              key={"pumpCapacity-input-"}
               {...register(`monthlyConsumption`)}
             />
           </div>
@@ -83,13 +84,11 @@ export function NewGridTiedProposal() {
         <CreateProposal
           customStepsClassName="lg:mt-40"
           steps={new Set<PropSteps>(["map", "housing"])}
-          consumptionDetails={{
-            monthlyConsumption: localStorageData?.monthlyConsumption || 0,
-          }}
+          consumptionDetails={consumptionDetails}
           address={
             localStorageData?.address || {
-              lat: 0,
-              lng: 0,
+              lat: 30,
+              lng: 30,
             }
           }
           createProposalFunc={createGridTiedProposal}

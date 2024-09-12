@@ -1,0 +1,437 @@
+{
+  "markup": 0.25,
+  "labourCost": 3000,
+  "battery": {
+    "brand": "NewMax 200AH-12V LeadAcid Gel",
+    "cableCost": 300,
+    "price": 20000,
+    "meterString": 6,
+    "depthOfDischarge": 0.7,
+    "capacity": 200,
+    "voltage": 12,
+    "capacityVariances": [
+      { "hoursTillEmpty": 1, "capacity": 132 },
+      { "hoursTillEmpty": 5, "capacity": 174 },
+      { "hoursTillEmpty": 10, "capacity": 190 },
+      { "hoursTillEmpty": 20, "capacity": 200 }
+    ],
+    "circuitBreaker": {
+      "brand": "ABB",
+      "rating": "200A",
+      "price": 5000,
+      "quantity": 1
+    }
+  },
+  "inverters": [
+    {
+      "capacity": 1000,
+      "brand": "1KW - MPPT",
+      "systemVoltage": 12,
+      "price": 15502,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x4",
+        "price": 37.19,
+        "quantity": 100,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 15
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 45
+      }
+    },
+    {
+      "capacity": 2000,
+      "brand": "2KW - MPPT",
+      "systemVoltage": 24,
+      "price": 15502,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x4",
+        "price": 37.19,
+        "quantity": 100,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 15
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 45
+      }
+    },
+    {
+      "capacity": 3000,
+      "brand": "3KW - MPPT",
+      "systemVoltage": 24,
+      "price": 15502,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x4",
+        "price": 37.19,
+        "quantity": 100,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 15
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 45
+      }
+    },
+    {
+      "capacity": 5000,
+      "brand": "5KW - MPPT",
+      "systemVoltage": 48,
+      "price": 33120,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 100,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 15
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 45
+      }
+    },
+    {
+      "capacity": 10000,
+      "brand": "2 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 80000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 200,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 30
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 90
+      }
+    },
+    {
+      "capacity": 15000,
+      "brand": "3 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 120000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 300,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 45
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 135
+      }
+    },
+    {
+      "capacity": 20000,
+      "brand": "4 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 160000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 400,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 60
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 180
+      }
+    },
+    {
+      "capacity": 25000,
+      "brand": "5 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 200000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 500,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 75
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 225
+      }
+    },
+    {
+      "capacity": 30000,
+      "brand": "6 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 240000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 600,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 90
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 270
+      }
+    },
+    {
+      "capacity": 35000,
+      "brand": "7 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 280000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 700,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 105
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 315
+      }
+    },
+    {
+      "capacity": 40000,
+      "brand": "8 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 320000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 800,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 120
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 360
+      }
+    },
+    {
+      "capacity": 45000,
+      "brand": "9 x 5.2kWp - MPPT",
+      "systemVoltage": 48,
+      "price": 360000,
+      "acCable": {
+        "brand": "El-Sweedy",
+        "rating": "1x6",
+        "price": 54.67,
+        "quantity": 900,
+        "acEarthCable": {
+          "brand": "El-Sweedy",
+          "rating": "1x6",
+          "price": 54.67,
+          "quantity": 135
+        }
+      },
+      "circuitBreaker": {
+        "brand": "ABB",
+        "rating": "10A-40A",
+        "price": 510,
+        "quantity": 405
+      }
+    }
+  ],
+  "deviceLoadTemplates": [
+    {
+      "name": "lamp",
+      "powerWatt": 12,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "socket",
+      "powerWatt": 50,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "router",
+      "powerWatt": 50,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "tv",
+      "powerWatt": 200,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "fridge",
+      "powerWatt": 400,
+      "hasSurgePower": true,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "ac",
+      "powerWatt": 1676.25,
+      "hasSurgePower": true,
+      "hasManualTransferSwitch": false,
+      "unit": "hp"
+    },
+    {
+      "name": "ac-inverter",
+      "powerWatt": 1676.25,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "hp"
+    },
+    {
+      "name": "fan",
+      "powerWatt": 100,
+      "hasSurgePower": true,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "motor",
+      "powerWatt": 745,
+      "hasSurgePower": true,
+      "hasManualTransferSwitch": false,
+      "unit": "hp"
+    },
+    {
+      "name": "shutter",
+      "powerWatt": 330,
+      "hasSurgePower": true,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "waterHeater",
+      "powerWatt": 2000,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    },
+    {
+      "name": "camera",
+      "powerWatt": 70,
+      "hasSurgePower": false,
+      "hasManualTransferSwitch": false,
+      "unit": "watt"
+    }
+  ],
+  "mc4": { "brand": "Suntree", "price": 60 },
+  "dcCable": {
+    "meterPerString": 20,
+    "price": 60,
+    "brand": "KBE",
+    "rating": "4mm2"
+  },
+  "mountingPrice": 100,
+  "panel": {
+    "brand": "Tongwei Solar 555",
+    "powerOutputWatt": 555,
+    "pricePerWatt": 10.8,
+    "width": 1.14,
+    "switchBox": { "brand": "ABB", "price": 2000, "citySpecificities": [] }
+  },
+  "manualTransferSwitch": {
+    "brand": "ABB",
+    "rating": "10A-40A",
+    "price": 1000,
+    "quantity": 1
+  },
+  "fuse": { "brand": "Suntree", "price": 220 },
+  "flexible": { "brand": "", "quantity": 2, "price": 600 },
+  "transportationCost": 2000,
+  "cleaningToolPrice": 800,
+  "batteryStandPrice": {
+    "insideHousePrice": 3000,
+    "outsideHousePerFourBatteriesPrice": 14000
+  },
+  "dollarRate": 1,
+  "billingPercentage": {
+    "downPaymentPercentage": 0.5,
+    "commissionPercentage": 0.05,
+    "componentsSupplyPercentage": 0.25,
+    "installationPercentage": 0.2
+  }
+}
