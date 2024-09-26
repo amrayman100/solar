@@ -48,9 +48,6 @@ export default async function GridTied() {
                     <TypographyH4Light text="• Environmental friendly: Contribute to a cleaner planet by reducing your carbon footprint." />
                   </li>
                   <li>
-                    <TypographyH4Light text="• Government incentives: Many governments offer incentives and tax credits to encourage the adoption of solar energy." />
-                  </li>
-                  <li>
                     <TypographyH4Light text="• Easy installation: Grid-tied systems are relatively easy to install and require minimal maintenance." />
                   </li>
                 </ul>
@@ -66,12 +63,12 @@ export default async function GridTied() {
                     <TypographyH4Light text="• Inverter: Converts DC power from the panels into AC power for your home." />
                   </li>
                   <li>
-                    <TypographyH4Light text="• Grid connection: Excess electricity is sent back to the grid for credits." />
+                    <TypographyH4Light text="• Net Meter: Excess electricity is sent back to the grid for credits." />
                   </li>
                 </ul>
                 <div className="mt-4">
                   <span className="text-2xl font-semibold tracking-tight">
-                    Ready to start saving money and the environment? today
+                    Ready to start saving money and the environment?
                   </span>
                 </div>
                 <div className="mt-4">

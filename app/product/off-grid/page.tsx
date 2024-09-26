@@ -33,7 +33,7 @@ export default async function OffGrid() {
             </div>
             <div className="flex justify-center h-full">
               <div className="m-auto flex flex-col">
-                <TypographyH3 text="Power Up Your Life, No Matter What!" />
+                <TypographyH3 text="Be Energy Independent" />
                 <TypographyH3
                   text="Backup solar off-grid systems are your ticket to energy independence. Imagine never worrying about power outages or soaring electricity bills again!"
                   className="font-normal mt-2"

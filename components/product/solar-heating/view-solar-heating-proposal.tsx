@@ -29,7 +29,7 @@ export function ViewSolarHeatingProposal({
                 {details.type == "house-hold" && (
                   <>
                     <TypographyH1
-                      text="Your House Hold Heating Preliminary Solution"
+                      text="Your House-hold Heating Solution"
                       className="mx-3 text-center"
                     />
                     {!details.heater && (
@@ -37,7 +37,7 @@ export function ViewSolarHeatingProposal({
                         <ContactMe
                           darkMode
                           proposalId={proposal.id}
-                          caption="You need a custom Preliminary Solution"
+                          caption="You need a custom Solution"
                         />
                       </div>
                     )}
@@ -94,7 +94,7 @@ export function ViewSolarHeatingProposal({
                 {details.type == "pool" && (
                   <>
                     <TypographyH1
-                      text="Your Pool Heating Preliminary Solution"
+                      text="Your Pool Heating Solution"
                       className="mx-3"
                     />
                     {!details.heater && (
@@ -103,7 +103,7 @@ export function ViewSolarHeatingProposal({
                           <ContactMe
                             darkMode
                             proposalId={proposal.id}
-                            caption="You need a custom Preliminary Solution"
+                            caption="You need a custom Solution"
                           />
                         </div>
                       </div>

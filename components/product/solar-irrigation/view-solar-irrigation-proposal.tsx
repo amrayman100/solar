@@ -28,10 +28,10 @@ export function ViewSolarIrrigationProposal({
             className="bg-cover bg-center w-screen lg:h-[70vh] pt-1"
           >
             <div className="mt-3 h-max">
-              <div className="flex-col rounded-xl border bg-card w-max p-4 mx-4 h-max">
+              <div className="flex-col-max p-4 mx-4 h-max">
                 <TypographyH1
                   text="Your Preliminary Solution"
-                  className="bg-gradient-to-r from-primary via-green-400 to-primary bg-clip-text mx-3"
+                  className="mx-3 text-white"
                 />
               </div>
             </div>
@@ -59,7 +59,7 @@ export function ViewSolarIrrigationProposal({
                     <div className="flex-col flex gap-2">
                       <div>
                         <TypographyH5
-                          className="font-bold"
+                          className="font-bold text-center"
                           text={details.pumpCapacity.toString() + " HP"}
                         ></TypographyH5>
                       </div>

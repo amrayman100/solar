@@ -49,7 +49,7 @@ export function MainentanceForm() {
     return (
       <>
         <TypographyH3
-          text="We will contact you in 72 hours"
+          text="Amazing, we will contact you as soon as possible!"
           className="font-bold"
         />
       </>

@@ -36,7 +36,7 @@ export function ViewConstructionProposal({
                   <div className="flex-col flex gap-6 justify-center h-full items-center">
                     <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
                       <TypographyH3
-                        text="We will contact you in 72 hours"
+                        text="Amazing, we will contact you as soon as possible!"
                         className="font-bold"
                       />
                     </div>
@@ -46,7 +46,7 @@ export function ViewConstructionProposal({
                   <div className="flex-col flex gap-6 justify-center h-full items-center">
                     <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
                       <TypographyH3
-                        text="We will contact you in 72 hours"
+                        text="Amazing, we will contact you as soon as possible!"
                         className="font-bold"
                       />
                     </div>

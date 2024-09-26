@@ -72,7 +72,7 @@ export function NewSolarHeatingProposal() {
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="house-hold" id="r2" />
-            <Label htmlFor="r2">House Hold Heating</Label>
+            <Label htmlFor="r2">House-hold Heating</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="pool" id="r3" />

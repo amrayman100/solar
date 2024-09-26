@@ -42,7 +42,7 @@ export function BrandAmbassadorForm() {
   if (mutation.isSuccess) {
     return (
       <>
-        <TypographyH3 text="We will contact you in 72 hours" />
+        <TypographyH3 text="Amazing, we will contact you as soon as possible!" />
       </>
     );
   }

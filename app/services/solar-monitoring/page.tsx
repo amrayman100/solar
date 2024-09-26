@@ -15,7 +15,7 @@ export default async function SolarMonitoring() {
         <div className="m-10">
           <div className="flex place-items-center gap-3">
             <TypographyH3
-              text="Smart Monitoring"
+              text="Smart monitoring"
               className="font-bold self-center"
             />
           </div>

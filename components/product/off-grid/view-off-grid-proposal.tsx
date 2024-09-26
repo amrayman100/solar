@@ -97,7 +97,7 @@ export function ViewOffGridProposal({
               </div>
               <div>
                 <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4">
-                  <TypographyH4 text="Your quotation" />
+                  <TypographyH4 text="Your Quotation" />
                   <Table>
                     <TableHeader>
                       <TableRow>

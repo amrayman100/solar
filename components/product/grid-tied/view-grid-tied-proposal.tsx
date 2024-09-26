@@ -47,11 +47,11 @@ export function ViewGridTiedProposal({
   const firstYearMonthlyBillSavingsBarChartData = [
     {
       name: "Old Bill",
-      bill: details.currentMonthlyBill,
+      Amount: details.currentMonthlyBill,
     },
     {
       name: "New Bill",
-      bill:
+      Amount:
         firstYearMonthlyBill < 0
           ? 0
           : Math.round(firstYearMonthlyBill).toLocaleString("en", {
@@ -162,7 +162,7 @@ export function ViewGridTiedProposal({
           </div>
           <div>
             <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4">
-              <TypographyH4 text="Your quotation" />
+              <TypographyH4 text="Your Quotation" />
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -282,14 +282,20 @@ export function ViewGridTiedProposal({
                       bottom: 5,
                     }}
                   >
-                    <Tooltip />
+                    <Tooltip
+                      // labelStyle={{ display: "none" }}
+                      label={"Bill"}
+                      formatter={(value) =>
+                        value && value.toLocaleString() + " EGP"
+                      }
+                    />
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis
                       tickFormatter={(value) => value && value.toLocaleString()}
                     />
                     <Bar
-                      dataKey="bill"
+                      dataKey="Amount"
                       fill="#82ca9d"
                       activeBar={<Rectangle fill="gold" stroke="purple" />}
                     />
