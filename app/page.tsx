@@ -182,7 +182,7 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
+        <div className="flex flex-col place-items-center justify-center mt-10 gap-5 mb-2">
           <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
             Your installation in 4 simple steps
           </div>
@@ -192,37 +192,36 @@ export default async function Home() {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-20 mt-6 p-10  lg:mx-80 mx-10">
+        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
-            <TypographyH4
-              text=" 
-Calculate your quote"
-              className="text-center"
-            />
+            <TypographyH4 text="Calculate your quote" className="text-center" />
             <div className="text-[0px]"></div>
-            <div className="text-[0px]">
+            <div className="text-[0px] text-center">
               <span className="text-base">
                 Run your solar simulation or contact our solar specialists.
               </span>
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4 text="Your study at 0 cost" className="text-center" />
             <div className="text-[0px]"></div>
-            <div className="text-[0px]">
+            <div className="text-[0px] text-center">
               <span className="text-base">
                 Get a personalized study of the installation you need
               </span>
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4
@@ -230,7 +229,7 @@ Calculate your quote"
               className="text-center"
             />
             <div className="text-[0px]"></div>
-            <div className="text-[0px]">
+            <div className="text-[0px] text-center">
               <span className="text-base">
                 We will schedule a technical visit to examine the feasibility of
                 the project
@@ -238,7 +237,7 @@ Calculate your quote"
             </div>
           </div>
           <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow border-green-400"
+            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
             style={{ flex: "1 1 0px;" }}
           >
             <TypographyH4
@@ -246,7 +245,7 @@ Calculate your quote"
               className="text-center"
             />
             <div className="text-[0px]"></div>
-            <div className="text-[0px]">
+            <div className="text-[0px] text-center">
               <span className="text-base">
                 Schedule the installation in less than two weeks and bring your
                 bill to 0 EGP{" "}
