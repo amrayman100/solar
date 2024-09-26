@@ -72,7 +72,7 @@ export default async function Home() {
               </span>
               <span className="text-base">
                 {" "}
-                in correspondence to your roofs pace and average consumption.
+                in relation to your roof space and average consumption.
               </span>{" "}
             </div>
           </div>
@@ -88,7 +88,7 @@ export default async function Home() {
               </span>
               <span className="text-base text-primary font-bold">
                 {" "}
-                production in real time
+                production in real-time
               </span>
               <span className="text-base">
                 {" "}
@@ -113,7 +113,7 @@ export default async function Home() {
               </span>
               <span className="text-base">
                 {" "}
-                with minimum initial investment, and an all maintenance
+                with minimum initial investment,with all maintenance
                 included.
               </span>{" "}
             </div>
@@ -173,7 +173,7 @@ export default async function Home() {
             <div className="text-[0px]"></div>
             <div className="text-[0px]">
               <span className="text-base">
-                Finance your soluion to adjust so you can pay
+                Finance your solution to adjust so you can pay
               </span>
               <span className="text-base text-primary font-bold">
                 {" "}

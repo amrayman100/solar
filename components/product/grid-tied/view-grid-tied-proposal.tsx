@@ -173,7 +173,7 @@ export function ViewGridTiedProposal({
                 <TableBody>
                   <TableRow>
                     <TableCell className="font-bold">
-                      Total System Cost
+                      Total System Price
                     </TableCell>
                     <TableCell className="text-right font-bold">
                       {Math.round(
@@ -183,7 +183,7 @@ export function ViewGridTiedProposal({
                   </TableRow>
                 </TableBody>
                 <p className="mt-2">
-                  Kindly Note There is an additional utility meter cost
+                  Kindly note there is an additional utility meter cost
                 </p>
               </Table>
             </div>
@@ -239,7 +239,7 @@ export function ViewGridTiedProposal({
               </Table>
             </div>
             <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 h-max">
-              Need Off Grid Batteries to store excess energy?{"  "}
+              Need back-up storage for excess energy?{"  "}
               <Link
                 className="scroll-m-20 font-extrabold tracking-tight text-primary"
                 href={{
