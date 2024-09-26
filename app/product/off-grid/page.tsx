@@ -20,8 +20,8 @@ export default async function OffGrid() {
             <div>
               <Image
                 alt="Off Grid"
-                src={"/off-grid.png"}
-                blurDataURL={"/off-grid.png"}
+                src={"/offgrid-ai.png"}
+                blurDataURL={"/offgrid-ai.png"}
                 placeholder="blur"
                 quality={100}
                 height={500}

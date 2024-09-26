@@ -22,8 +22,8 @@ export default async function SolarMonitoring() {
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
               alt="Smart Monitoring"
-              src={"/monit.jpg"}
-              blurDataURL={"/monit.jpg"}
+              src={"/monitor-ai.png"}
+              blurDataURL={"/monitor-ai.png"}
               placeholder="blur"
               quality={100}
               height={500}
