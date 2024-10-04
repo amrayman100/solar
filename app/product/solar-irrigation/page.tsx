@@ -26,8 +26,8 @@ export default async function SolarIrrigationPage() {
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
               alt="Solar Irrigation"
-              src={"/solar-irig-ai.png"}
-              blurDataURL={"/solar-irig-ai.png"}
+              src={"/solar-irrig.jpg"}
+              blurDataURL={"/solar-irrig.jpg"}
               placeholder="blur"
               quality={100}
               height={500}

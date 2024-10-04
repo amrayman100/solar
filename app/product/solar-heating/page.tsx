@@ -22,8 +22,8 @@ export default async function SolarHeating() {
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
               alt="Solar Heating"
-              src={"/solar-heating.jpg"}
-              blurDataURL={"/solar-heating.jpg"}
+              src={"/solar-heat-ai.png"}
+              blurDataURL={"/solar-heat-ai.png"}
               placeholder="blur"
               quality={100}
               height={500}
