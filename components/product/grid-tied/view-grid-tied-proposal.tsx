@@ -270,36 +270,43 @@ export function ViewGridTiedProposal({
                 className="font-bold text-center p-2"
               />
               <div className="lg:flex-row flex-col flex gap-6">
-                <div className="text-center w-full">
-                  <BarChart
-                    width={400}
-                    height={300}
-                    data={firstYearMonthlyBillSavingsBarChartData}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <Tooltip
-                      // labelStyle={{ display: "none" }}
-                      label={"Bill"}
-                      formatter={(value) =>
-                        value && value.toLocaleString() + " EGP"
-                      }
-                    />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis
-                      tickFormatter={(value) => value && value.toLocaleString()}
-                    />
-                    <Bar
-                      dataKey="Amount"
-                      fill="#82ca9d"
-                      activeBar={<Rectangle fill="gold" stroke="purple" />}
-                    />
-                  </BarChart>
+                <div
+                  className="text-center w-full"
+                  style={{ width: "100%", height: 268 }}
+                >
+                  <ResponsiveContainer>
+                    <BarChart
+                      // width={400}
+                      // height={300}
+                      data={firstYearMonthlyBillSavingsBarChartData}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <Tooltip
+                        // labelStyle={{ display: "none" }}
+                        label={"Bill"}
+                        formatter={(value) =>
+                          value && value.toLocaleString() + " EGP"
+                        }
+                      />
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis
+                        tickFormatter={(value) =>
+                          value && value.toLocaleString()
+                        }
+                      />
+                      <Bar
+                        dataKey="Amount"
+                        fill="#82ca9d"
+                        activeBar={<Rectangle fill="gold" stroke="purple" />}
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
