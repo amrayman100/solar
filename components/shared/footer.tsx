@@ -46,7 +46,7 @@ export function Footer() {
             <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse text-center">
               <a
                 href="https://www.instagram.com/solarsolutionsegypt/"
-                className="text-gray-600 hover:text-gray-900 dark:hover:text-white text-center"
+                className="text-gray-6git00 hover:text-gray-900 dark:hover:text-white text-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -63,13 +63,13 @@ export function Footer() {
               </a>
               <a
                 href="mailto:info@bolt-energy.me"
-                className="text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="text-gray-600 hover:text-gray-900 dark:hover:text-white text-sm md:text-base lg:text-base"
               >
                 info@bolt-energy.me
               </a>
               <a
                 href="tel:+201002606000"
-                className="text-gray-600 hover:text-gray-900 dark:hover:text-white"
+                className="text-gray-600 hover:text-gray-900 dark:hover:text-white text-sm md:text-base lg:text-base"
               >
                 01002606000
               </a>
