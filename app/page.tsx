@@ -314,7 +314,7 @@ export default async function Home() {
                         Solutions, but most, if not all of them, were very
                         unsatisfactory. Bolt Energy on the other hand were
                         extremely helpful the whole way through, despite
-                        expected hiccups with the government's electrical
+                        expected hiccups with the government&apos;s electrical
                         company. The team were professional and were working on
                         the system as if it were their own. I would recommend
                         them to anyone, and already did.
@@ -332,13 +332,13 @@ export default async function Home() {
                     <CardContent className="flex p-6">
                       <span className="">
                         {" "}
-                        I did not expect to find such a great and professional
-                        people. Bolt Energy team is simply perfect. In few days
-                        I got an offer for my unit, and the installation
-                        procedure had been easy and smooth. I highly recommend
-                        this company to all my friends, neighbors and people
-                        that are interested in invest some money for a better
-                        and green future.
+                        I didn&apos;t expect to find such a great and
+                        professional people. Bolt Energy team is simply perfect.
+                        In few days I got an offer for my unit, and the
+                        installation procedure had been easy and smooth. I
+                        highly recommend this company to all my friends,
+                        neighbors and people that are interested in invest some
+                        money for a better and green future.
                       </span>
                     </CardContent>
                   </Card>
