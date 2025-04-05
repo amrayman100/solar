@@ -355,8 +355,8 @@ export default async function Home() {
                         {" "}
                         Everyone was extremely professional and friendly and did
                         everything to make the experience smooth and easy for
-                        me. I'm extremely satisfied with my experience and would
-                        definitely recommend to anyone.
+                        me. I&apos;m extremely satisfied with my experience and
+                        would definitely recommend to anyone.
                       </span>
                     </CardContent>
                   </Card>
