@@ -1,9 +1,7 @@
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
-import { TypographyH2, TypographyH4 } from "@/components/shared/typography";
+import { TypographyH4 } from "@/components/shared/typography";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { MainentanceForm } from "@/components/services/maintenance/maintenance-form";
 
 export default async function Maintenance() {

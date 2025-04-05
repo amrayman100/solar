@@ -21,6 +21,28 @@ import {
 } from "@/components/ui/accordion";
 import Image from "next/image";
 import { BrandAmbassadorForm } from "@/components/brand-ambassador/brand-ambassador-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Renewable Energy Solutions | Solar, Energy Storage",
+  description:
+    "Explore our comprehensive range of renewable energy solutions including solar energy systems, wind energy, solar heaters, solar pumps, heat pumps, on-grid and off-grid solutions, batteries (lithium-ion and lead-acid), solar lamps, and more.",
+  keywords:
+    "solar energy, renewable energy, wind energy, solar heaters, solar pumps, heat pumps, on grid, off grid, batteries, lithium ion, lead acid, solar lamps, solar headlights, watt, energy, power",
+  openGraph: {
+    title: "Renewable Energy Solutions | Solar, Wind & Energy Storage",
+    description:
+      "Comprehensive renewable energy solutions for sustainable power generation and storage.",
+    images: [
+      {
+        url: "/drone-4-1.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Renewable Energy Solutions",
+      },
+    ],
+  },
+};
 
 export default async function Home() {
   return (
@@ -113,8 +135,7 @@ export default async function Home() {
               </span>
               <span className="text-base">
                 {" "}
-                with minimum initial investment,with all maintenance
-                included.
+                with minimum initial investment,with all maintenance included.
               </span>{" "}
             </div>
           </div>
@@ -293,7 +314,7 @@ export default async function Home() {
                         Solutions, but most, if not all of them, were very
                         unsatisfactory. Bolt Energy on the other hand were
                         extremely helpful the whole way through, despite
-                        expected hiccups with the government’s electrical
+                        expected hiccups with the government's electrical
                         company. The team were professional and were working on
                         the system as if it were their own. I would recommend
                         them to anyone, and already did.
@@ -334,7 +355,7 @@ export default async function Home() {
                         {" "}
                         Everyone was extremely professional and friendly and did
                         everything to make the experience smooth and easy for
-                        me. I’m extremely satisfied with my experience and would
+                        me. I'm extremely satisfied with my experience and would
                         definitely recommend to anyone.
                       </span>
                     </CardContent>

@@ -5,7 +5,6 @@ import { TypographyH3, TypographyH4 } from "../shared/typography";
 import { Button } from "../ui/button";
 import { setProductProposalInterest } from "@/actions/proposal";
 import { cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
 
 type Props = {
   proposalId: number;

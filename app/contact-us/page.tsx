@@ -1,7 +1,6 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
-import Image from "next/image";
 
 export default async function ContactUs() {
   return (

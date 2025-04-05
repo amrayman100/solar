@@ -6,6 +6,28 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Off-Grid Solar Solutions | Energy Independence",
+  description:
+    "Complete off-grid solar power systems with battery storage for energy independence. Ideal for remote locations and backup power solutions.",
+  keywords:
+    "off grid, solar energy, energy independence, battery storage, remote power, solar systems, renewable energy",
+  openGraph: {
+    title: "Off-Grid Solar Solutions | Energy Independence",
+    description:
+      "Complete off-grid solar power systems for energy independence and reliable power supply.",
+    images: [
+      {
+        url: "/offgrid-ai.png",
+        width: 600,
+        height: 500,
+        alt: "Off-Grid Solar Solutions",
+      },
+    ],
+  },
+};
 
 export default async function OffGrid() {
   return (

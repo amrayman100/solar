@@ -6,6 +6,27 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Grid-Tied Solar Systems | Energy Independence",
+  description:
+    "Harness the sun's power for free with grid-tied solar systems. Send excess electricity back to the grid for credits and reduce your energy bills.",
+  keywords:
+    "grid-tied solar systems, energy independence, solar power, energy savings, renewable energy",
+  openGraph: {
+    title: "Grid-Tied Solar Systems | Energy Independence",
+    description:
+      "Harness the sun's power for free with grid-tied solar systems. Send excess electricity back to the grid for credits and reduce your energy bills.",
+    images: [
+      {
+        url: "/grid-tied.jpeg",
+        width: 600,
+        height: 500,
+      },
+    ],
+  },
+};
 
 export default async function GridTied() {
   return (

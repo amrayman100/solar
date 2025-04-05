@@ -1,15 +1,32 @@
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import {
-  TypographyH1,
-  TypographyH2,
   TypographyH3,
-  TypographyH4,
   TypographyH4Light,
-  TypographyH5,
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Solar Irrigation | Solar Irrigation Solutions",
+  description:
+    "Harness the power of the sun to irrigate your crops, saving you money and helping the planet.",
+  keywords:
+    "solar irrigation, solar irrigation solutions, irrigation, crops, water, energy savings, renewable energy",
+  openGraph: {
+    title: "Solar Irrigation | Solar Irrigation Solutions",
+    description:
+      "Harness the power of the sun to irrigate your crops, saving you money and helping the planet.",
+    images: [
+      {
+        url: "/solar-irrig.jpg",
+        width: 600,
+        height: 500,
+      },
+    ],
+  },
+};
 
 export default async function SolarIrrigationPage() {
   return (

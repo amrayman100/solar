@@ -6,6 +6,28 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Solar Construction Solutions | Renewable Energy Infrastructure",
+  description:
+    "Professional solar installation and construction services for residential and commercial projects. Our expert team ensures optimal system performance and structural integrity.",
+  keywords:
+    "solar construction, solar installation, renewable energy infrastructure, solar mounting, solar racking, energy systems, professional installation",
+  openGraph: {
+    title: "Solar Construction Solutions | Renewable Energy Infrastructure",
+    description:
+      "Professional solar installation and construction services for optimal system performance.",
+    images: [
+      {
+        url: "/construction-man.jpeg",
+        width: 600,
+        height: 500,
+        alt: "Solar Construction Solutions",
+      },
+    ],
+  },
+};
 
 export default async function EV() {
   return (
@@ -33,7 +55,7 @@ export default async function EV() {
             />
             <div className="flex justify-center h-full">
               <div className="m-auto flex flex-col">
-                <TypographyH3 text="Bolt construction is Bolt’s civil and implementation arm." />
+                <TypographyH3 text="Bolt construction is Bolt's civil and implementation arm." />
                 <TypographyH3
                   text="Our services are spread across three segments:"
                   className="font-normal mt-2"

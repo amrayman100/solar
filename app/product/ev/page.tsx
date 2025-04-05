@@ -6,6 +6,27 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "EV Chargers | Electric Vehicle Charging Solutions",
+  description:
+    "Explore our range of EV chargers for your home or business. Fast, convenient, and eco-friendly, we offer a variety of options to suit your needs.",
+  keywords:
+    "EV chargers, electric vehicle charging solutions, home chargers, public chargers, fast chargers",
+  openGraph: {
+    title: "EV Chargers | Electric Vehicle Charging Solutions",
+    description:
+      "Explore our range of EV chargers for your home or business. Fast, convenient, and eco-friendly, we offer a variety of options to suit your needs.",
+    images: [
+      {
+        url: "/ev-ai.png",
+        width: 600,
+        height: 500,
+      },
+    ],
+  },
+};
 
 export default async function EV() {
   return (

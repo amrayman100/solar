@@ -6,6 +6,27 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Solar Heating | Solar Heating Solutions",
+  description:
+    "Harness the power of the sun to provide hot water and pool heating, saving you money and helping the planet.",
+  keywords:
+    "solar heating, solar heating solutions, hot water, pool heating, solar power, energy savings, renewable energy",
+  openGraph: {
+    title: "Solar Heating | Solar Heating Solutions",
+    description:
+      "Harness the power of the sun to provide hot water and pool heating, saving you money and helping the planet.",
+    images: [
+      {
+        url: "/solar-heat-ai.png",
+        width: 600,
+        height: 500,
+      },
+    ],
+  },
+};
 
 export default async function SolarHeating() {
   return (
