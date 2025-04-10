@@ -35,6 +35,7 @@ import {
   offGridProduct,
 } from "@/models/product";
 import { eq } from "drizzle-orm";
+import { sendProposalNotification } from "@/lib/email";
 
 export type ProposalRequestInfo<T> = {
   consumptionDetails: T;
@@ -119,6 +120,13 @@ export async function createGridTiedProposal(
   }
 
   proposal.id = insertResult[0].id;
+
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
 
   return proposal;
 }
