@@ -121,12 +121,14 @@ export async function createGridTiedProposal(
 
   proposal.id = insertResult[0].id;
 
-  await sendProposalNotification({
+  const emailSent = await sendProposalNotification({
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: proposal.name,
   });
+
+  console.log(emailSent);
 
   return proposal;
 }
@@ -205,6 +207,13 @@ export async function createOffGridProposal(
 
   proposal.id = insertResult[0].id;
 
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
+
   return proposal;
 }
 
@@ -256,6 +265,13 @@ export async function createSolarIrrigationProposal(
   }
 
   proposal.id = insertResult[0].id;
+
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
 
   return proposal;
 }
@@ -331,6 +347,13 @@ export async function createSolarHeatingProposal(
 
   proposal.id = insertResult[0].id;
 
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
+
   return proposal;
 }
 
@@ -381,6 +404,12 @@ export async function createEVProposal(
 
   proposal.id = insertResult[0].id;
 
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
   return proposal;
 }
 
@@ -423,6 +452,12 @@ export async function createWholesaleProposal(
 
   proposal.id = insertResult[0].id;
 
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
   return proposal;
 }
 
@@ -453,6 +488,12 @@ export async function createConstructionProposal(
 
   proposal.id = insertResult[0].id;
 
+  await sendProposalNotification({
+    name: req.name,
+    email: req.email,
+    phoneNumber: req.phoneNumber,
+    productType: proposal.name,
+  });
   return proposal;
 }
 

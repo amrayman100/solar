@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: true,
+  secure: false,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
@@ -18,8 +18,8 @@ export async function sendProposalNotification(proposalDetails: {
 }) {
   try {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: "info@bolt-energy.me",
+      from: "info@bolt-energy.me",
+      to: "amrayman1996@yahoo.com",
       subject: "New Proposal Created",
       html: `
         <h2>New Proposal Notification</h2>
