@@ -125,7 +125,7 @@ export async function createGridTiedProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: gridTied.name,
   });
 
   console.log(emailSent);
@@ -211,7 +211,7 @@ export async function createOffGridProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: offGridProduct.name,
   });
 
   return proposal;
@@ -270,7 +270,7 @@ export async function createSolarIrrigationProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: irrigationProduct.name,
   });
 
   return proposal;
@@ -351,7 +351,7 @@ export async function createSolarHeatingProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: solarHeatingProduct.name,
   });
 
   return proposal;
@@ -408,7 +408,7 @@ export async function createEVProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: product.name,
   });
   return proposal;
 }
@@ -456,7 +456,7 @@ export async function createWholesaleProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: product.name,
   });
   return proposal;
 }
@@ -492,7 +492,7 @@ export async function createConstructionProposal(
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
-    productType: proposal.name,
+    productType: product.name,
   });
   return proposal;
 }
