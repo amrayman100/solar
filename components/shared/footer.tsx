@@ -45,7 +45,7 @@ export function Footer() {
             </span>
             <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse text-center">
               <a
-                href="https://www.instagram.com/solarsolutionsegypt/"
+                href="https://www.instagram.com/boltenergy_me/"
                 className="text-gray-6git00 hover:text-gray-900 dark:hover:text-white text-center"
               >
                 <svg
