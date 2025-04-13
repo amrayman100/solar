@@ -19,7 +19,7 @@ export async function sendProposalNotification(proposalDetails: {
   try {
     await transporter.sendMail({
       from: "info@bolt-energy.me",
-      to: "info@bolt-energy.me",
+      to: "Alamloum@bolt-energy.me",
       subject: "New Proposal Created",
       html: `
         <h2>New Proposal Notification</h2>
