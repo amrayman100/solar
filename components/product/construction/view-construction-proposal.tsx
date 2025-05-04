@@ -9,7 +9,6 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { ConstructionProposal } from "@/models/product";
-import { ContactMe } from "../contact-me";
 
 export function ViewConstructionProposal({
   proposal,
@@ -69,13 +68,6 @@ export function ViewConstructionProposal({
                           </span>
                         </div>
                       </div>
-                    </div>
-                    <div className="text-center">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Do you want us to contact you?"
-                      />
                     </div>
                   </div>
                 )}

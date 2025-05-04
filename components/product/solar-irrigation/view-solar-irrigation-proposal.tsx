@@ -9,7 +9,6 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { SolarIrrigationProposal } from "@/models/product";
-import { ContactMe } from "../contact-me";
 
 export function ViewSolarIrrigationProposal({
   proposal,
@@ -65,13 +64,6 @@ export function ViewSolarIrrigationProposal({
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex-col rounded-xl border bg-card w-max p-4 mx-auto h-max">
-                  <ContactMe
-                    darkMode
-                    proposalId={proposal.id}
-                    caption="Interested in going solar?"
-                  />
                 </div>
               </div>
             </div>

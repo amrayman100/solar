@@ -13,6 +13,7 @@ import {
   GridTied,
   GridTiedParams,
   GridTiedProposal,
+  HouseholdSolarHeater,
   OffGridConsumption,
   OffGridParams,
   OffGridProposal,
@@ -120,12 +121,12 @@ export async function createGridTiedProposal(
   }
 
   proposal.id = insertResult[0].id;
-
   const emailSent = await sendProposalNotification({
     name: req.name,
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: gridTied.name,
+    proposalData: `System Size: ${proposal.proposalDetails.systemSize} kW\nNumber of Panels: ${proposal.proposalDetails.numberOfPanels}\nTotal Cost: ${proposal.proposalDetails.totalCost} EGP\nFirst Year Savings: ${proposal.proposalDetails.firstYearSavings} EGP\nCurrent Monthly Bill: ${proposal.proposalDetails.currentMonthlyBill} EGP\nFirst Year Monthly Bill: ${proposal.proposalDetails.firstYearMonthlyBill} EGP`,
   });
 
   console.log(emailSent);
@@ -212,6 +213,7 @@ export async function createOffGridProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: offGridProduct.name,
+    proposalData: `Number of Panels: ${proposal.proposalDetails.numberOfPanels}\nNumber of Batteries: ${proposal.proposalDetails.numberOfBatteries}\nTotal Cost: ${proposal.proposalDetails.totalCost} EGP\nBattery Capacity: ${proposal.proposalDetails.battery.capacity} kWh`,
   });
 
   return proposal;
@@ -271,6 +273,7 @@ export async function createSolarIrrigationProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: irrigationProduct.name,
+    proposalData: `Pump Capacity: ${proposal.proposalDetails.pumpCapacity} HP\nEstimated Cost: ${proposal.proposalDetails.cost} EGP`,
   });
 
   return proposal;
@@ -352,6 +355,18 @@ export async function createSolarHeatingProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: solarHeatingProduct.name,
+    proposalData:
+      proposal.proposalDetails.type === "house-hold"
+        ? `Type: Household Heating\nNumber of Rooms: ${
+            proposal.proposalDetails.numberOfRooms
+          }\nHeater Brand: ${
+            proposal.proposalDetails.heater?.brand
+          }\nHeater Capacity: ${
+            (proposal.proposalDetails.heater as HouseholdSolarHeater)?.litres
+          } litres\nEstimated Cost: ${
+            proposal.proposalDetails.heater?.price
+          } EGP`
+        : `Type: Pool Heating\nPool Volume: ${proposal.proposalDetails.poolVolume} m³\nHeater Brand: ${proposal.proposalDetails.heater?.brand}\nEstimated Cost: ${proposal.proposalDetails.heater?.price} EGP`,
   });
 
   return proposal;
@@ -409,6 +424,7 @@ export async function createEVProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: product.name,
+    proposalData: `Charging Power: ${proposal.proposalDetails.chargingPower} kW\nCharger Power: ${proposal.proposalDetails.charger?.power} kW\nEstimated Cost: ${proposal.proposalDetails.charger?.price} EGP`,
   });
   return proposal;
 }
@@ -457,6 +473,11 @@ export async function createWholesaleProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: product.name,
+    proposalData: `Order Details:\n${Object.entries(
+      proposal.proposalDetails.order
+    )
+      .map(([key, value]) => `${key}: ${value}`)
+      .join("\n")}`,
   });
   return proposal;
 }
@@ -493,6 +514,13 @@ export async function createConstructionProposal(
     email: req.email,
     phoneNumber: req.phoneNumber,
     productType: product.name,
+    proposalData: `Project Type: ${proposal.proposalDetails.type}\n${
+      proposal.proposalDetails.type === "homeFinishing"
+        ? `Finishing Type: ${proposal.proposalDetails.finishingType}\nCost: ${proposal.proposalDetails.cost} EGP`
+        : proposal.proposalDetails.type === "generalContracting"
+        ? `Subject: ${proposal.proposalDetails.subject}`
+        : `Plant Size: ${proposal.proposalDetails.plantSizeKws} kW`
+    }`,
   });
   return proposal;
 }

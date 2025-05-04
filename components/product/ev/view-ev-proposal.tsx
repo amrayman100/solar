@@ -9,7 +9,6 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { EVProposal } from "@/models/product";
-import { ContactMe } from "../contact-me";
 
 export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
   const details = proposal.proposalDetails;
@@ -28,17 +27,6 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                   text="Your EV Charging Preliminary Solution"
                   className="mx-3 text-center"
                 />
-                {!details.charger && (
-                  <div>
-                    <div className="">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="You’ll need a custom Preliminary Solution"
-                      />
-                    </div>
-                  </div>
-                )}
                 {details.charger && (
                   <div className="flex-col flex gap-6 justify-center h-full items-center">
                     <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
@@ -58,13 +46,6 @@ export function ViewEvProposal({ proposal }: { proposal: EVProposal }) {
                           </span>
                         </div>
                       </div>
-                    </div>
-                    <div className="">
-                      <ContactMe
-                        darkMode
-                        proposalId={proposal.id}
-                        caption="Interested energizing your vehicle?"
-                      />
                     </div>
                   </div>
                 )}

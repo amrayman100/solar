@@ -9,7 +9,6 @@ import {
   TypographyH5,
 } from "@/components/shared/typography";
 import { SolarHeatingProposal } from "@/models/product";
-import { ContactMe } from "../contact-me";
 
 export function ViewSolarHeatingProposal({
   proposal,
@@ -32,15 +31,6 @@ export function ViewSolarHeatingProposal({
                       text="Your House-hold Heating Solution"
                       className="mx-3 text-center"
                     />
-                    {!details.heater && (
-                      <div className="flex mx-auto justify-center mt-2">
-                        <ContactMe
-                          darkMode
-                          proposalId={proposal.id}
-                          caption="You need a custom Solution"
-                        />
-                      </div>
-                    )}
                     {details.heater && (
                       <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
                         <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-max">
@@ -80,15 +70,6 @@ export function ViewSolarHeatingProposal({
                         </div>
                       </div>
                     )}
-                    {details.heater && (
-                      <div className="text-center mt-6 mx-auto w-max">
-                        <ContactMe
-                          darkMode
-                          proposalId={proposal.id}
-                          caption="Interested in going solar?"
-                        />
-                      </div>
-                    )}
                   </>
                 )}
                 {details.type == "pool" && (
@@ -97,17 +78,6 @@ export function ViewSolarHeatingProposal({
                       text="Your Pool Heating Solution"
                       className="mx-3"
                     />
-                    {!details.heater && (
-                      <div>
-                        <div className="flex mx-auto justify-center mt-2">
-                          <ContactMe
-                            darkMode
-                            proposalId={proposal.id}
-                            caption="You need a custom Solution"
-                          />
-                        </div>
-                      </div>
-                    )}
                     {details.heater && (
                       <div className="lg:flex-row flex-col flex gap-6 justify-center h-full">
                         <div className="mt-6 lg:mt-10 rounded-xl border bg-card text-card-foreground shadow p-4 lg:w-1/3">
@@ -148,15 +118,6 @@ export function ViewSolarHeatingProposal({
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    {details.heater && (
-                      <div className="text-center mt-6 mx-auto w-max">
-                        <ContactMe
-                          darkMode
-                          proposalId={proposal.id}
-                          caption="Interested in going solar?"
-                        />
                       </div>
                     )}
                   </>

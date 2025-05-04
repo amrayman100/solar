@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import Header from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
-import { ContactMe } from "../contact-me";
 
 export function ViewOffGridProposal({
   proposal,
@@ -178,13 +177,6 @@ export function ViewOffGridProposal({
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex mx-auto mt-4 align-center justify-center">
-          <ContactMe
-            darkMode
-            proposalId={proposal.id}
-            caption="Interested in going solar?"
-          />
         </div>
       </div>
       <Footer />

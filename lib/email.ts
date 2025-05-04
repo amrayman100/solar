@@ -15,6 +15,7 @@ export async function sendProposalNotification(proposalDetails: {
   email?: string;
   phoneNumber: string;
   productType: string;
+  proposalData: string;
 }) {
   try {
     await transporter.sendMail({
@@ -29,6 +30,7 @@ export async function sendProposalNotification(proposalDetails: {
           <li>Email: ${proposalDetails.email || "Not provided"}</li>
           <li>Phone Number: ${proposalDetails.phoneNumber}</li>
           <li>Product Type: ${proposalDetails.productType}</li>
+          <li>Proposal Data: ${proposalDetails.proposalData}</li>
         </ul>
       `,
     });

@@ -31,7 +31,6 @@ import {
 import Link from "next/link";
 import Header from "@/components/shared/header";
 import { Footer } from "@/components/shared/footer";
-import { ContactMe } from "../contact-me";
 
 export function ViewGridTiedProposal({
   proposal,
@@ -252,13 +251,6 @@ export function ViewGridTiedProposal({
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex mx-auto mt-4 align-center justify-center">
-        <ContactMe
-          darkMode
-          proposalId={proposal.id}
-          caption="Interested in going solar?"
-        />
       </div>
       <div className="bg-cover bg-center w-screen h-max relative pb-10">
         <div className="p-4">
