@@ -71,7 +71,7 @@ export function Footer() {
                 href="tel:+201002606000"
                 className="text-gray-600 hover:text-gray-900 dark:hover:text-white text-sm md:text-base lg:text-base"
               >
-                01002606000
+                01044438446
               </a>
             </div>
           </div>
