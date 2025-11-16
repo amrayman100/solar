@@ -134,7 +134,7 @@ export default function Header() {
         </Sheet>
       </div>
       {/* desktop nav menu */}
-      <div className="sticky top-0 z-40 hidden lg:flex md:flex justify-between p-4 lg:mx-12">
+      <div className="sticky top-0 z-40 hidden lg:flex md:flex justify-between items-center p-4 lg:mx-12 bg-white">
         <div
           className="flex place-items-center gap-3 cursor-pointer"
           onClick={() => router.push("/")}
@@ -172,79 +172,34 @@ export default function Header() {
             />
             <TypographyH3
               text="Bolt Energy"
-              className="self-center text-primary"
+              className="self-center text-emerald-950"
             />
           </div>
         </div>
-        <div className="flex">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger onClick={(e) => e.preventDefault()}>
-                  Products
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                    <ListItem
-                      href="/product/grid-tied"
-                      title="Grid-Tied"
-                    ></ListItem>
-                    <ListItem
-                      href="/product/off-grid"
-                      title="Off-Grid"
-                    ></ListItem>
-                    <ListItem
-                      href="/product/solar-irrigation"
-                      title="Solar Irrigation"
-                    ></ListItem>
-                    <ListItem
-                      href="/product/solar-heating"
-                      title="Solar Heating"
-                    ></ListItem>
-                    <ListItem href="/product/ev" title="EV Charging"></ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger onClick={(e) => e.preventDefault()}>
-                  Services
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                    <ListItem
-                      href="/services/maintenance"
-                      title="Maintenance"
-                    ></ListItem>
-                    <ListItem
-                      href="/services/solar-monitoring"
-                      title="Smart Monitoring"
-                    ></ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/proposal/whole-sale" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Wholesale
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/product/construction" legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={
-                      navigationMenuTriggerStyleVariant() + " text-yellow-500"
-                    }
-                  >
-                    Bolt Construction
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+        <div className="flex items-center gap-6">
+          <Link href="/product/grid-tied" legacyBehavior passHref>
+            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+              Products
+            </a>
+          </Link>
+          <Link href="/services/maintenance" legacyBehavior passHref>
+            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+              Services
+            </a>
+          </Link>
+          <Link href="/proposal/whole-sale" legacyBehavior passHref>
+            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+              Wholesale
+            </a>
+          </Link>
+          <Link href="/product/construction" legacyBehavior passHref>
+            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+              Bolt Construction
+            </a>
+          </Link>
           <Button
             variant="default"
-            className="self-center"
+            className="rounded-lg bg-primary text-white hover:bg-primary/90 px-6 py-2"
             onClick={() => router.push("/contact-us")}
           >
             Contact Us

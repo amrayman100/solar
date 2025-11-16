@@ -51,17 +51,20 @@ export default async function Home() {
         <Header />
         <div
           style={{ backgroundImage: `url(${"/drone-4-1.jpeg"})` }}
-          className="bg-cover bg-center w-full h-96 lg:h-156 relative mt-2 bg-gradient-to-r from-primary via-yellow-400 to-primary p-1"
+          className="bg-cover bg-center w-full h-96 lg:h-[600px] relative mt-2"
         >
-          <div className="flex mx-auto mt-2 justify-cente lg:w-max">
-            <div className="flex flex-col p-10 rounded-lg to-primary w-fit">
-              <div className="text-center rounded-xl lg:border lg:bg-white shadow lg:p-4">
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-emerald-950 text-white text-center">
-                  Get Your Free Solar Quote{" "}
-                </span>
-                <span className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl lg:text-primary text-primary text-center">
-                  Instantly
-                </span>
+          {/* Dark green overlay */}
+          <div className="absolute inset-0 bg-emerald-950/60"></div>
+          
+          <div className="relative flex flex-col items-center justify-center h-full px-4 z-10">
+            <div className="flex flex-col items-center gap-6 max-w-2xl w-full">
+              <div className="text-center">
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center mb-2">
+                  Get Your Free Solar
+                </h1>
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center">
+                  Quote Instantly
+                </h1>
               </div>
               <MonthlyConsumptionForm />
             </div>

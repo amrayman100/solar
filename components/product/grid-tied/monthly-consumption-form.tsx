@@ -106,9 +106,9 @@ export function MonthlyConsumptionForm() {
         setIsPlacesAPILoaded(true);
       }}
     >
-      <div className="m-auto h-full mt-12">
+      <div className="w-full">
         <form
-          className="flex flex-col lg:flex-row md:flex:row gap-2"
+          className="flex flex-col lg:flex-row gap-3 w-full max-w-2xl"
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -119,7 +119,7 @@ export function MonthlyConsumptionForm() {
             ref={inputRef}
             type="text"
             placeholder="Enter Your Address"
-            className="bg-background"
+            className="bg-white rounded-2xl px-4 py-3 text-base flex-1 border-0 shadow-sm"
           />
           <form.Field
             name="monthlyConsumption"
@@ -134,13 +134,13 @@ export function MonthlyConsumptionForm() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                  className="bg-background"
+                  className="bg-white rounded-2xl px-4 py-3 text-base flex-1 border-0 shadow-sm"
                   placeholder="Monthly Consumption"
                 />
               </>
             )}
           />
-          <Button variant="default" type="submit">
+          <Button variant="default" type="submit" className="rounded-2xl px-6 py-3 text-base whitespace-nowrap bg-primary hover:bg-primary/90">
             Calculate My Fee
           </Button>
         </form>
