@@ -2,25 +2,17 @@ import { MonthlyConsumptionForm } from "@/components/product/grid-tied/monthly-c
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { TypographyH2, TypographyH4 } from "@/components/shared/typography";
-import { LuWallet, LuThumbsUp } from "react-icons/lu";
-import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
-import { FiBatteryCharging } from "react-icons/fi";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Image from "next/image";
-import { BrandAmbassadorForm } from "@/components/brand-ambassador/brand-ambassador-form";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/home/product-card";
+import { TrackRecordCard } from "@/components/home/track-record-card";
+import { TestimonialCard } from "@/components/home/testimonial-card";
+import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -55,7 +47,7 @@ export default async function Home() {
         >
           {/* Dark green overlay */}
           <div className="absolute inset-0 bg-emerald-950/60"></div>
-          
+
           <div className="relative flex flex-col items-center justify-center h-full px-4 z-10">
             <div className="flex flex-col items-center gap-6 max-w-2xl w-full">
               <div className="text-center">
@@ -70,391 +62,196 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col place-items-center w-100 justify-center mt-6 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
-            Maximum savings from day one
-          </div>
-          <TypographyH2
-            text="It's time to generate your own energy and save"
-            className="text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3 text-center"
-          />
-        </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <LuWallet className="text-primary text-4xl" />
-            <TypographyH4 text="Get your bill at 0 EGP" className="" />
-            <div className="text-[0px]">
-              <span className="text-base scroll-m">
-                Thanks to the combination of our careful design services,
-              </span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                we offer savings that can eliminate your entire bill
-              </span>
-              <span className="text-base">
-                {" "}
-                in relation to your roof space and average consumption.
-              </span>{" "}
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <HiOutlineDevicePhoneMobile className="text-primary text-4xl" />
-            <TypographyH4 text="Cutting-edge technology" className="" />
-            <div className="text-[0px]">
-              <span className="text-base">
-                You will be able to visualize your
-              </span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                production in real-time
-              </span>
-              <span className="text-base">
-                {" "}
-                and optimize your consumption to make your home more efficient.
-              </span>{" "}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <LuThumbsUp className="text-primary text-4xl" />
-            <TypographyH4 text="Pay in installments" className="" />
-            <div className="text-[0px]">
-              <span className="text-base">Pay a</span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                comfortable monthly fee
-              </span>
-              <span className="text-base">
-                {" "}
-                with minimum initial investment,with all maintenance included.
-              </span>{" "}
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <FiBatteryCharging className="text-primary text-4xl" />
-            <TypographyH4 text="Virtual Battery and Community" className="" />
-            <div className="text-[0px]">
-              <span className="text-base">Choose what to do with the</span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                surplus energy
-              </span>
-              <span className="text-base">
-                {" "}
-                you generate: offset your bill or store It for use as a backup.
-              </span>{" "}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
-            Different options , for different needs
-          </div>
-          <TypographyH2
-            text="we have multiple procurement options to suit your needs"
-            className="text-center text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
-          />
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-20 bg-gradient-to-r from-primary via-green-400 to-primary mt-6 p-10  lg:mx-80 mx-10 border-solid rounded-xl border">
-          <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4 text="Buy" className="text-center" />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px]">
-              <span className="text-base">
-                Buy your solution from the beginning with a quick
-              </span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                return on investment
-              </span>
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4 text="Financing" className="text-center" />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px]">
-              <span className="text-base">
-                Finance your solution to adjust so you can pay
-              </span>
-              <span className="text-base text-primary font-bold">
-                {" "}
-                at your own pace
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col place-items-center justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
-            Your installation in 4 simple steps
-          </div>
-          <TypographyH2
-            text="We will accompany you through the whole process to make your path to clean energy as easy as possible."
-            className="text-center text-2xl bg-gradient-to-r from-primary via-green-400 to-primary text-transparent bg-clip-text mx-3"
-          />
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4 text="Calculate your quote" className="text-center" />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px] text-center">
-              <span className="text-base">
-                Run your solar simulation or contact our solar specialists.
-              </span>
-            </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4 text="Your study at 0 cost" className="text-center" />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px] text-center">
-              <span className="text-base">
-                Get a personalized study of the installation you need
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-6 lg:mx-80 mx-10">
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4
-              text="We perform the technical visit"
-              className="text-center"
+        {/* Our Products Section */}
+        <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
+          <h2 className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231]">
+            Our Products
+          </h2>
+          <div className="flex flex-wrap justify-center gap-4 px-4 max-w-7xl mx-auto">
+            <ProductCard
+              title="Grid Tied"
+              description="By harnessing the sun's energy, you can generate your own electricity and send any excess back to the grid for credits."
+              image="/grid-tied.jpeg"
+              calculateLink="/product/grid-tied"
+              learnMoreLink="/product/grid-tied"
             />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px] text-center">
-              <span className="text-base">
+            <ProductCard
+              title="Off Grid"
+              description="Backup solar off-grid systems are your ticket to energy independence"
+              image="/off-grid.png"
+              calculateLink="/product/off-grid"
+              learnMoreLink="/product/off-grid"
+            />
+            <ProductCard
+              title="Solar Irrigation"
+              description="Imagine growing healthier crops, saving money, and becoming more eco-friendly all at the same time."
+              image="/solar-irrig.jpg"
+              calculateLink="/product/solar-irrigation"
+              learnMoreLink="/product/solar-irrigation"
+            />
+            <ProductCard
+              title="Solar Heating"
+              description="Tired of Gas and Electric Bills, Smoke Them Out With Solar Heating!"
+              image="/solar-heating.jpg"
+              calculateLink="/product/solar-heating"
+              learnMoreLink="/product/solar-heating"
+            />
+          </div>
+        </div>
+
+        {/* Track Record Section */}
+        <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
+          <h2 className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231]">
+            Track Record
+          </h2>
+          <div className="flex flex-wrap justify-center gap-6 px-4 max-w-7xl mx-auto">
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="13 KW"
+              location="SKEIKH ZAYED, EGYPT"
+              image="/drone-4-1.jpeg"
+            />
+            <TrackRecordCard
+              title="Back-up System"
+              power="192 KW"
+              location="New Administrative Capital, EGYPT"
+              image="/drone-1.jpg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="16 KW"
+              location="Allegria, SKEIKH ZAYED, EGYPT"
+              image="/drone-2.jpg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="30 KW"
+              location="Pyramid Hills, EGYPT"
+              image="/drone-3.jpg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="50 KW"
+              location="SKEIKH ZAYED, EGYPT"
+              image="/drone-4-1.jpeg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="9.5 KW"
+              location="SKEIKH ZAYED, EGYPT"
+              image="/drone-5.jpeg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="12 KW"
+              location="Giza, EGYPT"
+              image="/drone-6.jpeg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="20 KW"
+              location="New Cairo, EGYPT"
+              image="/drone-7.jpeg"
+            />
+          </div>
+        </div>
+        {/* What our customers think Section */}
+        <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
+          <h2 className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231]">
+            What our customers think?
+          </h2>
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 px-4 max-w-7xl mx-auto"
+            style={{ overflow: "visible" }}
+          >
+            <TestimonialCard
+              name="Fady Iskandar"
+              text="The level of professionalism was exemplary. All promises were fulfilled and there were no surprises. The installation process was seamless."
+            />
+            <TestimonialCard
+              name="Walid Bazan"
+              text="Bolt Energy is a good start up company, with more projects under their belt. Over all acceptable experience the system was delivered and installed and commissioned as designed and they have good follow up on trouble shooting and follow up until successful commissioning was achieved."
+            />
+            <TestimonialCard
+              name="Stefano Soldi"
+              text="I didn't expect to find such a great and professional people. Bolt Energy team is simply perfect. In few days I got an offer for my unit, and the installation procedure had been easy and smooth. I highly recommend this company to all my friends, neighbors and people that are interested in invest some money for a better and green future."
+            />
+            <TestimonialCard
+              name="Ali Dessouki"
+              text="Everyone was extremely professional and friendly and did everything to make the experience smooth and easy for me. I'm extremely satisfied with my experience and would definitely recommend to anyone."
+            />
+            <TestimonialCard
+              name="Mohamed Fekry Aziz Saber Khalil"
+              text="Professional company with good service and competitive prices"
+            />
+            <TestimonialCard
+              name="Amr Ayman"
+              text="Very professional and experienced team"
+            />
+          </div>
+        </div>
+        {/* Your installation in 4 simple steps Section */}
+        <div className="flex flex-col place-items-center justify-center mt-16 gap-5 mb-12 px-4">
+          <h2 className="scroll-m-20 text-3xl md:text-4xl font-bold tracking-tight text-center text-[#015231]">
+            Your installation in 4 simple steps
+          </h2>
+          <p className="text-lg md:text-2xl font-medium text-center text-[#015231] max-w-4xl">
+            We will accompany you through the whole process to make your path to
+            clean energy as easy as possible.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto mt-8 w-full">
+            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
+              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                Calculate your quote
+              </h3>
+              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                Run your solar simulation or contact our solar specialists.
+              </p>
+            </div>
+            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
+              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                Your study at 0 cost
+              </h3>
+              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                Get a personalized study of the installation you need
+              </p>
+            </div>
+            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
+              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                We perform the technical visit
+              </h3>
+              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
                 We will schedule a technical visit to examine the feasibility of
                 the project
-              </span>
+              </p>
             </div>
-          </div>
-          <div
-            className="flex flex-col gap-3 mx-auto mt-10 border-solid p-10 rounded-xl border bg-card text-card-foreground shadow  lg:w-[50%]"
-            style={{ flex: "1 1 0px;" }}
-          >
-            <TypographyH4
-              text="Bring your bill to 0 EGP"
-              className="text-center"
-            />
-            <div className="text-[0px]"></div>
-            <div className="text-[0px] text-center">
-              <span className="text-base">
+            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
+              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                Bring your bill to 0 EGP
+              </h3>
+              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
                 Schedule the installation in less than two weeks and bring your
-                bill to 0 EGP{" "}
-              </span>
+                bill to 0 EGP
+              </p>
             </div>
           </div>
         </div>
-        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-center text-emerald-950">
-            What our customers think?
-          </div>
-          <Carousel className="w-2/3 max-h-max">
-            <CarouselContent className="-ml-1">
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Walid Bazan</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        {" "}
-                        Bolt Energy is a good start up company, with more
-                        projects under their belt. Over all acceptable
-                        experience the system was delivered and installed and
-                        commissioned as designed and they have good follow up on
-                        trouble shooting and follow up until successful
-                        commissioning was achieved.
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Hussein Mourad</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        {" "}
-                        I called a couple of other companies that dealt with
-                        Bolt Energy in Egypt before stumbling upon Solar
-                        Solutions, but most, if not all of them, were very
-                        unsatisfactory. Bolt Energy on the other hand were
-                        extremely helpful the whole way through, despite
-                        expected hiccups with the government&apos;s electrical
-                        company. The team were professional and were working on
-                        the system as if it were their own. I would recommend
-                        them to anyone, and already did.
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Stefano Soldi</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        {" "}
-                        I didn&apos;t expect to find such a great and
-                        professional people. Bolt Energy team is simply perfect.
-                        In few days I got an offer for my unit, and the
-                        installation procedure had been easy and smooth. I
-                        highly recommend this company to all my friends,
-                        neighbors and people that are interested in invest some
-                        money for a better and green future.
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Ali Dessouki</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        {" "}
-                        Everyone was extremely professional and friendly and did
-                        everything to make the experience smooth and easy for
-                        me. I&apos;m extremely satisfied with my experience and
-                        would definitely recommend to anyone.
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Fady Iskandar</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        The level of professionalism was exemplary. All promises
-                        were fulfilled and there were no surprises. The
-                        installation process was seamless
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Amr Ayman</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        Very professional and experienced team
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-              <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Mohamed Fekry Aziz Saber Khalil</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex p-6">
-                      <span className="">
-                        Professional company with good service and competitive
-                        prices
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-        <div className="lg:mt-10 flex flex-col lg:flex-row mx-4 gap-2">
-          <Image
-            alt="logo-bg"
-            src={"/logo-bg.jpg"}
-            blurDataURL={"/logo-bg.jpg"}
-            placeholder="blur"
-            quality={100}
-            height={500}
-            width={500}
-            style={{
-              objectFit: "cover",
-            }}
-          />
-          <div
-            className="flex flex-col gap-3 mx-auto border-solid p-10 rounded-xl border bg-card text-card-foreground shadow w-fit"
-            style={{ flex: "1 1 0px;" }}
+        {/* FAQs Section */}
+        <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
+          <h2 className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231]">
+            FAQs
+          </h2>
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full max-w-4xl px-4"
           >
-            <TypographyH4
-              text="Become a brand ambassador now and earn incentives for every new
-                customer!"
-              className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-emerald-950"
-            />
-            <div className="text-[0px]">
-              <span className=" text-primary font-bold text-2xl">
-                {" "}
-                Get from 10,000 EGP for every new customer you bring to Bolt
-                Energy
-              </span>
-            </div>
-            <BrandAmbassadorForm />
-          </div>
-        </div>
-        <div className="flex flex-col place-items-center w-100 justify-center mt-10 gap-5 mb-2">
-          <div className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl text-emerald-950">
-            FAQS
-          </div>
-          <Accordion type="single" collapsible className="w-2/3">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Why should I go solar?</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem value="item-1" className="border-b border-[#015231]">
+              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
+                Why should I go solar?
+              </AccordionTrigger>
+              <AccordionContent className="text-base text-[#015231] pt-4">
                 Photovoltaic energy is emerging as a solid alternative to large
                 electricity companies. The installation of solar panels offers
                 clear benefits, including savings of up to 70% on electricity
@@ -464,29 +261,33 @@ export default async function Home() {
                 and offers access to various grants and subsidies.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>How do solar panels work?</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem value="item-2" className="border-b border-[#015231]">
+              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
+                How do solar panels work?
+              </AccordionTrigger>
+              <AccordionContent className="text-base text-[#015231] pt-4">
                 Solar panels convert sunlight into electricity through the
                 photovoltaic process. Solar cells absorb sunlight to generate
                 electricity, then an inverter converts this current into usable
                 form for the home.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
+            <AccordionItem value="item-3" className="border-b border-[#015231]">
+              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
                 What is the maintenance of solar panels?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="text-base text-[#015231] pt-4">
                 The care of solar panels is simple and minimal, we can usually
                 take care of them ourselves. They are built to withstand weather
                 conditions and usually only need occasional cleaning and checks
                 to ensure they are working properly and to prevent damage.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-4">
-              <AccordionTrigger>How are solar panels cleaned?</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem value="item-4" className="border-b border-[#015231]">
+              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
+                How are solar panels cleaned?
+              </AccordionTrigger>
+              <AccordionContent className="text-base text-[#015231] pt-4">
                 Solar panels usually require little maintenance thanks to their
                 glass cover, which tends to keep them clean. Occasionally, if
                 dirt such as leaves or debris accumulates, a gentle wash with
@@ -498,6 +299,16 @@ export default async function Home() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        </div>
+
+        {/* Contact Us Now Button */}
+        <div className="flex justify-center mt-12 mb-16">
+          <Button
+            asChild
+            className="bg-[#00bd70] hover:bg-[#00bd70]/90 h-[3.75rem] px-[67px] py-[10px] rounded-[0.8125rem] text-[1.5rem] font-semibold text-white"
+          >
+            <Link href="/contact-us">Contact Us Now</Link>
+          </Button>
         </div>
       </main>
       <Footer />

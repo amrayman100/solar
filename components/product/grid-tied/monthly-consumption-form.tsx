@@ -106,9 +106,9 @@ export function MonthlyConsumptionForm() {
         setIsPlacesAPILoaded(true);
       }}
     >
-      <div className="w-full">
+      <div className="w-full flex justify-center">
         <form
-          className="flex flex-col lg:flex-row gap-3 w-full max-w-2xl"
+          className="flex flex-col gap-0 w-full max-w-[371px]"
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -119,7 +119,7 @@ export function MonthlyConsumptionForm() {
             ref={inputRef}
             type="text"
             placeholder="Enter Your Address"
-            className="bg-white rounded-2xl px-4 py-3 text-base flex-1 border-0 shadow-sm"
+            className="bg-white h-[2.75rem] md:h-[3.25rem] w-full rounded-[5.75rem] px-4 md:px-6 text-base md:text-[1.5rem] border-0 shadow-sm text-[#797979] placeholder:text-[#797979] text-center placeholder:text-center"
           />
           <form.Field
             name="monthlyConsumption"
@@ -134,13 +134,13 @@ export function MonthlyConsumptionForm() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.valueAsNumber)}
-                  className="bg-white rounded-2xl px-4 py-3 text-base flex-1 border-0 shadow-sm"
+                  className="bg-white h-[2.75rem] md:h-[3.25rem] w-full rounded-[5.75rem] px-4 md:px-6 text-base md:text-[1.5rem] border-0 shadow-sm text-[#797979] placeholder:text-[#797979] text-center placeholder:text-center mt-3 md:mt-[1.0625rem]"
                   placeholder="Monthly Consumption"
                 />
               </>
             )}
           />
-          <Button variant="default" type="submit" className="rounded-2xl px-6 py-3 text-base whitespace-nowrap bg-primary hover:bg-primary/90">
+          <Button variant="default" type="submit" className="h-[3.125rem] md:h-[4.0625rem] w-full rounded-[7.8125rem] p-2 md:p-[0.625rem] text-lg md:text-[2rem] font-bold whitespace-nowrap bg-[#00bd70] hover:bg-[#00bd70]/90 text-white mt-3 md:mt-[1.1875rem]">
             Calculate My Fee
           </Button>
         </form>
