@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/home/product-card";
 import { TrackRecordCard } from "@/components/home/track-record-card";
 import { TestimonialCard } from "@/components/home/testimonial-card";
+import { ProductsDropdown } from "@/components/home/products-dropdown";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -65,9 +66,7 @@ export default async function Home() {
 
         {/* Our Products Section */}
         <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
-          <h2 className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231]">
-            Our Products
-          </h2>
+          <ProductsDropdown />
           <div className="flex flex-wrap justify-center gap-4 px-4 max-w-7xl mx-auto">
             <ProductCard
               title="Grid Tied"
@@ -106,53 +105,80 @@ export default async function Home() {
             Track Record
           </h2>
           <div className="flex flex-wrap justify-center gap-6 px-4 max-w-7xl mx-auto">
+            {/* Row 1 */}
             <TrackRecordCard
               title="Grid Tied System"
               power="13 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="/drone-4-1.jpeg"
+              image="https://www.figma.com/api/mcp/asset/176702e1-5452-4fcd-93d5-a9300705d6d7"
             />
             <TrackRecordCard
               title="Back-up System"
               power="192 KW"
               location="New Administrative Capital, EGYPT"
-              image="/drone-1.jpg"
+              image="https://www.figma.com/api/mcp/asset/00342762-4a4f-441c-b126-ea6babf42217"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="16 KW"
               location="Allegria, SKEIKH ZAYED, EGYPT"
-              image="/drone-2.jpg"
+              image="https://www.figma.com/api/mcp/asset/0e49c53e-df84-4411-8a7f-b68b4c6a6314"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="30 KW"
               location="Pyramid Hills, EGYPT"
-              image="/drone-3.jpg"
+              image="https://www.figma.com/api/mcp/asset/b8965f67-8206-463b-9707-b590d8d27443"
             />
+            {/* Row 2 */}
             <TrackRecordCard
               title="Grid Tied System"
               power="50 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="/drone-4-1.jpeg"
+              image="https://www.figma.com/api/mcp/asset/70155e8a-b61d-4f97-afaa-277e73d2870e"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="9.5 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="/drone-5.jpeg"
+              image="https://www.figma.com/api/mcp/asset/6ea1dde8-4cfc-4625-8668-7da714c83743"
             />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="120 KW"
+              location="SKEIKH ZAYED, EGYPT"
+              image="https://www.figma.com/api/mcp/asset/6550483e-cca7-4bb3-9cc6-4112c7f31e8a"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="120 KW"
+              location="GIZA, EGYPT"
+              image="https://www.figma.com/api/mcp/asset/1e4e56e7-ceb2-4715-b767-86a81eb4b659"
+            />
+            {/* Row 3 */}
             <TrackRecordCard
               title="Grid Tied System"
               power="12 KW"
               location="Giza, EGYPT"
-              image="/drone-6.jpeg"
+              image="https://www.figma.com/api/mcp/asset/401851c8-db6a-45d8-93ae-9324f5e1e545"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="20 KW"
               location="New Cairo, EGYPT"
+              image="https://www.figma.com/api/mcp/asset/14e62a9b-5dc8-4213-915a-b2ed6e1651af"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="9 KW"
+              location="New Cairo, EGYPT"
               image="/drone-7.jpeg"
+            />
+            <TrackRecordCard
+              title="Grid Tied System"
+              power="120 KW"
+              location="EL KHATATBA, EGYPT"
+              image="https://www.figma.com/api/mcp/asset/5d7d613e-26e8-4b16-8acd-0284fd72906d"
             />
           </div>
         </div>

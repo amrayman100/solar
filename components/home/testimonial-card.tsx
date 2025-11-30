@@ -40,7 +40,7 @@ export function TestimonialCard({ name, text }: TestimonialCardProps) {
         }}
       >
         <Image
-          src="https://www.figma.com/api/mcp/asset/960b6794-c1f4-4337-8516-72debed16c9a"
+          src="https://www.figma.com/api/mcp/asset/12481556-9a58-4975-80eb-87a265d92bdd"
           alt="Profile"
           width={60}
           height={60}
