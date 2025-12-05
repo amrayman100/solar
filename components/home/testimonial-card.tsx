@@ -40,12 +40,11 @@ export function TestimonialCard({ name, text }: TestimonialCardProps) {
         }}
       >
         <Image
-          src="https://www.figma.com/api/mcp/asset/12481556-9a58-4975-80eb-87a265d92bdd"
+          src="/testimonial-profile-icon.svg"
           alt="Profile"
           width={60}
           height={60}
           className="w-full h-full object-contain"
-          unoptimized
         />
       </div>
     </div>

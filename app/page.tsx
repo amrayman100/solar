@@ -15,31 +15,85 @@ import { TestimonialCard } from "@/components/home/testimonial-card";
 import { ProductsDropdown } from "@/components/home/products-dropdown";
 import Link from "next/link";
 import { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Renewable Energy Solutions | Solar, Energy Storage",
+  title: "Solar Energy Egypt | Bolt Energy Solar Solutions",
   description:
-    "Explore our comprehensive range of renewable energy solutions including solar energy systems, wind energy, solar heaters, solar pumps, heat pumps, on-grid and off-grid solutions, batteries (lithium-ion and lead-acid), solar lamps, and more.",
+    "Bolt Energy delivers solar energy solutions in Egypt: grid-tied, off-grid, irrigation, and heating systems with expert design, installation, and monitoring.",
   keywords:
-    "solar energy, renewable energy, wind energy, solar heaters, solar pumps, heat pumps, on grid, off grid, batteries, lithium ion, lead acid, solar lamps, solar headlights, watt, energy, power",
+    "solar egypt, solar energy egypt, solar panels egypt, solar company egypt, bolt energy egypt, grid tied solar egypt, off grid solar egypt, solar irrigation egypt, solar heating egypt, solar installer egypt, طاقة شمسية مصر, شركات الطاقة الشمسية في مصر",
   openGraph: {
-    title: "Renewable Energy Solutions | Solar, Wind & Energy Storage",
+    title: "Solar Energy Egypt | Bolt Energy",
     description:
-      "Comprehensive renewable energy solutions for sustainable power generation and storage.",
+      "Leading solar energy company in Egypt offering grid-tied, off-grid, irrigation, and heating solar systems with professional installation and monitoring.",
     images: [
       {
         url: "/drone-4-1.jpeg",
         width: 1200,
         height: 630,
-        alt: "Renewable Energy Solutions",
+        alt: "Bolt Energy solar installation in Egypt",
       },
     ],
   },
 };
 
 export default async function Home() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Bolt Energy",
+    url: "https://bolt-energy.me",
+    logo: "https://bolt-energy.me/footer-logo-white.svg",
+    email: "info@bolt-energy.me",
+    telephone: "+201044438446",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "6th of October",
+      addressLocality: "Giza",
+      addressCountry: "EG",
+    },
+    sameAs: [
+      "https://www.facebook.com/boltenergy.me",
+      "https://www.instagram.com/bolt.energy.eg",
+    ],
+    description:
+      "Leading solar energy company in Egypt providing grid-tied, off-grid, irrigation, and heating solar solutions.",
+    areaServed: "Egypt",
+    keywords: [
+      "solar egypt",
+      "solar energy egypt",
+      "طاقة شمسية مصر",
+      "solar panels egypt",
+      "bolt energy",
+    ],
+  };
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://bolt-energy.me",
+    name: "Bolt Energy",
+    potentialAction: {
+      "@type": "SearchAction",
+      target:
+        "https://www.google.com/search?q=bolt+energy+egypt+{search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <>
+      <Script
+        id="schema-organization"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <Script
+        id="schema-website"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+      />
       <main className="flex-grow w-screen">
         <Header />
         <div
@@ -50,14 +104,15 @@ export default async function Home() {
           <div className="absolute inset-0 bg-emerald-950/60"></div>
 
           <div className="relative flex flex-col items-center justify-center h-full px-4 z-10">
-            <div className="flex flex-col items-center gap-6 max-w-2xl w-full">
+            <div className="flex flex-col items-center gap-6 max-w-3xl w-full">
               <div className="text-center">
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center mb-2">
-                  Get Your Free Solar
-                </h1>
                 <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center">
-                  Quote Instantly
+                  Solar Energy in Egypt — Get Your Free Solar Quote Instantly
                 </h1>
+                <p className="mt-3 text-lg lg:text-xl text-white/90">
+                  Grid-tied, off-grid, irrigation, and heating solar systems
+                  tailored for Egyptian homes, farms, and businesses.
+                </p>
               </div>
               <MonthlyConsumptionForm />
             </div>
@@ -110,75 +165,75 @@ export default async function Home() {
               title="Grid Tied System"
               power="13 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/176702e1-5452-4fcd-93d5-a9300705d6d7"
+              image="/track-record-13kw.jpg"
             />
             <TrackRecordCard
               title="Back-up System"
               power="192 KW"
               location="New Administrative Capital, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/00342762-4a4f-441c-b126-ea6babf42217"
+              image="/track-record-192kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="16 KW"
               location="Allegria, SKEIKH ZAYED, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/0e49c53e-df84-4411-8a7f-b68b4c6a6314"
+              image="/track-record-16kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="30 KW"
               location="Pyramid Hills, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/b8965f67-8206-463b-9707-b590d8d27443"
+              image="/track-record-30kw.jpg"
             />
             {/* Row 2 */}
             <TrackRecordCard
               title="Grid Tied System"
               power="50 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/70155e8a-b61d-4f97-afaa-277e73d2870e"
+              image="/track-record-50kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="9.5 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/6ea1dde8-4cfc-4625-8668-7da714c83743"
+              image="/track-record-9.5kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="120 KW"
               location="SKEIKH ZAYED, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/6550483e-cca7-4bb3-9cc6-4112c7f31e8a"
+              image="/track-record-120kw-sheikh.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="120 KW"
               location="GIZA, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/1e4e56e7-ceb2-4715-b767-86a81eb4b659"
+              image="/track-record-120kw-giza.jpg"
             />
             {/* Row 3 */}
             <TrackRecordCard
               title="Grid Tied System"
               power="12 KW"
               location="Giza, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/401851c8-db6a-45d8-93ae-9324f5e1e545"
+              image="/track-record-12kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="20 KW"
               location="New Cairo, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/14e62a9b-5dc8-4213-915a-b2ed6e1651af"
+              image="/track-record-20kw.jpg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="9 KW"
               location="New Cairo, EGYPT"
-              image="/drone-7.jpeg"
+              image="/drone-4-1.jpeg"
             />
             <TrackRecordCard
               title="Grid Tied System"
               power="120 KW"
               location="EL KHATATBA, EGYPT"
-              image="https://www.figma.com/api/mcp/asset/5d7d613e-26e8-4b16-8acd-0284fd72906d"
+              image="/track-record-120kw-khatatba.jpg"
             />
           </div>
         </div>
@@ -218,48 +273,50 @@ export default async function Home() {
           </div>
         </div>
         {/* Your installation in 4 simple steps Section */}
-        <div className="flex flex-col place-items-center justify-center mt-16 gap-5 mb-12 px-4">
-          <h2 className="scroll-m-20 text-3xl md:text-4xl font-bold tracking-tight text-center text-[#015231]">
-            Your installation in 4 simple steps
-          </h2>
-          <p className="text-lg md:text-2xl font-medium text-center text-[#015231] max-w-4xl">
-            We will accompany you through the whole process to make your path to
-            clean energy as easy as possible.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto mt-8 w-full">
-            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
-              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
-                Calculate your quote
-              </h3>
-              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
-                Run your solar simulation or contact our solar specialists.
-              </p>
-            </div>
-            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
-              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
-                Your study at 0 cost
-              </h3>
-              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
-                Get a personalized study of the installation you need
-              </p>
-            </div>
-            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
-              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
-                We perform the technical visit
-              </h3>
-              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
-                We will schedule a technical visit to examine the feasibility of
-                the project
-              </p>
-            </div>
-            <div className="bg-[#f1f1f1] rounded-[28px] p-4 md:p-6 min-h-[160px] flex flex-col gap-2 justify-center items-center text-center">
-              <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
-                Bring your bill to 0 EGP
-              </h3>
-              <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
-                Schedule the installation in less than two weeks and bring your
-                bill to 0 EGP
-              </p>
+        <div className="flex flex-col place-items-center w-full justify-center mt-16 gap-8 mb-12 px-4">
+          <div className="w-full max-w-7xl mx-auto flex flex-col items-center gap-8">
+            <h2 className="scroll-m-20 text-3xl md:text-4xl font-bold tracking-tight text-center text-[#015231]">
+              Your installation in 4 simple steps
+            </h2>
+            <p className="text-lg md:text-2xl font-medium text-center text-[#015231] max-w-4xl mx-auto">
+              We will accompany you through the whole process to make your path
+              to clean energy as easy as possible.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 w-full max-w-7xl justify-items-center">
+              <div className="bg-[#f1f1f1] rounded-[28px] p-5 md:p-6 min-h-[180px] flex flex-col gap-[18px] justify-center items-center text-center w-full max-w-[580px]">
+                <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                  Calculate your quote
+                </h3>
+                <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                  Run your solar simulation or contact our solar specialists.
+                </p>
+              </div>
+              <div className="bg-[#f1f1f1] rounded-[28px] p-5 md:p-6 min-h-[180px] flex flex-col gap-[18px] justify-center items-center text-center w-full max-w-[580px]">
+                <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                  Your study at 0 cost
+                </h3>
+                <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                  Get a personalized study of the installation you need
+                </p>
+              </div>
+              <div className="bg-[#f1f1f1] rounded-[28px] p-5 md:p-6 min-h-[180px] flex flex-col gap-[18px] justify-center items-center text-center w-full max-w-[580px]">
+                <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                  We perform the technical visit
+                </h3>
+                <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                  We will schedule a technical visit to examine the feasibility
+                  of the project
+                </p>
+              </div>
+              <div className="bg-[#f1f1f1] rounded-[28px] p-5 md:p-6 min-h-[180px] flex flex-col gap-[18px] justify-center items-center text-center w-full max-w-[580px]">
+                <h3 className="font-semibold text-xl md:text-[32px] text-[#015231] text-center">
+                  Bring your bill to 0 EGP
+                </h3>
+                <p className="font-normal text-base md:text-2xl text-[#015231] text-center">
+                  Schedule the installation in less than two weeks and bring
+                  your bill to 0 EGP
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -28,6 +28,7 @@ import {
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { ProductsDropdown } from "../home/products-dropdown";
 
 export default function Header() {
   const { theme } = useTheme();
@@ -177,11 +178,10 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/product/grid-tied" legacyBehavior passHref>
-            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
-              Products
-            </a>
-          </Link>
+          <ProductsDropdown 
+            triggerClassName="text-emerald-950 font-medium hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer focus:outline-none"
+            triggerText="Products"
+          />
           <Link href="/services/maintenance" legacyBehavior passHref>
             <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
               Services

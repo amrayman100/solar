@@ -19,16 +19,27 @@ const products = [
   { name: "Construction", href: "/product/construction" },
 ];
 
-export function ProductsDropdown() {
+interface ProductsDropdownProps {
+  triggerClassName?: string;
+  triggerText?: string;
+}
+
+export function ProductsDropdown({ 
+  triggerClassName,
+  triggerText = "Our Products"
+}: ProductsDropdownProps = {}) {
   const [open, setOpen] = React.useState(false);
+
+  const defaultClassName = "scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231] hover:text-[#00bd70] transition-colors flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bd70] focus:ring-offset-2 rounded-md px-2 py-1";
+  const headerClassName = "text-emerald-950 font-medium hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer focus:outline-none";
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="scroll-m-20 text-4xl font-bold tracking-tight text-center text-[#015231] hover:text-[#00bd70] transition-colors flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00bd70] focus:ring-offset-2 rounded-md px-2 py-1">
-          Our Products
+        <button className={triggerClassName || defaultClassName}>
+          {triggerText}
           <ChevronDown
-            className={`h-6 w-6 transition-transform duration-200 ${
+            className={`h-4 w-4 transition-transform duration-200 ${
               open ? "rotate-180" : ""
             }`}
           />

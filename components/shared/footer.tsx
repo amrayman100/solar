@@ -6,10 +6,10 @@ export function Footer() {
     <footer className="bg-[#015231] w-screen text-white">
       <div className="w-full px-4 lg:px-12 py-12">
         {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 justify-items-center">
           {/* Logo and Description */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-4 items-center text-center w-full">
+            <div className="flex items-center gap-3 justify-center">
               <Image
                 alt="Logo"
                 src="/footer-logo-white.svg"
@@ -29,7 +29,7 @@ export function Footer() {
               support.
             </p>
             {/* Social Media Icons */}
-            <div className="flex gap-4 mt-2">
+            <div className="flex gap-4 mt-2 justify-center">
               <Image
                 src="/footer-social-icons.svg"
                 alt="Social Media"
@@ -41,9 +41,9 @@ export function Footer() {
           </div>
 
           {/* Products */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center text-center w-full">
             <h4 className="text-sm font-bold text-white">Products</h4>
-            <div className="flex flex-col gap-2 text-sm text-white">
+            <div className="flex flex-col gap-2 text-sm text-white items-center">
               <Link
                 href="/product/grid-tied"
                 className="hover:opacity-80 transition-opacity"
@@ -72,28 +72,28 @@ export function Footer() {
           </div>
 
           {/* Contact Us */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center text-center w-full">
             <h4 className="text-sm font-bold text-white">Contact Us</h4>
-            <div className="flex flex-col gap-3 text-sm text-white">
+            <div className="flex flex-col gap-3 text-sm text-white items-center">
               {/* Address */}
-              <div className="flex items-start gap-2">
+              <div className="flex items-center gap-2 justify-center">
                 <Image
                   src="/footer-location-icon.svg"
                   alt="Location"
                   width={11}
                   height={14}
-                  className="mt-0.5 flex-shrink-0 object-contain"
+                  className="flex-shrink-0 object-contain"
                 />
                 <span>6th of October, Giza, Egypt</span>
               </div>
               {/* Email */}
-              <div className="flex items-start gap-2">
+              <div className="flex items-center gap-2 justify-center">
                 <Image
                   src="/footer-email-icon.svg"
                   alt="Email"
                   width={15}
                   height={12}
-                  className="mt-0.5 flex-shrink-0 object-contain"
+                  className="flex-shrink-0 object-contain"
                 />
                 <a
                   href="mailto:info@bolt-energy.me"
@@ -103,13 +103,13 @@ export function Footer() {
                 </a>
               </div>
               {/* Phone */}
-              <div className="flex items-start gap-2">
+              <div className="flex items-center gap-2 justify-center">
                 <Image
                   src="/footer-phone-icon.svg"
                   alt="Phone"
                   width={13}
                   height={13}
-                  className="mt-0.5 flex-shrink-0 object-contain"
+                  className="flex-shrink-0 object-contain"
                 />
                 <a
                   href="tel:01044438446"

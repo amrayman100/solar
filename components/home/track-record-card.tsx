@@ -23,7 +23,6 @@ export function TrackRecordCard({
           alt={title}
           fill
           className="object-cover"
-          unoptimized
         />
       </div>
       <div className="flex flex-col gap-1 items-center justify-center px-4 pb-4">
