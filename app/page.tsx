@@ -104,15 +104,14 @@ export default async function Home() {
           <div className="absolute inset-0 bg-emerald-950/60"></div>
 
           <div className="relative flex flex-col items-center justify-center h-full px-4 z-10">
-            <div className="flex flex-col items-center gap-6 max-w-3xl w-full">
+            <div className="flex flex-col items-center gap-6 max-w-2xl w-full">
               <div className="text-center">
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center">
-                  Solar Energy in Egypt — Get Your Free Solar Quote Instantly
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center mb-2">
+                  Get Your Free Solar
                 </h1>
-                <p className="mt-3 text-lg lg:text-xl text-white/90">
-                  Grid-tied, off-grid, irrigation, and heating solar systems
-                  tailored for Egyptian homes, farms, and businesses.
-                </p>
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center">
+                  Quote Instantly
+                </h1>
               </div>
               <MonthlyConsumptionForm />
             </div>
