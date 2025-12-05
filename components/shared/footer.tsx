@@ -12,16 +12,12 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <Image
                 alt="Logo"
-                src="https://www.figma.com/api/mcp/asset/9aad1a59-8b82-4b8b-b278-9cd9c28aa5e0"
-                blurDataURL="https://www.figma.com/api/mcp/asset/9aad1a59-8b82-4b8b-b278-9cd9c28aa5e0"
-                placeholder="blur"
-                quality={100}
+                src="/footer-logo-white.svg"
                 height={26}
                 width={24}
                 style={{
                   objectFit: "contain",
                 }}
-                unoptimized
               />
               <h3 className="text-xl font-bold text-white">Bolt Energy</h3>
             </div>
@@ -35,12 +31,11 @@ export function Footer() {
             {/* Social Media Icons */}
             <div className="flex gap-4 mt-2">
               <Image
-                src="https://www.figma.com/api/mcp/asset/73e4b6ce-fdd2-4eb1-b501-8036ba1ec739"
+                src="/footer-social-icons.svg"
                 alt="Social Media"
                 width={48}
                 height={20}
                 className="object-contain"
-                unoptimized
               />
             </div>
           </div>
@@ -83,24 +78,22 @@ export function Footer() {
               {/* Address */}
               <div className="flex items-start gap-2">
                 <Image
-                  src="https://www.figma.com/api/mcp/asset/ee944488-12f5-4d50-b8ff-b38dd4808ade"
+                  src="/footer-location-icon.svg"
                   alt="Location"
                   width={11}
                   height={14}
                   className="mt-0.5 flex-shrink-0 object-contain"
-                  unoptimized
                 />
                 <span>6th of October, Giza, Egypt</span>
               </div>
               {/* Email */}
               <div className="flex items-start gap-2">
                 <Image
-                  src="https://www.figma.com/api/mcp/asset/e42e05c7-2947-4e3c-932d-20847245b9ed"
+                  src="/footer-email-icon.svg"
                   alt="Email"
                   width={15}
                   height={12}
                   className="mt-0.5 flex-shrink-0 object-contain"
-                  unoptimized
                 />
                 <a
                   href="mailto:info@bolt-energy.me"
@@ -112,12 +105,11 @@ export function Footer() {
               {/* Phone */}
               <div className="flex items-start gap-2">
                 <Image
-                  src="https://www.figma.com/api/mcp/asset/2148b3ee-9d55-4d9b-a2f7-4ad11d606a40"
+                  src="/footer-phone-icon.svg"
                   alt="Phone"
                   width={13}
                   height={13}
                   className="mt-0.5 flex-shrink-0 object-contain"
-                  unoptimized
                 />
                 <a
                   href="tel:01044438446"
