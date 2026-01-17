@@ -53,7 +53,7 @@ export default async function Construction() {
               </h1>
               <div className="flex flex-col gap-2">
                 <h2 className="font-bold text-xl lg:text-[24px] text-[#015231]">
-                  Bolt construction is Bolt's civil and implementation arm.
+                  Bolt construction is Bolt&apos;s civil and implementation arm.
                 </h2>
                 <p className="font-normal text-base lg:text-[16px] text-black leading-normal">
                   Our expert team provides professional construction and installation services for solar projects and beyond.

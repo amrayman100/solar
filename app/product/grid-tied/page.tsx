@@ -52,10 +52,10 @@ export default async function GridTied() {
               </h1>
               <div className="flex flex-col gap-2">
                 <h2 className="font-bold text-xl lg:text-[24px] text-[#015231]">
-                  Harness the Sun's Power for Free!
+                  Harness the Sun&apos;s Power for Free!
                 </h2>
                 <p className="font-normal text-base lg:text-[16px] text-black leading-normal">
-                  Grid-tied solar systems are a smart investment that can significantly reduce your electricity bills. By harnessing the sun's energy, you can generate your own electricity and send any excess back to the grid for credits.
+                  Grid-tied solar systems are a smart investment that can significantly reduce your electricity bills. By harnessing the sun&apos;s energy, you can generate your own electricity and send any excess back to the grid for credits.
                 </p>
               </div>
               <div className="flex flex-col gap-2">

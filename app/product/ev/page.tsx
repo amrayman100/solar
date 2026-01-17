@@ -64,7 +64,7 @@ export default async function EV() {
                 </h3>
                 <ul className="list-disc list-inside font-normal text-base lg:text-[16px] text-black space-y-1">
                   <li>Fast & Convenient: No more waiting in line at gas stations. Plug in at home or a charging station and top up your battery quickly.</li>
-                  <li>Save Money: Electricity typically costs less than gas, so fill 'er up for less!</li>
+                  <li>Save Money: Electricity typically costs less than gas, so fill &apos;er up for less!</li>
                   <li>Peace of Mind: Always know you have a way to recharge, no matter where your adventures take you.</li>
                   <li>Eco-Friendly Choice: Power your car with clean electricity, reducing emissions and your impact on the environment.</li>
                 </ul>

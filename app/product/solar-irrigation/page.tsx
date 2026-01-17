@@ -65,7 +65,7 @@ export default async function SolarIrrigationPage() {
                 <ul className="list-disc list-inside font-normal text-base lg:text-[16px] text-black space-y-1">
                   <li>Slash Electricity Bills: Ditch the grid and power your irrigation system with free sunshine. Sun = Savings!</li>
                   <li>Drought-Proof Your Farm: Reliable access to water, even in remote areas or during power outages.</li>
-                  <li>Sustainable Superhero: Reduce your farm's carbon footprint and leave a lighter footprint on the planet.</li>
+                  <li>Sustainable Superhero: Reduce your farm&apos;s carbon footprint and leave a lighter footprint on the planet.</li>
                   <li>Boost Crop Quality: Consistent watering leads to healthier, more vibrant crops that fetch premium prices.</li>
                 </ul>
               </div>
