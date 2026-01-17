@@ -135,75 +135,77 @@ export default function Header() {
         </Sheet>
       </div>
       {/* desktop nav menu */}
-      <div className="sticky top-0 z-40 hidden lg:flex md:flex justify-between items-center p-4 lg:mx-12 bg-white">
-        <div
-          className="flex place-items-center gap-3 cursor-pointer"
-          onClick={() => router.push("/")}
-        >
-          <div className="hidden dark:flex">
-            <Image
-              alt="Logo"
-              src={"/logo-dark.png"}
-              blurDataURL={"/logo-dark.png"}
-              placeholder="blur"
-              quality={100}
-              height={80}
-              width={80}
-              style={{
-                objectFit: "cover",
-              }}
-            />
-            <TypographyH3
-              text="Bolt Energy"
-              className="self-center text-emerald-950"
-            />
-          </div>
-          <div className="flex dark:hidden">
-            <Image
-              alt="Logo"
-              src={"/logo.png"}
-              blurDataURL={"/logo.png"}
-              placeholder="blur"
-              quality={100}
-              height={80}
-              width={80}
-              style={{
-                objectFit: "cover",
-              }}
-            />
-            <TypographyH3
-              text="Bolt Energy"
-              className="self-center text-emerald-950"
-            />
-          </div>
-        </div>
-        <div className="flex items-center gap-6">
-          <ProductsDropdown 
-            triggerClassName="text-emerald-950 font-medium hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer focus:outline-none"
-            triggerText="Products"
-          />
-          <Link href="/services/maintenance" legacyBehavior passHref>
-            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
-              Services
-            </a>
-          </Link>
-          <Link href="/proposal/whole-sale" legacyBehavior passHref>
-            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
-              Wholesale
-            </a>
-          </Link>
-          <Link href="/product/construction" legacyBehavior passHref>
-            <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
-              Bolt Construction
-            </a>
-          </Link>
-          <Button
-            variant="default"
-            className="rounded-lg bg-primary text-white hover:bg-primary/90 px-6 py-2"
-            onClick={() => router.push("/contact-us")}
+      <div className="sticky top-0 z-40 hidden lg:flex md:flex bg-white">
+        <div className="w-full px-4 lg:px-12 max-w-7xl mx-auto flex justify-between items-center py-4">
+          <div
+            className="flex place-items-center gap-3 cursor-pointer"
+            onClick={() => router.push("/")}
           >
-            Contact Us
-          </Button>
+            <div className="hidden dark:flex">
+              <Image
+                alt="Logo"
+                src={"/logo-dark.png"}
+                blurDataURL={"/logo-dark.png"}
+                placeholder="blur"
+                quality={100}
+                height={80}
+                width={80}
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+              <TypographyH3
+                text="Bolt Energy"
+                className="self-center text-emerald-950"
+              />
+            </div>
+            <div className="flex dark:hidden">
+              <Image
+                alt="Logo"
+                src={"/logo.png"}
+                blurDataURL={"/logo.png"}
+                placeholder="blur"
+                quality={100}
+                height={80}
+                width={80}
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+              <TypographyH3
+                text="Bolt Energy"
+                className="self-center text-emerald-950"
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+            <ProductsDropdown 
+              triggerClassName="text-emerald-950 font-medium hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer focus:outline-none"
+              triggerText="Products"
+            />
+            <Link href="/services/maintenance" legacyBehavior passHref>
+              <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+                Services
+              </a>
+            </Link>
+            <Link href="/proposal/whole-sale" legacyBehavior passHref>
+              <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+                Wholesale
+              </a>
+            </Link>
+            <Link href="/product/construction" legacyBehavior passHref>
+              <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+                Bolt Construction
+              </a>
+            </Link>
+            <Button
+              variant="default"
+              className="rounded-lg bg-primary text-white hover:bg-primary/90 px-6 py-2"
+              onClick={() => router.push("/contact-us")}
+            >
+              Contact Us
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -31,81 +31,69 @@ export const metadata: Metadata = {
 export default async function GridTied() {
   return (
     <>
-      <main className="flex-grow">
+      <main className="flex-grow w-screen">
         <Header />
-        <div className="m-10">
-          <div className="flex place-items-center gap-3">
-            <TypographyH3 text="Grid Tied" className="font-bold self-center" />
-          </div>
-          <div className="mt-2 lg:flex gap-4 flex-row">
-            <Image
-              alt="Grid Tied"
-              src={"/grid-tied.jpeg"}
-              blurDataURL={"/grid-tied.jpeg"}
-              placeholder="blur"
-              quality={100}
-              height={500}
-              width={500}
-              style={{
-                objectFit: "cover",
-              }}
-            />
-            <div className="flex justify-center h-full">
-              <div className="m-auto flex flex-col">
-                <TypographyH3 text="Harness the Sun's Power for Free! " />
-                <TypographyH3
-                  text="Grid-tied solar systems are a smart investment that can significantly reduce your electricity bills. By harnessing the sun's energy, you can generate your own electricity and send any excess back to the grid for credits. "
-                  className="font-normal mt-2"
-                />
-                <TypographyH3
-                  text="Key benefits:"
-                  className="font-normal mt-2"
-                />
-                <ul className="mt-4">
-                  <li>
-                    <TypographyH4Light text="• Lower electricity bills: Reduce your reliance on the grid and save money on energy costs." />
-                  </li>
-                  <li>
-                    <TypographyH4Light text="• Environmental friendly: Contribute to a cleaner planet by reducing your carbon footprint." />
-                  </li>
-                  <li>
-                    <TypographyH4Light text="• Easy installation: Grid-tied systems are relatively easy to install and require minimal maintenance." />
-                  </li>
+        <div className="flex justify-center px-4 py-8 lg:py-16">
+          <div className="bg-[#f6f6f6] rounded-[39px] flex flex-col lg:flex-row gap-6 lg:gap-[21px] items-center overflow-hidden w-full max-w-[1122px] p-6 lg:p-0">
+            <div className="flex items-center justify-center relative shrink-0 w-full lg:w-[363px] h-[300px] lg:h-[646px]">
+              <Image
+                alt="Grid Tied"
+                src={"/grid-tied.jpeg"}
+                blurDataURL={"/grid-tied.jpeg"}
+                placeholder="blur"
+                quality={100}
+                fill
+                className="object-cover rounded-lg lg:rounded-none"
+              />
+            </div>
+            <div className="flex flex-col gap-4 lg:gap-[16px] items-start text-black w-full lg:w-[703px] px-4 lg:px-0 pb-6 lg:pb-0">
+              <h1 className="font-bold text-2xl lg:text-[32px] text-[#015231] leading-normal">
+                Grid Tied
+              </h1>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-bold text-xl lg:text-[24px] text-[#015231]">
+                  Harness the Sun's Power for Free!
+                </h2>
+                <p className="font-normal text-base lg:text-[16px] text-black leading-normal">
+                  Grid-tied solar systems are a smart investment that can significantly reduce your electricity bills. By harnessing the sun's energy, you can generate your own electricity and send any excess back to the grid for credits.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="font-bold text-xl lg:text-[24px] text-[#015231]">
+                  Key benefits:
+                </h3>
+                <ul className="list-disc list-inside font-normal text-base lg:text-[16px] text-black space-y-1">
+                  <li>Lower electricity bills: Reduce your reliance on the grid and save money on energy costs.</li>
+                  <li>Environmental friendly: Contribute to a cleaner planet by reducing your carbon footprint.</li>
+                  <li>Easy installation: Grid-tied systems are relatively easy to install and require minimal maintenance.</li>
                 </ul>
-                <TypographyH3
-                  text="How it works:"
-                  className="font-normal mt-2"
-                />
-                <ul className="mt-4">
-                  <li>
-                    <TypographyH4Light text="• Solar panels: Capture sunlight and convert it into electricity." />
-                  </li>
-                  <li>
-                    <TypographyH4Light text="• Inverter: Converts DC power from the panels into AC power for your home." />
-                  </li>
-                  <li>
-                    <TypographyH4Light text="• Net Meter: Excess electricity is sent back to the grid for credits." />
-                  </li>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="font-bold text-xl lg:text-[24px] text-[#015231]">
+                  How it works:
+                </h3>
+                <ul className="list-disc list-inside font-normal text-base lg:text-[16px] text-black space-y-1">
+                  <li>Solar panels: Capture sunlight and convert it into electricity.</li>
+                  <li>Inverter: Converts DC power from the panels into AC power for your home.</li>
+                  <li>Net Meter: Excess electricity is sent back to the grid for credits.</li>
                 </ul>
-                <div className="mt-4">
-                  <span className="text-2xl font-semibold tracking-tight">
-                    Ready to start saving money and the environment?
-                  </span>
-                </div>
-                <div className="mt-4">
-                  <Link
-                    className="text-2xl scroll-m-20 font-extrabold tracking-tight text-primary"
-                    href={{
-                      pathname: "/proposal/grid-tied",
-                      query: { startFromBeginning: true },
-                    }}
-                  >
-                    Contact us today for a free consultation!
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col items-center gap-6 px-4 py-8 lg:py-12">
+          <p className="font-bold text-xl lg:text-[24px] text-black text-center">
+            Ready to start saving money and the environment?
+          </p>
+          <Link
+            href={{
+              pathname: "/proposal/grid-tied",
+              query: { startFromBeginning: true },
+            }}
+            className="bg-[#00bd70] hover:bg-[#00bd70]/90 flex items-center justify-center h-[39px] px-8 py-[10px] rounded-[8px] w-full max-w-[383px] transition-colors"
+          >
+            <span className="font-bold text-base text-white">Calculate Now</span>
+          </Link>
         </div>
       </main>
       <Footer />
