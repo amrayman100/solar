@@ -5,7 +5,17 @@ import {
   TypographyH3,
   TypographyH4Light,
 } from "@/components/shared/typography";
+import { createPageMetadata } from "@/lib/seo";
 import Image from "next/image";
+
+export const metadata = createPageMetadata({
+  title: "Solar Smart Monitoring Egypt | Energy Usage Tracking",
+  description:
+    "Smart solar monitoring for homes and businesses in Egypt. Track energy production, identify savings, and optimize your solar system performance.",
+  path: "/services/solar-monitoring",
+  image: "/monitor-ai.png",
+  imageAlt: "Smart solar energy monitoring dashboard",
+});
 
 export default async function SolarMonitoring() {
   return (
@@ -19,15 +29,17 @@ export default async function SolarMonitoring() {
               className="font-bold self-center"
             />
           </div>
+          <h1 className="sr-only">Smart Solar Monitoring Services in Egypt</h1>
           <div className="mt-2 lg:flex gap-4 flex-row">
             <Image
-              alt="Smart Monitoring"
+              alt="Smart solar energy monitoring system for homes in Egypt"
               src={"/monitor-ai.png"}
               blurDataURL={"/monitor-ai.png"}
               placeholder="blur"
-              quality={100}
+              quality={80}
               height={500}
               width={500}
+              sizes="(max-width: 768px) 100vw, 500px"
               style={{
                 objectFit: "cover",
               }}

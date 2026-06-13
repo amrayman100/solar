@@ -8,6 +8,7 @@ interface ProductCardProps {
   title: string;
   description: string;
   image: string;
+  imageAlt?: string;
   calculateLink: string;
   learnMoreLink: string;
 }
@@ -16,17 +17,23 @@ export function ProductCard({
   title,
   description,
   image,
+  imageAlt,
   calculateLink,
   learnMoreLink,
 }: ProductCardProps) {
+  const alt =
+    imageAlt ?? `${title} solar system installation by Bolt Energy in Egypt`;
+
   return (
     <div className="bg-[#f1f1f1] flex flex-col items-center overflow-hidden rounded-[15px] w-[270px] h-[380px]">
       <div className="relative w-full aspect-[2276/1739] overflow-hidden flex-shrink-0">
         <Image
           src={image}
-          alt={title}
+          alt={alt}
           fill
           className="object-cover"
+          sizes="270px"
+          quality={80}
         />
       </div>
       <div className="flex flex-col gap-4 items-center justify-between px-4 pb-4 pt-4 w-full flex-grow">

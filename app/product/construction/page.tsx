@@ -6,28 +6,17 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Solar Construction Solutions | Renewable Energy Infrastructure",
+export const metadata = createPageMetadata({
+  title: "Solar Construction & Installation Egypt | Bolt Construction",
   description:
-    "Professional solar installation and construction services for residential and commercial projects. Our expert team ensures optimal system performance and structural integrity.",
-  keywords:
-    "solar construction, solar installation, renewable energy infrastructure, solar mounting, solar racking, energy systems, professional installation",
-  openGraph: {
-    title: "Solar Construction Solutions | Renewable Energy Infrastructure",
-    description:
-      "Professional solar installation and construction services for optimal system performance.",
-    images: [
-      {
-        url: "/construction-man.jpeg",
-        width: 600,
-        height: 500,
-        alt: "Solar Construction Solutions",
-      },
-    ],
-  },
-};
+    "Professional solar construction and installation services in Egypt. Residential and commercial mounting, racking, and renewable energy infrastructure.",
+  path: "/product/construction",
+  keywords: ["solar construction egypt", "solar installation egypt", "bolt construction"],
+  image: "/construction-man.jpeg",
+  imageAlt: "Solar construction and installation team in Egypt",
+});
 
 export default async function Construction() {
   return (
@@ -38,12 +27,13 @@ export default async function Construction() {
           <div className="bg-[#f6f6f6] rounded-[39px] flex flex-col lg:flex-row gap-6 lg:gap-[21px] items-center overflow-hidden w-full max-w-[1122px] p-6 lg:p-0">
             <div className="flex items-center justify-center relative shrink-0 w-full lg:w-[363px] h-[300px] lg:h-[646px]">
               <Image
-                alt="Construction"
+                alt="Bolt Construction solar installation team working on a project in Egypt"
                 src={"/contact-man.jpeg"}
                 blurDataURL={"/contact-man.jpeg"}
                 placeholder="blur"
-                quality={100}
+                quality={80}
                 fill
+                sizes="(max-width: 1024px) 100vw, 363px"
                 className="object-cover rounded-lg lg:rounded-none"
               />
             </div>

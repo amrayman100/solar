@@ -6,12 +6,12 @@ export function Footer() {
     <footer className="bg-[#015231] w-screen text-white">
       <div className="w-full px-4 lg:px-12 py-12">
         {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 justify-items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 justify-items-center">
           {/* Logo and Description */}
           <div className="flex flex-col gap-4 items-center text-center w-full">
             <div className="flex items-center gap-3 justify-center">
               <Image
-                alt="Logo"
+                alt="Bolt Energy logo — solar company in Egypt"
                 src="/footer-logo-white.svg"
                 height={26}
                 width={24}
@@ -37,6 +37,37 @@ export function Footer() {
                 height={20}
                 className="object-contain"
               />
+            </div>
+          </div>
+
+          {/* Company */}
+          <div className="flex flex-col gap-4 items-center text-center w-full">
+            <h4 className="text-sm font-bold text-white">Company</h4>
+            <div className="flex flex-col gap-2 text-sm text-white items-center">
+              <Link
+                href="/about"
+                className="hover:opacity-80 transition-opacity"
+              >
+                About Us
+              </Link>
+              <Link
+                href="/projects"
+                className="hover:opacity-80 transition-opacity"
+              >
+                Our Projects
+              </Link>
+              <Link
+                href="/resources"
+                className="hover:opacity-80 transition-opacity"
+              >
+                Solar Resources
+              </Link>
+              <Link
+                href="/contact-us"
+                className="hover:opacity-80 transition-opacity"
+              >
+                Contact Us
+              </Link>
             </div>
           </div>
 

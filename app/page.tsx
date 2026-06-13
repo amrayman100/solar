@@ -15,84 +15,48 @@ import { TestimonialCard } from "@/components/home/testimonial-card";
 import { ProductsDropdown } from "@/components/home/products-dropdown";
 import Link from "next/link";
 import { Metadata } from "next";
-import Script from "next/script";
+import { StructuredData } from "@/components/structured-data";
+import { createPageMetadata } from "@/lib/seo";
+import { TRACK_RECORD_PROJECTS } from "@/lib/site-content";
+import {
+  FAQ_ITEMS,
+  TESTIMONIALS,
+  getFaqPageSchema,
+  getLocalBusinessSchema,
+  getWebSiteSchema,
+} from "@/lib/structured-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Solar Energy Egypt | Bolt Energy Solar Solutions",
   description:
     "Bolt Energy delivers solar energy solutions in Egypt: grid-tied, off-grid, irrigation, and heating systems with expert design, installation, and monitoring.",
-  keywords:
-    "solar egypt, solar energy egypt, solar panels egypt, solar company egypt, bolt energy egypt, grid tied solar egypt, off grid solar egypt, solar irrigation egypt, solar heating egypt, solar installer egypt, طاقة شمسية مصر, شركات الطاقة الشمسية في مصر",
-  openGraph: {
-    title: "Solar Energy Egypt | Bolt Energy",
-    description:
-      "Leading solar energy company in Egypt offering grid-tied, off-grid, irrigation, and heating solar systems with professional installation and monitoring.",
-    images: [
-      {
-        url: "/drone-4-1.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Bolt Energy solar installation in Egypt",
-      },
-    ],
-  },
-};
+  path: "/",
+  keywords: [
+    "solar egypt",
+    "solar energy egypt",
+    "solar panels egypt",
+    "solar company egypt",
+    "bolt energy egypt",
+    "grid tied solar egypt",
+    "off grid solar egypt",
+    "solar irrigation egypt",
+    "solar heating egypt",
+    "solar installer egypt",
+    "طاقة شمسية مصر",
+    "شركات الطاقة الشمسية في مصر",
+  ],
+});
 
 export default async function Home() {
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Bolt Energy",
-    url: "https://bolt-energy.me",
-    logo: "https://bolt-energy.me/footer-logo-white.svg",
-    email: "info@bolt-energy.me",
-    telephone: "+201044438446",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "6th of October",
-      addressLocality: "Giza",
-      addressCountry: "EG",
-    },
-    sameAs: [
-      "https://www.facebook.com/boltenergy.me",
-      "https://www.instagram.com/bolt.energy.eg",
-    ],
-    description:
-      "Leading solar energy company in Egypt providing grid-tied, off-grid, irrigation, and heating solar solutions.",
-    areaServed: "Egypt",
-    keywords: [
-      "solar egypt",
-      "solar energy egypt",
-      "طاقة شمسية مصر",
-      "solar panels egypt",
-      "bolt energy",
-    ],
-  };
-
-  const webSiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    url: "https://bolt-energy.me",
-    name: "Bolt Energy",
-    potentialAction: {
-      "@type": "SearchAction",
-      target:
-        "https://www.google.com/search?q=bolt+energy+egypt+{search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
-  };
-
   return (
     <>
-      <Script
-        id="schema-organization"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <Script
-        id="schema-website"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+      <StructuredData
+        id="schema-home"
+        data={[
+          getLocalBusinessSchema(),
+          getWebSiteSchema(),
+          getFaqPageSchema(),
+        ]}
       />
       <main className="flex-grow w-screen">
         <Header />
@@ -106,12 +70,13 @@ export default async function Home() {
           <div className="relative flex flex-col items-center justify-center h-full px-4 z-10">
             <div className="flex flex-col items-center gap-6 max-w-2xl w-full">
               <div className="text-center">
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center mb-2">
-                  Get Your Free Solar
+                <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl text-white text-center leading-tight">
+                  Solar Energy Solutions in Egypt — Design, Installation &amp;
+                  Monitoring
                 </h1>
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl text-white text-center">
-                  Quote Instantly
-                </h1>
+                <p className="scroll-m-20 text-2xl font-bold tracking-tight lg:text-4xl text-white/90 text-center mt-3">
+                  Get Your Free Solar Quote Instantly
+                </p>
               </div>
               <MonthlyConsumptionForm />
             </div>
@@ -126,6 +91,7 @@ export default async function Home() {
               title="Grid Tied"
               description="By harnessing the sun's energy, you can generate your own electricity and send any excess back to the grid for credits."
               image="/grid-tied.jpeg"
+              imageAlt="Grid-tied solar panel system for homes in Egypt by Bolt Energy"
               calculateLink="/product/grid-tied"
               learnMoreLink="/product/grid-tied"
             />
@@ -133,6 +99,7 @@ export default async function Home() {
               title="Off Grid"
               description="Backup solar off-grid systems are your ticket to energy independence"
               image="/off-grid.png"
+              imageAlt="Off-grid solar system with battery backup in Egypt"
               calculateLink="/product/off-grid"
               learnMoreLink="/product/off-grid"
             />
@@ -140,6 +107,7 @@ export default async function Home() {
               title="Solar Irrigation"
               description="Imagine growing healthier crops, saving money, and becoming more eco-friendly all at the same time."
               image="/solar-irrig.jpg"
+              imageAlt="Solar-powered irrigation system for farms in Egypt"
               calculateLink="/product/solar-irrigation"
               learnMoreLink="/product/solar-irrigation"
             />
@@ -147,6 +115,7 @@ export default async function Home() {
               title="Solar Heating"
               description="Tired of Gas and Electric Bills, Smoke Them Out With Solar Heating!"
               image="/solar-heating.jpg"
+              imageAlt="Solar water heating system for homes in Egypt"
               calculateLink="/product/solar-heating"
               learnMoreLink="/product/solar-heating"
             />
@@ -159,82 +128,24 @@ export default async function Home() {
             Track Record
           </h2>
           <div className="flex flex-wrap justify-center gap-6 px-4 max-w-7xl mx-auto">
-            {/* Row 1 */}
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="13 KW"
-              location="SKEIKH ZAYED, EGYPT"
-              image="/track-record-13kw.jpg"
-            />
-            <TrackRecordCard
-              title="Back-up System"
-              power="192 KW"
-              location="New Administrative Capital, EGYPT"
-              image="/track-record-192kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="16 KW"
-              location="Allegria, SKEIKH ZAYED, EGYPT"
-              image="/track-record-16kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="30 KW"
-              location="Pyramid Hills, EGYPT"
-              image="/track-record-30kw.jpg"
-            />
-            {/* Row 2 */}
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="50 KW"
-              location="SKEIKH ZAYED, EGYPT"
-              image="/track-record-50kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="9.5 KW"
-              location="SKEIKH ZAYED, EGYPT"
-              image="/track-record-9.5kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="120 KW"
-              location="SKEIKH ZAYED, EGYPT"
-              image="/track-record-120kw-sheikh.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="120 KW"
-              location="GIZA, EGYPT"
-              image="/track-record-120kw-giza.jpg"
-            />
-            {/* Row 3 */}
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="12 KW"
-              location="Giza, EGYPT"
-              image="/track-record-12kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="20 KW"
-              location="New Cairo, EGYPT"
-              image="/track-record-20kw.jpg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="9 KW"
-              location="New Cairo, EGYPT"
-              image="/drone-4-1.jpeg"
-            />
-            <TrackRecordCard
-              title="Grid Tied System"
-              power="120 KW"
-              location="EL KHATATBA, EGYPT"
-              image="/track-record-120kw-khatatba.jpg"
-            />
+            {TRACK_RECORD_PROJECTS.map((project) => (
+              <TrackRecordCard
+                key={project.slug}
+                title={project.systemType}
+                power={project.power}
+                location={project.location}
+                image={project.image}
+                imageAlt={project.imageAlt}
+                href={`/projects/${project.slug}`}
+              />
+            ))}
           </div>
+          <Link
+            href="/projects"
+            className="text-[#00bd70] font-semibold hover:underline"
+          >
+            View all installation projects →
+          </Link>
         </div>
         {/* What our customers think Section */}
         <div className="flex flex-col place-items-center w-100 justify-center mt-16 gap-8 mb-12">
@@ -245,30 +156,13 @@ export default async function Home() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 px-4 max-w-7xl mx-auto"
             style={{ overflow: "visible" }}
           >
-            <TestimonialCard
-              name="Fady Iskandar"
-              text="The level of professionalism was exemplary. All promises were fulfilled and there were no surprises. The installation process was seamless."
-            />
-            <TestimonialCard
-              name="Walid Bazan"
-              text="Bolt Energy is a good start up company, with more projects under their belt. Over all acceptable experience the system was delivered and installed and commissioned as designed and they have good follow up on trouble shooting and follow up until successful commissioning was achieved."
-            />
-            <TestimonialCard
-              name="Stefano Soldi"
-              text="I didn't expect to find such a great and professional people. Bolt Energy team is simply perfect. In few days I got an offer for my unit, and the installation procedure had been easy and smooth. I highly recommend this company to all my friends, neighbors and people that are interested in invest some money for a better and green future."
-            />
-            <TestimonialCard
-              name="Ali Dessouki"
-              text="Everyone was extremely professional and friendly and did everything to make the experience smooth and easy for me. I'm extremely satisfied with my experience and would definitely recommend to anyone."
-            />
-            <TestimonialCard
-              name="Mohamed Fekry Aziz Saber Khalil"
-              text="Professional company with good service and competitive prices"
-            />
-            <TestimonialCard
-              name="Amr Ayman"
-              text="Very professional and experienced team"
-            />
+            {TESTIMONIALS.map((testimonial) => (
+              <TestimonialCard
+                key={testimonial.name}
+                name={testimonial.name}
+                text={testimonial.text}
+              />
+            ))}
           </div>
         </div>
         {/* Your installation in 4 simple steps Section */}
@@ -329,57 +223,20 @@ export default async function Home() {
             collapsible
             className="w-full max-w-4xl px-4"
           >
-            <AccordionItem value="item-1" className="border-b border-[#015231]">
-              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
-                Why should I go solar?
-              </AccordionTrigger>
-              <AccordionContent className="text-base text-[#015231] pt-4">
-                Photovoltaic energy is emerging as a solid alternative to large
-                electricity companies. The installation of solar panels offers
-                clear benefits, including savings of up to 70% on electricity
-                bills, driving many families towards solar self-consumption in
-                our country. It also provides energy independence, increases the
-                value of the property, contributes to combating climate change,
-                and offers access to various grants and subsidies.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2" className="border-b border-[#015231]">
-              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
-                How do solar panels work?
-              </AccordionTrigger>
-              <AccordionContent className="text-base text-[#015231] pt-4">
-                Solar panels convert sunlight into electricity through the
-                photovoltaic process. Solar cells absorb sunlight to generate
-                electricity, then an inverter converts this current into usable
-                form for the home.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3" className="border-b border-[#015231]">
-              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
-                What is the maintenance of solar panels?
-              </AccordionTrigger>
-              <AccordionContent className="text-base text-[#015231] pt-4">
-                The care of solar panels is simple and minimal, we can usually
-                take care of them ourselves. They are built to withstand weather
-                conditions and usually only need occasional cleaning and checks
-                to ensure they are working properly and to prevent damage.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4" className="border-b border-[#015231]">
-              <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
-                How are solar panels cleaned?
-              </AccordionTrigger>
-              <AccordionContent className="text-base text-[#015231] pt-4">
-                Solar panels usually require little maintenance thanks to their
-                glass cover, which tends to keep them clean. Occasionally, if
-                dirt such as leaves or debris accumulates, a gentle wash with
-                water from a hose or using a soft sponge or brush is sufficient.
-                Regular observation is key to identifying build-up that may
-                affect its efficiency. In general, the protective coating on the
-                panels allows rain and sun to keep them clean, minimizing the
-                need for frequent cleaning.
-              </AccordionContent>
-            </AccordionItem>
+            {FAQ_ITEMS.map((item, index) => (
+              <AccordionItem
+                key={item.question}
+                value={`item-${index + 1}`}
+                className="border-b border-[#015231]"
+              >
+                <AccordionTrigger className="text-2xl font-bold text-[#015231] hover:no-underline">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base text-[#015231] pt-4">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </div>
 

@@ -6,49 +6,52 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
+import { RelatedProducts } from "@/components/seo/related-products";
+import { StructuredData } from "@/components/structured-data";
+import { createPageMetadata } from "@/lib/seo";
+import { getServiceSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Grid-Tied Solar Systems | Energy Independence",
+export const metadata = createPageMetadata({
+  title: "Grid-Tied Solar Systems Egypt | Net Metering & Bill Reduction",
   description:
-    "Harness the sun's power for free with grid-tied solar systems. Send excess electricity back to the grid for credits and reduce your energy bills.",
-  keywords:
-    "grid-tied solar systems, energy independence, solar power, energy savings, renewable energy",
-  openGraph: {
-    title: "Grid-Tied Solar Systems | Energy Independence",
-    description:
-      "Harness the sun's power for free with grid-tied solar systems. Send excess electricity back to the grid for credits and reduce your energy bills.",
-    images: [
-      {
-        url: "/grid-tied.jpeg",
-        width: 600,
-        height: 500,
-      },
-    ],
-  },
-};
+    "Grid-tied solar systems in Egypt with net metering. Generate your own electricity, send excess to the grid for credits, and reduce your energy bills with Bolt Energy.",
+  path: "/product/grid-tied",
+  keywords: [
+    "grid tied solar egypt",
+    "net metering egypt",
+    "solar panels egypt",
+    "grid connected solar",
+  ],
+  image: "/grid-tied.jpeg",
+  imageAlt: "Grid-tied solar panel installation in Egypt by Bolt Energy",
+});
 
 export default async function GridTied() {
   return (
     <>
+      <StructuredData
+        id="schema-grid-tied"
+        data={getServiceSchema("grid-tied")}
+      />
       <main className="flex-grow w-screen">
         <Header />
         <div className="flex justify-center px-4 py-8 lg:py-16">
           <div className="bg-[#f6f6f6] rounded-[39px] flex flex-col lg:flex-row gap-6 lg:gap-[21px] items-center overflow-hidden w-full max-w-[1122px] p-6 lg:p-0">
             <div className="flex items-center justify-center relative shrink-0 w-full lg:w-[363px] h-[300px] lg:h-[646px]">
               <Image
-                alt="Grid Tied"
+                alt="Grid-tied solar panel system installation in Egypt by Bolt Energy"
                 src={"/grid-tied.jpeg"}
                 blurDataURL={"/grid-tied.jpeg"}
                 placeholder="blur"
-                quality={100}
+                quality={80}
                 fill
+                sizes="(max-width: 1024px) 100vw, 363px"
                 className="object-cover rounded-lg lg:rounded-none"
               />
             </div>
             <div className="flex flex-col gap-4 lg:gap-[16px] items-start text-black w-full lg:w-[703px] px-4 lg:px-0 pb-6 lg:pb-0">
               <h1 className="font-bold text-2xl lg:text-[32px] text-[#015231] leading-normal">
-                Grid Tied
+                Grid-Tied Solar Systems in Egypt
               </h1>
               <div className="flex flex-col gap-2">
                 <h2 className="font-bold text-xl lg:text-[24px] text-[#015231]">
@@ -78,6 +81,16 @@ export default async function GridTied() {
                   <li>Net Meter: Excess electricity is sent back to the grid for credits.</li>
                 </ul>
               </div>
+              <p className="text-sm text-gray-600">
+                Learn more:{" "}
+                <Link href="/resources/net-metering-egypt" className="text-[#00bd70] hover:underline">
+                  Net metering in Egypt
+                </Link>
+                {" · "}
+                <Link href="/resources/solar-panel-cost-egypt-2026" className="text-[#00bd70] hover:underline">
+                  2026 solar panel costs
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -95,6 +108,7 @@ export default async function GridTied() {
             <span className="font-bold text-base text-white">Calculate Now</span>
           </Link>
         </div>
+        <RelatedProducts />
       </main>
       <Footer />
     </>

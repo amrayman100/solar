@@ -6,27 +6,17 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "EV Chargers | Electric Vehicle Charging Solutions",
+export const metadata = createPageMetadata({
+  title: "EV Charging Stations Egypt | Home & Business EV Chargers",
   description:
-    "Explore our range of EV chargers for your home or business. Fast, convenient, and eco-friendly, we offer a variety of options to suit your needs.",
-  keywords:
-    "EV chargers, electric vehicle charging solutions, home chargers, public chargers, fast chargers",
-  openGraph: {
-    title: "EV Chargers | Electric Vehicle Charging Solutions",
-    description:
-      "Explore our range of EV chargers for your home or business. Fast, convenient, and eco-friendly, we offer a variety of options to suit your needs.",
-    images: [
-      {
-        url: "/ev-ai.png",
-        width: 600,
-        height: 500,
-      },
-    ],
-  },
-};
+    "EV charging solutions for homes and businesses in Egypt. Fast, convenient, and solar-compatible electric vehicle charging from Bolt Energy.",
+  path: "/product/ev",
+  keywords: ["ev charger egypt", "electric vehicle charging egypt"],
+  image: "/ev-ai.png",
+  imageAlt: "EV charging station installation in Egypt",
+});
 
 export default async function EV() {
   return (
@@ -37,12 +27,13 @@ export default async function EV() {
           <div className="bg-[#f6f6f6] rounded-[39px] flex flex-col lg:flex-row gap-6 lg:gap-[21px] items-center overflow-hidden w-full max-w-[1122px] p-6 lg:p-0">
             <div className="flex items-center justify-center relative shrink-0 w-full lg:w-[363px] h-[300px] lg:h-[646px]">
               <Image
-                alt="EV Chargers"
+                alt="Electric vehicle charging station for home and business in Egypt"
                 src={"/ev-ai.png"}
                 blurDataURL={"/ev-ai.png"}
                 placeholder="blur"
-                quality={100}
+                quality={80}
                 fill
+                sizes="(max-width: 1024px) 100vw, 363px"
                 className="object-cover rounded-lg lg:rounded-none"
               />
             </div>

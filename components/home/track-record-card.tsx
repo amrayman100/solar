@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface TrackRecordCardProps {
   title: string;
   power: string;
   location: string;
   image: string;
+  imageAlt?: string;
+  href?: string;
 }
 
 export function TrackRecordCard({
@@ -14,15 +17,22 @@ export function TrackRecordCard({
   power,
   location,
   image,
+  imageAlt,
+  href,
 }: TrackRecordCardProps) {
-  return (
+  const alt =
+    imageAlt ?? `${power} ${title.toLowerCase()} in ${location}, Egypt`;
+
+  const content = (
     <div className="bg-[#f1f1f1] flex flex-col gap-3 items-center overflow-hidden rounded-[15px] w-full max-w-[270px] h-[292px]">
       <div className="relative w-full h-[206px] overflow-hidden">
         <Image
           src={image}
-          alt={title}
+          alt={alt}
           fill
           className="object-cover"
+          sizes="(max-width: 640px) 100vw, 270px"
+          quality={75}
         />
       </div>
       <div className="flex flex-col gap-1 items-center justify-center px-4 pb-4">
@@ -37,6 +47,7 @@ export function TrackRecordCard({
               viewBox="0 0 6 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
                 d="M3 0L3.4641 4.5L6 6L3.4641 7.5L3 12L2.5359 7.5L0 6L2.5359 4.5L3 0Z"
@@ -54,6 +65,7 @@ export function TrackRecordCard({
               viewBox="0 0 8 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
                 d="M4 0C1.79086 0 0 1.79086 0 4C0 7 4 12 4 12C4 12 8 7 8 4C8 1.79086 6.20914 0 4 0ZM4 5.5C3.17157 5.5 2.5 4.82843 2.5 4C2.5 3.17157 3.17157 2.5 4 2.5C4.82843 2.5 5.5 3.17157 5.5 4C5.5 4.82843 4.82843 5.5 4 5.5Z"
@@ -68,4 +80,14 @@ export function TrackRecordCard({
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="hover:opacity-90 transition-opacity">
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 }

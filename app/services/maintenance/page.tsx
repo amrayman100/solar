@@ -1,8 +1,18 @@
+import { MainentanceForm } from "@/components/services/maintenance/maintenance-form";
 import { Footer } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { TypographyH4 } from "@/components/shared/typography";
+import { createPageMetadata } from "@/lib/seo";
 import Image from "next/image";
-import { MainentanceForm } from "@/components/services/maintenance/maintenance-form";
+
+export const metadata = createPageMetadata({
+  title: "Solar Panel Maintenance Egypt | System Care & Support",
+  description:
+    "Professional solar panel maintenance and system care in Egypt. Keep your installation performing at peak efficiency with Bolt Energy support services.",
+  path: "/services/maintenance",
+  image: "/logo-bg.jpg",
+  imageAlt: "Bolt Energy solar maintenance services in Egypt",
+});
 
 export default async function Maintenance() {
   return (
@@ -11,13 +21,14 @@ export default async function Maintenance() {
         <Header />
         <div className="lg:mt-10 flex flex-col lg:flex-row mx-4 gap-2">
           <Image
-            alt="logo-bg"
+            alt="Solar panel maintenance and system care by Bolt Energy Egypt"
             src={"/logo-bg.jpg"}
             blurDataURL={"/logo-bg.jpg"}
             placeholder="blur"
-            quality={100}
+            quality={80}
             height={500}
             width={500}
+            sizes="(max-width: 768px) 100vw, 500px"
             style={{
               objectFit: "cover",
             }}
@@ -31,6 +42,7 @@ export default async function Maintenance() {
               text="Proactive Measures: The Key to Success"
               className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl"
             />
+            <h1 className="sr-only">Solar Panel Maintenance Services in Egypt</h1>
             <div className="text-[0px]">
               <span className="font-normal text-lg">
                 Our maintenance service ensures your installation remains in top

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { RTLProvider } from "@/components/rtl-provider";
 import { ReactQueryClientProvider } from "@/components/react-query-client-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { SITE_URL } from "@/lib/structured-data";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,6 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Bolt Energy | Solar Energy Egypt",
     template: "%s | Bolt Energy Egypt",
@@ -33,6 +35,9 @@ export const metadata: Metadata = {
     "طاقة شمسية مصر",
     "الطاقة الشمسية في مصر",
   ],
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     title: "Bolt Energy | Solar Energy Egypt",
     description:

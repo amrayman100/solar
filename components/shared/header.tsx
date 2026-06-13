@@ -43,7 +43,7 @@ export default function Header() {
             <div className="flex gap-2">
               <div className="hidden dark:block">
                 <Image
-                  alt="Logo"
+                  alt="Bolt Energy logo — solar energy company Egypt"
                   src={"/logo-dark.png"}
                   blurDataURL={"/logo-dark.png"}
                   placeholder="blur"
@@ -57,7 +57,7 @@ export default function Header() {
               </div>
               <div className="block dark:hidden">
                 <Image
-                  alt="Logo"
+                  alt="Bolt Energy logo — solar energy company Egypt"
                   src={"/logo.png"}
                   blurDataURL={"/logo.png"}
                   placeholder="blur"
@@ -88,6 +88,21 @@ export default function Header() {
               </a>
             </Link>
             <div className="flex flex-col">
+              <Link href="/about" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  About
+                </a>
+              </Link>
+              <Link href="/resources" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  Resources
+                </a>
+              </Link>
+              <Link href="/projects" legacyBehavior passHref>
+                <a className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  Projects
+                </a>
+              </Link>
               <Link href="/contact-us" legacyBehavior passHref>
                 <a className="scroll-m-20 text-xl font-semibold tracking-tight">
                   Contact Us
@@ -179,6 +194,16 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center gap-6">
+            <Link href="/about" legacyBehavior passHref>
+              <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+                About
+              </a>
+            </Link>
+            <Link href="/resources" legacyBehavior passHref>
+              <a className="text-emerald-950 font-medium hover:text-emerald-800 transition-colors">
+                Resources
+              </a>
+            </Link>
             <ProductsDropdown 
               triggerClassName="text-emerald-950 font-medium hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer focus:outline-none"
               triggerText="Products"

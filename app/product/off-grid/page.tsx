@@ -6,50 +6,47 @@ import {
 } from "@/components/shared/typography";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
+import { RelatedProducts } from "@/components/seo/related-products";
+import { StructuredData } from "@/components/structured-data";
+import { createPageMetadata } from "@/lib/seo";
+import { getServiceSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Off-Grid Solar Solutions | Energy Independence",
+export const metadata = createPageMetadata({
+  title: "Off-Grid Solar Systems Egypt | Energy Independence & Backup",
   description:
-    "Complete off-grid solar power systems with battery storage for energy independence. Ideal for remote locations and backup power solutions.",
-  keywords:
-    "off grid, solar energy, energy independence, battery storage, remote power, solar systems, renewable energy",
-  openGraph: {
-    title: "Off-Grid Solar Solutions | Energy Independence",
-    description:
-      "Complete off-grid solar power systems for energy independence and reliable power supply.",
-    images: [
-      {
-        url: "/offgrid-ai.png",
-        width: 600,
-        height: 500,
-        alt: "Off-Grid Solar Solutions",
-      },
-    ],
-  },
-};
+    "Off-grid solar power systems with battery storage in Egypt. Energy independence, backup power, and reliable electricity for remote homes and businesses.",
+  path: "/product/off-grid",
+  keywords: ["off grid solar egypt", "solar battery egypt", "backup solar egypt"],
+  image: "/offgrid-ai.png",
+  imageAlt: "Off-grid solar system with battery storage in Egypt",
+});
 
 export default async function OffGrid() {
   return (
     <>
+      <StructuredData
+        id="schema-off-grid"
+        data={getServiceSchema("off-grid")}
+      />
       <main className="flex-grow w-screen">
         <Header />
         <div className="flex justify-center px-4 py-8 lg:py-16">
           <div className="bg-[#f6f6f6] rounded-[39px] flex flex-col lg:flex-row gap-6 lg:gap-[21px] items-center overflow-hidden w-full max-w-[1122px] p-6 lg:p-0">
             <div className="flex items-center justify-center relative shrink-0 w-full lg:w-[363px] h-[300px] lg:h-[646px]">
               <Image
-                alt="Off Grid"
+                alt="Off-grid solar system with battery backup in Egypt by Bolt Energy"
                 src={"/offgrid-ai.png"}
                 blurDataURL={"/offgrid-ai.png"}
                 placeholder="blur"
-                quality={100}
+                quality={80}
                 fill
+                sizes="(max-width: 1024px) 100vw, 363px"
                 className="object-cover rounded-lg lg:rounded-none"
               />
             </div>
             <div className="flex flex-col gap-4 lg:gap-[16px] items-start text-black w-full lg:w-[703px] px-4 lg:px-0 pb-6 lg:pb-0">
               <h1 className="font-bold text-2xl lg:text-[32px] text-[#015231] leading-normal">
-                Off Grid
+                Off-Grid Solar Solutions in Egypt
               </h1>
               <div className="flex flex-col gap-2">
                 <h2 className="font-bold text-xl lg:text-[24px] text-[#015231]">
@@ -80,6 +77,12 @@ export default async function OffGrid() {
                   <li>Versatility: Perfect for homes, businesses, and remote locations.</li>
                 </ul>
               </div>
+              <p className="text-sm text-gray-600">
+                Compare options:{" "}
+                <Link href="/resources/off-grid-vs-grid-tied-egypt" className="text-[#00bd70] hover:underline">
+                  Off-grid vs grid-tied solar
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -94,6 +97,7 @@ export default async function OffGrid() {
             <span className="font-bold text-base text-white">Calculate Now</span>
           </Link>
         </div>
+        <RelatedProducts />
       </main>
       <Footer />
     </>
