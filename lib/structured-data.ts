@@ -11,10 +11,12 @@ export const BUSINESS_INFO = {
     addressCountry: "EG",
   },
   logo: `${SITE_URL}/footer-logo-white.svg`,
-  sameAs: [
-    "https://www.facebook.com/boltenergy.me",
-    "https://www.instagram.com/bolt.energy.eg",
-  ],
+  facebook: "https://www.facebook.com/BoltEnergyme/",
+  instagram: "https://www.instagram.com/boltenergy_me/",
+  linkedin: "https://www.linkedin.com/company/boltenergy-me/",
+  get sameAs() {
+    return [this.facebook, this.instagram, this.linkedin];
+  },
   description:
     "Leading solar energy company in Egypt providing grid-tied, off-grid, irrigation, and heating solar solutions with professional installation and monitoring.",
 };

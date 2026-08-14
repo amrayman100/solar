@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { BUSINESS_INFO } from "@/lib/structured-data";
 
 export function Footer() {
   return (
@@ -28,15 +30,34 @@ export function Footer() {
               reliable, and cost effective energy with quality installation and
               support.
             </p>
-            {/* Social Media Icons */}
             <div className="flex gap-4 mt-2 justify-center">
-              <Image
-                src="/footer-social-icons.svg"
-                alt="Social Media"
-                width={48}
-                height={20}
-                className="object-contain"
-              />
+              <a
+                href={BUSINESS_INFO.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bolt Energy on Instagram"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href={BUSINESS_INFO.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bolt Energy on Facebook"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href={BUSINESS_INFO.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bolt Energy on LinkedIn"
+                className="hover:opacity-80 transition-opacity"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
