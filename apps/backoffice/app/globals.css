@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@source "../../../packages/ui/**/*.{ts,tsx}";
+@import "@bolt-energy/ui/styles/globals.css";
+
+/* Brighter Bolt greens for backoffice (customer site keeps forest tokens). */
+:root {
+  /* ~#00bd70 */
+  --primary: oklch(0.72 0.18 155);
+  --primary-foreground: oklch(0.99 0.01 155);
+  --secondary: oklch(0.95 0.05 150);
+  --secondary-foreground: oklch(0.30 0.09 155);
+  --accent: oklch(0.94 0.09 150);
+  --accent-foreground: oklch(0.26 0.09 155);
+  --ring: oklch(0.66 0.16 155);
+  --chart-1: oklch(0.72 0.18 155);
+  --chart-2: oklch(0.80 0.16 140);
+  --chart-4: oklch(0.84 0.12 145);
+  --sidebar: oklch(0.36 0.10 155);
+  --sidebar-foreground: oklch(0.99 0.01 155);
+  --sidebar-primary: oklch(0.82 0.18 145);
+  --sidebar-primary-foreground: oklch(0.18 0.04 162);
+  --sidebar-accent: oklch(0.46 0.12 155);
+  --sidebar-accent-foreground: oklch(0.99 0.01 155);
+  --sidebar-border: oklch(0.48 0.09 155);
+  --sidebar-ring: oklch(0.78 0.16 145);
+}
+
+.dark {
+  --primary: oklch(0.78 0.17 150);
+  --primary-foreground: oklch(0.16 0.04 162);
+  --ring: oklch(0.72 0.15 150);
+  --sidebar: oklch(0.28 0.07 155);
+  --sidebar-primary: oklch(0.82 0.18 145);
+  --sidebar-accent: oklch(0.38 0.10 155);
+  --sidebar-ring: oklch(0.78 0.16 145);
+}

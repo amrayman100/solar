@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@source "../../../packages/ui/**/*.{ts,tsx}";
+@import "@bolt-energy/ui/styles/globals.css";
+
+body {
+  overflow-x: hidden;
+}
