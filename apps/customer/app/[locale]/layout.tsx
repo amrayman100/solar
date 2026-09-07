@@ -30,6 +30,14 @@ export const metadata: Metadata = {
   },
   description:
     "Bolt Energy designs and installs solar energy systems across Egypt, delivering grid-tied, off-grid, and irrigation solutions with expert engineering and support.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: ["/favicon.ico"],
+  },
   keywords: [
     "solar egypt",
     "solar energy egypt",

@@ -5,7 +5,6 @@ import { useQuery } from "convex/react";
 import { useLocale, useTranslations } from "next-intl";
 import { api } from "@convex/_generated/api";
 import { ProductCard } from "@/components/product-card";
-import { ShopCategoryNav } from "@/components/shop-category-nav";
 
 export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
   const t = useTranslations("shop");
@@ -59,31 +58,28 @@ export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
       : undefined) || t("subtitle");
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-10 lg:px-8">
-      <div className="max-w-3xl">
+    <div>
+      <div className="mt-6 max-w-3xl">
         <h1 className="text-3xl font-bold text-(--primary)">{title}</h1>
         <p className="mt-2 text-(--muted-foreground)">{subtitle}</p>
       </div>
 
-      <div className="mt-6 space-y-4">
-        <ShopCategoryNav activeSlug={categorySlug} />
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <label className="block w-full max-w-md">
-            <span className="sr-only">{t("searchLabel")}</span>
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder={t("searchPlaceholder")}
-              className="w-full rounded-lg border border-(--border) bg-white px-3 py-2.5 text-sm outline-none ring-[#00bd70] placeholder:text-(--muted-foreground) focus:ring-2"
-            />
-          </label>
-          <p className="text-sm text-(--muted-foreground)">
-            {products === undefined
-              ? common("loading")
-              : t("productsCount", { count: filtered.length })}
-          </p>
-        </div>
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <label className="block w-full max-w-md">
+          <span className="sr-only">{t("searchLabel")}</span>
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="w-full rounded-lg border border-(--border) bg-white px-3 py-2.5 text-sm outline-none ring-[#00bd70] placeholder:text-(--muted-foreground) focus:ring-2"
+          />
+        </label>
+        <p className="text-sm text-(--muted-foreground)">
+          {products === undefined
+            ? common("loading")
+            : t("productsCount", { count: filtered.length })}
+        </p>
       </div>
 
       {products === undefined ? (
@@ -97,6 +93,6 @@ export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

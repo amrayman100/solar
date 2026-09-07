@@ -16,7 +16,7 @@ export function ShopCategoryNav({ activeSlug }: { activeSlug?: string }) {
   return (
     <nav
       aria-label={t("categoriesNav")}
-      className="sticky top-[4.5rem] z-30 -mx-4 border-b border-(--border) bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:top-[4.75rem] lg:-mx-0 lg:rounded-xl lg:border lg:px-3"
+      className="sticky top-[4.25rem] z-[90] border border-(--border) bg-white/95 px-3 py-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/90 lg:top-[4.5rem] lg:rounded-xl"
     >
       <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]">
         <CategoryChip href="/shop" active={allActive} label={t("allCategories")} />
