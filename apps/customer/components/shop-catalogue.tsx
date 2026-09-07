@@ -51,11 +51,12 @@ export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
       : activeCategory.nameEn
     : t("title");
 
-  const subtitle = activeCategory
-    ? locale === "ar"
-      ? activeCategory.descriptionAr
-      : activeCategory.descriptionEn
-    : t("subtitle");
+  const subtitle =
+    (activeCategory
+      ? locale === "ar"
+        ? activeCategory.descriptionAr
+        : activeCategory.descriptionEn
+      : undefined) || t("subtitle");
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-10 lg:px-8">
