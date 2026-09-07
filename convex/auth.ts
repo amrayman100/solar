@@ -8,9 +8,35 @@ import authConfig from "./auth.config";
 const siteUrl = process.env.SITE_URL ?? "http://localhost:3000";
 const backofficeUrl = process.env.BACKOFFICE_URL ?? "http://localhost:3001";
 
+function normalizeOrigin(value: string): string {
+  return value.trim().replace(/\/$/, "");
+}
+
+function collectTrustedOrigins(): string[] {
+  const fromEnv = (process.env.TRUSTED_ORIGINS ?? "")
+    .split(",")
+    .map(normalizeOrigin)
+    .filter(Boolean);
+
+  const defaults = [
+    siteUrl,
+    backofficeUrl,
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://www.boltenergy.me",
+    "https://boltenergy.me",
+  ]
+    .map(normalizeOrigin)
+    .filter(Boolean);
+
+  return [...new Set([...defaults, ...fromEnv])];
+}
+
 export const authComponent = createClient<DataModel>(components.betterAuth);
 
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
+  const trustedOrigins = collectTrustedOrigins();
+
   return betterAuth({
     appName: "Bolt Energy",
     baseURL: siteUrl,
@@ -20,7 +46,7 @@ export const createAuth = (ctx: GenericCtx<DataModel>) => {
       enabled: true,
       requireEmailVerification: false,
     },
-    trustedOrigins: [siteUrl, backofficeUrl],
+    trustedOrigins,
     plugins: [convex({ authConfig })],
   });
 };
