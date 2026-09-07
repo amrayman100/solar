@@ -3,12 +3,13 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@convex/_generated/api";
+import type { Id } from "@convex/_generated/dataModel";
 import { ShopCategoryNav } from "@/components/shop-category-nav";
 import { usePathname } from "@/i18n/navigation";
 
 type ShopCatalogueResult = {
   categories: Array<{
-    _id: string;
+    _id: Id<"categories">;
     slug: string;
     nameEn: string;
     nameAr: string;
@@ -17,10 +18,10 @@ type ShopCatalogueResult = {
     sortOrder: number;
   }>;
   products: Array<{
-    _id: string;
+    _id: Id<"products">;
     slug: string;
     sku: string;
-    categoryId: string;
+    categoryId: Id<"categories">;
     nameEn: string;
     nameAr: string;
     specEn: string;
@@ -30,7 +31,7 @@ type ShopCatalogueResult = {
     availability: "in_stock" | "on_request" | "quote_only";
   }>;
   activeCategory: {
-    _id: string;
+    _id: Id<"categories">;
     slug: string;
     nameEn: string;
     nameAr: string;
