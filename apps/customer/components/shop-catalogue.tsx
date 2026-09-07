@@ -1,48 +1,37 @@
 "use client";
 
 import { useDeferredValue, useMemo, useState } from "react";
-import { useQuery } from "convex/react";
 import { useLocale, useTranslations } from "next-intl";
-import { api } from "@convex/_generated/api";
 import { ProductCard } from "@/components/product-card";
+import { useShopCatalogue } from "@/components/shop-shell";
 
-export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
+export function ShopCatalogue() {
   const t = useTranslations("shop");
   const common = useTranslations("common");
   const locale = useLocale();
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
+  const catalogue = useShopCatalogue();
 
-  const categories = useQuery(api.catalogue.listCategories);
-  const products = useQuery(api.catalogue.listPublished);
-
-  const activeCategory = useMemo(
-    () => categories?.find((category) => category.slug === categorySlug) ?? null,
-    [categories, categorySlug]
-  );
+  const activeCategory = catalogue?.activeCategory ?? null;
+  const products = catalogue?.products;
 
   const filtered = useMemo(() => {
     if (!products) return [];
-    let rows = products;
-    if (activeCategory) {
-      rows = rows.filter((product) => product.categoryId === activeCategory._id);
-    }
-    if (deferredSearch) {
-      rows = rows.filter((product) => {
-        const haystack = [
-          product.sku,
-          product.nameEn,
-          product.nameAr,
-          product.specEn,
-          product.specAr,
-        ]
-          .join(" ")
-          .toLowerCase();
-        return haystack.includes(deferredSearch);
-      });
-    }
-    return rows;
-  }, [products, activeCategory, deferredSearch]);
+    if (!deferredSearch) return products;
+    return products.filter((product) => {
+      const haystack = [
+        product.sku,
+        product.nameEn,
+        product.nameAr,
+        product.specEn,
+        product.specAr,
+      ]
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(deferredSearch);
+    });
+  }, [products, deferredSearch]);
 
   const title = activeCategory
     ? locale === "ar"
@@ -76,13 +65,13 @@ export function ShopCatalogue({ categorySlug }: { categorySlug?: string }) {
           />
         </label>
         <p className="text-sm text-(--muted-foreground)">
-          {products === undefined
+          {catalogue === undefined
             ? common("loading")
             : t("productsCount", { count: filtered.length })}
         </p>
       </div>
 
-      {products === undefined ? (
+      {catalogue === undefined ? (
         <p className="mt-10 text-sm text-(--muted-foreground)">{common("loading")}</p>
       ) : filtered.length === 0 ? (
         <p className="mt-10">{t("empty")}</p>

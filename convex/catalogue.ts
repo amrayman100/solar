@@ -1,19 +1,101 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import type { Doc } from "./_generated/dataModel";
 import { requireStaff } from "./lib/auth";
 import {
   brandValidator,
   categoryValidator,
   familyValidator,
   productValidator,
+  shopCategoryChipValidator,
+  shopProductCardValidator,
 } from "./lib/validators";
+
+function toShopCard(product: Doc<"products">) {
+  return {
+    _id: product._id,
+    slug: product.slug,
+    sku: product.sku,
+    categoryId: product.categoryId,
+    nameEn: product.nameEn,
+    nameAr: product.nameAr,
+    specEn: product.specEn,
+    specAr: product.specAr,
+    priceEgp: product.priceEgp,
+    priceUnit: product.priceUnit,
+    availability: product.availability,
+  };
+}
+
+function toCategoryChip(category: Doc<"categories">) {
+  return {
+    _id: category._id,
+    slug: category.slug,
+    nameEn: category.nameEn,
+    nameAr: category.nameAr,
+    descriptionEn: category.descriptionEn,
+    descriptionAr: category.descriptionAr,
+    sortOrder: category.sortOrder,
+  };
+}
 
 export const listCategories = query({
   args: {},
   returns: v.array(categoryValidator),
   handler: async (ctx) => {
-    const categories = await ctx.db.query("categories").withIndex("by_sort").collect();
-    return categories.sort((a, b) => a.sortOrder - b.sortOrder);
+    return await ctx.db.query("categories").withIndex("by_sort").collect();
+  },
+});
+
+/**
+ * Single round-trip shop bootstrap: lean category chips + lean product cards.
+ * Pass categorySlug to use the category index instead of loading every product.
+ */
+export const getShopCatalogue = query({
+  args: {
+    categorySlug: v.optional(v.string()),
+  },
+  returns: v.object({
+    categories: v.array(shopCategoryChipValidator),
+    products: v.array(shopProductCardValidator),
+    activeCategory: v.union(shopCategoryChipValidator, v.null()),
+  }),
+  handler: async (ctx, args) => {
+    const categories = (
+      await ctx.db.query("categories").withIndex("by_sort").collect()
+    ).map(toCategoryChip);
+
+    if (args.categorySlug) {
+      const category = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", args.categorySlug!))
+        .unique();
+      if (!category) {
+        return { categories, products: [], activeCategory: null };
+      }
+      const products = (
+        await ctx.db
+          .query("products")
+          .withIndex("by_category_published", (q) =>
+            q.eq("categoryId", category._id).eq("isPublished", true)
+          )
+          .collect()
+      ).map(toShopCard);
+      return {
+        categories,
+        products,
+        activeCategory: toCategoryChip(category),
+      };
+    }
+
+    const products = (
+      await ctx.db
+        .query("products")
+        .withIndex("by_published", (q) => q.eq("isPublished", true))
+        .collect()
+    ).map(toShopCard);
+
+    return { categories, products, activeCategory: null };
   },
 });
 
@@ -52,19 +134,21 @@ export const getCategoryBySlug = query({
 
 export const listPublishedByCategory = query({
   args: { categorySlug: v.string() },
-  returns: v.array(productValidator),
+  returns: v.array(shopProductCardValidator),
   handler: async (ctx, args) => {
     const category = await ctx.db
       .query("categories")
       .withIndex("by_slug", (q) => q.eq("slug", args.categorySlug))
       .unique();
     if (!category) return [];
-    return await ctx.db
-      .query("products")
-      .withIndex("by_category_published", (q) =>
-        q.eq("categoryId", category._id).eq("isPublished", true)
-      )
-      .collect();
+    return (
+      await ctx.db
+        .query("products")
+        .withIndex("by_category_published", (q) =>
+          q.eq("categoryId", category._id).eq("isPublished", true)
+        )
+        .collect()
+    ).map(toShopCard);
   },
 });
 
@@ -83,12 +167,14 @@ export const getProductBySlug = query({
 
 export const listPublished = query({
   args: {},
-  returns: v.array(productValidator),
+  returns: v.array(shopProductCardValidator),
   handler: async (ctx) => {
-    return await ctx.db
-      .query("products")
-      .withIndex("by_published", (q) => q.eq("isPublished", true))
-      .collect();
+    return (
+      await ctx.db
+        .query("products")
+        .withIndex("by_published", (q) => q.eq("isPublished", true))
+        .collect()
+    ).map(toShopCard);
   },
 });
 

@@ -1,17 +1,25 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useQuery } from "convex/react";
-import { api } from "@convex/_generated/api";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
-export function ShopCategoryNav({ activeSlug }: { activeSlug?: string }) {
+type CategoryChipData = {
+  _id: string;
+  slug: string;
+  nameEn: string;
+  nameAr: string;
+};
+
+export function ShopCategoryNav({
+  activeSlug,
+  categories,
+}: {
+  activeSlug?: string;
+  categories?: CategoryChipData[];
+}) {
   const t = useTranslations("shop");
   const locale = useLocale();
-  const pathname = usePathname();
-  const categories = useQuery(api.catalogue.listCategories);
-
-  const allActive = !activeSlug && (pathname === "/shop" || pathname.endsWith("/shop"));
+  const allActive = !activeSlug;
 
   return (
     <nav
