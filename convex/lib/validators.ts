@@ -100,6 +100,31 @@ export const productValidator = v.object({
   updatedAt: v.number(),
 });
 
+/** Lean fields for shop grid cards — keeps catalogue payloads small. */
+export const shopProductCardValidator = v.object({
+  _id: v.id("products"),
+  slug: v.string(),
+  sku: v.string(),
+  categoryId: v.id("categories"),
+  nameEn: v.string(),
+  nameAr: v.string(),
+  specEn: v.string(),
+  specAr: v.string(),
+  priceEgp: v.optional(v.number()),
+  priceUnit: priceUnitValidator,
+  availability: availabilityValidator,
+});
+
+export const shopCategoryChipValidator = v.object({
+  _id: v.id("categories"),
+  slug: v.string(),
+  nameEn: v.string(),
+  nameAr: v.string(),
+  descriptionEn: v.optional(v.string()),
+  descriptionAr: v.optional(v.string()),
+  sortOrder: v.number(),
+});
+
 export const customerValidator = v.object({
   _id: v.id("customers"),
   _creationTime: v.number(),
