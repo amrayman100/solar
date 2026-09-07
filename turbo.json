@@ -3,14 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        ".next/static/**",
-        ".next/server/**",
-        ".next/routes-manifest.json",
-        ".next/build-manifest.json"
-      ]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "dev": {
       "cache": false,
