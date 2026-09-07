@@ -6,7 +6,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Poppins } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { ConvexClientProvider } from "@/lib/convex";
-import { getToken } from "@/lib/auth-server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
@@ -91,13 +90,12 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
   const messages = await getMessages();
-  const token = await getToken();
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body className={`${poppins.className} min-h-screen bg-(--background) text-(--foreground)`}>
-        <ConvexClientProvider initialToken={token}>
+        <ConvexClientProvider>
           <NextIntlClientProvider messages={messages}>
             <div className="flex min-h-screen w-full flex-col">
               <SiteHeader />

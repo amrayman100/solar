@@ -3,6 +3,7 @@
  * One-shot Neon → Convex import. Does not print or commit credentials.
  *
  *   NEON_DATABASE_URL=postgresql://... npm run import:neon
+ *   CONVEX_PROD=1 NEON_DATABASE_URL=postgresql://... npm run import:neon
  *
  * Requires `npx convex` logged in to the solar deployment.
  */
@@ -37,10 +38,12 @@ function optionalNumber(value) {
   return Number.isFinite(n) ? n : undefined;
 }
 
+const convexRunArgs = process.env.CONVEX_PROD === "1" ? ["--prod"] : [];
+
 function runConvex(fn, args) {
   const result = spawnSync(
     "npx",
-    ["convex", "run", fn, JSON.stringify(args)],
+    ["convex", "run", ...convexRunArgs, fn, JSON.stringify(args)],
     { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }
   );
   if (result.status !== 0) {

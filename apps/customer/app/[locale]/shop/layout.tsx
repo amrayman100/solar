@@ -1,5 +1,4 @@
 import { createLocalizedPageMetadata } from "@/lib/seo";
-import { ShopShell } from "@/components/shop-shell";
 
 type Props = {
   children: React.ReactNode;
@@ -28,5 +27,5 @@ export async function generateMetadata({
 }
 
 export default function ShopLayout({ children }: Props) {
-  return <ShopShell>{children}</ShopShell>;
+  return children;
 }
