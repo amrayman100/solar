@@ -25,8 +25,8 @@ function collectTrustedOrigins(): string[] {
     "http://localhost:3001",
     "https://www.boltenergy.me",
     "https://boltenergy.me",
-    "https://admin.boltenergy.me",
     "https://solar-backoffice-amrayman100s-projects.vercel.app",
+    "https://solar-backoffice-gules.vercel.app",
   ]
     .map(normalizeOrigin)
     .filter(Boolean);

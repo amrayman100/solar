@@ -2,7 +2,7 @@
 
 import { useDeferredValue, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ProductCard } from "@/components/product-card";
+import { ProductCard, type ShopProduct } from "@/components/product-card";
 import { useShopCatalogue } from "@/components/shop-shell";
 
 export function ShopCatalogue() {
@@ -78,7 +78,7 @@ export function ShopCatalogue() {
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard key={product._id} product={product as ShopProduct} />
           ))}
         </div>
       )}
