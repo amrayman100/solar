@@ -1,71 +1,101 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@convex/_generated/api";
 import type { Id } from "@convex/_generated/dataModel";
 import { ShopCategoryNav } from "@/components/shop-category-nav";
+import { ShopCatalogue } from "@/components/shop-catalogue";
 import { usePathname } from "@/i18n/navigation";
 
-type ShopCatalogueResult = {
-  categories: Array<{
-    _id: Id<"categories">;
-    slug: string;
-    nameEn: string;
-    nameAr: string;
-    descriptionEn?: string;
-    descriptionAr?: string;
-    sortOrder: number;
-  }>;
-  products: Array<{
-    _id: Id<"products">;
-    slug: string;
-    sku: string;
-    categoryId: Id<"categories">;
-    nameEn: string;
-    nameAr: string;
-    specEn: string;
-    specAr: string;
-    priceEgp?: number;
-    priceUnit: "each" | "per_watt" | "per_metre" | "per_kw";
-    availability: "in_stock" | "on_request" | "quote_only";
-  }>;
-  activeCategory: {
-    _id: Id<"categories">;
-    slug: string;
-    nameEn: string;
-    nameAr: string;
-    descriptionEn?: string;
-    descriptionAr?: string;
-    sortOrder: number;
-  } | null;
+export type ShopCategory = {
+  _id: Id<"categories">;
+  slug: string;
+  nameEn: string;
+  nameAr: string;
+  descriptionEn?: string;
+  descriptionAr?: string;
+  sortOrder: number;
 };
 
-const ShopCatalogueContext = createContext<ShopCatalogueResult | undefined>(
-  undefined
-);
+export type ShopProductCard = {
+  _id: Id<"products">;
+  slug: string;
+  sku: string;
+  categoryId: Id<"categories">;
+  nameEn: string;
+  nameAr: string;
+  specEn: string;
+  specAr: string;
+  priceEgp?: number;
+  priceUnit: "each" | "per_watt" | "per_metre" | "per_kw";
+  availability: "in_stock" | "on_request" | "quote_only";
+};
 
-export function useShopCatalogue() {
-  return useContext(ShopCatalogueContext);
+function categorySlugFromPath(pathname: string): string | null {
+  const match = pathname.match(/\/shop\/category\/([^/]+)/);
+  return match?.[1] ?? null;
 }
 
 export function ShopShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const match = pathname.match(/\/shop\/category\/([^/]+)/);
-  const activeSlug = match?.[1];
-  const catalogue = useQuery(api.catalogue.getShopCatalogue, {
-    categorySlug: activeSlug,
-  });
+  const routeSlug = categorySlugFromPath(pathname);
+  const [optimisticSlug, setOptimisticSlug] = useState<string | null | undefined>(
+    undefined
+  );
+  const [search, setSearch] = useState("");
+
+  const activeSlug =
+    optimisticSlug === undefined ? routeSlug : optimisticSlug;
+
+  useEffect(() => {
+    if (optimisticSlug === undefined) return;
+    if (optimisticSlug === routeSlug) {
+      setOptimisticSlug(undefined);
+    }
+  }, [routeSlug, optimisticSlug]);
+
+  const categories = useQuery(api.catalogue.listCategories);
+  const products = useQuery(api.catalogue.listPublished);
+
+  const counts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const product of products ?? []) {
+      map.set(product.categoryId, (map.get(product.categoryId) ?? 0) + 1);
+    }
+    return map;
+  }, [products]);
+
+  const activeCategory =
+    categories?.find((category) => category.slug === activeSlug) ?? null;
+
+  const visibleProducts = useMemo(() => {
+    if (!products) return undefined;
+    const scoped = activeCategory
+      ? products.filter((product) => product.categoryId === activeCategory._id)
+      : products;
+    return scoped;
+  }, [products, activeCategory]);
 
   return (
-    <ShopCatalogueContext.Provider value={catalogue}>
-      <div className="mx-auto w-full max-w-7xl px-4 pt-6 lg:px-8">
-        <ShopCategoryNav
-          activeSlug={activeSlug}
-          categories={catalogue?.categories}
+    <div className="mx-auto w-full max-w-7xl px-4 pt-6 lg:px-8">
+      <ShopCategoryNav
+        activeSlug={activeSlug}
+        categories={categories}
+        counts={counts}
+        totalCount={products?.length}
+        search={search}
+        onSearchChange={setSearch}
+        onSelectSlug={setOptimisticSlug}
+      />
+      <div className="pb-10">
+        <ShopCatalogue
+          activeCategory={activeCategory}
+          products={visibleProducts}
+          search={search}
         />
-        <div className="pb-10">{children}</div>
+        {children}
       </div>
-    </ShopCatalogueContext.Provider>
+    </div>
   );
 }

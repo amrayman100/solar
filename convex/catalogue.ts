@@ -48,54 +48,26 @@ export const listCategories = query({
 });
 
 /**
- * Single round-trip shop bootstrap: lean category chips + lean product cards.
- * Pass categorySlug to use the category index instead of loading every product.
+ * Combined shop bootstrap. Prefer listCategories + listPublished on the client
+ * so the chip nav can render before product cards arrive.
  */
 export const getShopCatalogue = query({
-  args: {
-    categorySlug: v.optional(v.string()),
-  },
+  args: {},
   returns: v.object({
     categories: v.array(shopCategoryChipValidator),
     products: v.array(shopProductCardValidator),
-    activeCategory: v.union(shopCategoryChipValidator, v.null()),
   }),
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const categories = (
       await ctx.db.query("categories").withIndex("by_sort").collect()
     ).map(toCategoryChip);
-
-    if (args.categorySlug) {
-      const category = await ctx.db
-        .query("categories")
-        .withIndex("by_slug", (q) => q.eq("slug", args.categorySlug!))
-        .unique();
-      if (!category) {
-        return { categories, products: [], activeCategory: null };
-      }
-      const products = (
-        await ctx.db
-          .query("products")
-          .withIndex("by_category_published", (q) =>
-            q.eq("categoryId", category._id).eq("isPublished", true)
-          )
-          .collect()
-      ).map(toShopCard);
-      return {
-        categories,
-        products,
-        activeCategory: toCategoryChip(category),
-      };
-    }
-
     const products = (
       await ctx.db
         .query("products")
         .withIndex("by_published", (q) => q.eq("isPublished", true))
         .collect()
     ).map(toShopCard);
-
-    return { categories, products, activeCategory: null };
+    return { categories, products };
   },
 });
 

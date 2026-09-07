@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: ShopProduct }) {
   }, []);
 
   return (
-    <article className="flex flex-col rounded-xl border border-(--border) bg-white p-4">
+    <article className="flex flex-col rounded-xl border border-(--border) bg-white p-4 [content-visibility:auto] [contain-intrinsic-size:auto_220px]">
       <Link href={`/shop/${product.slug}`} className="space-y-2">
         <p className="text-xs text-(--muted-foreground)">{product.sku}</p>
         <h3 className="text-base font-semibold text-(--primary)">{name}</h3>
