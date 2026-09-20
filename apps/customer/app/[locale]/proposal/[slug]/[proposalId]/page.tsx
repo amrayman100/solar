@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api } from "@convex/_generated/api";
 import type { Id } from "@convex/_generated/dataModel";
+import { ProposalResultView } from "@/components/proposal-views";
 
 export default function ProposalResultPage() {
   const params = useParams<{ slug: string; proposalId: string }>();
@@ -17,23 +18,45 @@ export default function ProposalResultPage() {
 
   useEffect(() => {
     const raw = sessionStorage.getItem(`proposal-${params.proposalId}`);
-    if (raw) setCached(JSON.parse(raw));
+    if (raw) {
+      try {
+        setCached(JSON.parse(raw));
+      } catch {
+        setCached(null);
+      }
+    }
   }, [params.proposalId]);
 
   const details = proposal
-    ? JSON.parse(proposal.proposalDetailsJson)
+    ? (() => {
+        try {
+          return JSON.parse(proposal.proposalDetailsJson);
+        } catch {
+          return null;
+        }
+      })()
     : cached;
 
+  if (proposal === undefined && cached === null) {
+    return (
+      <main className="mx-auto w-full max-w-3xl px-4 py-10">
+        <p className="text-sm text-(--muted-foreground)">Loading…</p>
+      </main>
+    );
+  }
+
+  if (!details) {
+    return (
+      <main className="mx-auto w-full max-w-3xl px-4 py-10">
+        <h1 className="text-3xl font-bold text-(--primary)">{t("result")}</h1>
+        <p className="mt-6 text-sm text-(--muted-foreground)">{t("proposalNotFound")}</p>
+      </main>
+    );
+  }
+
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 py-10">
-      <h1 className="text-3xl font-bold text-(--primary)">{t("result")}</h1>
-      {details ? (
-        <pre className="mt-6 overflow-x-auto rounded-xl border border-(--border) bg-(--secondary) p-4 text-sm">
-          {JSON.stringify(details, null, 2)}
-        </pre>
-      ) : (
-        <p className="mt-6 text-sm text-(--muted-foreground)">Loading…</p>
-      )}
+    <main className="w-full">
+      <ProposalResultView slug={params.slug} proposal={details} />
     </main>
   );
 }
