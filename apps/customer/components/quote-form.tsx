@@ -66,6 +66,7 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
   const [isConnectedToGrid, setIsConnectedToGrid] = useState(false);
   const [placeBatteriesIndoors, setPlaceBatteriesIndoors] = useState(true);
   const [loads, setLoads] = useState<DeviceLoad[]>([]);
+  const [loadTemplate, setLoadTemplate] = useState("");
   const [wholesaleNotes, setWholesaleNotes] = useState("");
 
   const templates = useMemo(() => {
@@ -140,7 +141,14 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
           sessionStorage.setItem(`proposal-${proposalId}`, JSON.stringify(computed));
           router.push(`/proposal/${slug}/${proposalId}`);
         } catch (err) {
-          setError(err instanceof Error ? err.message : "Failed to create proposal");
+          const message = err instanceof Error ? err.message : "";
+          if (message === "Add at least one device load") {
+            setError(t("loadsRequired"));
+          } else if (message === "inverter not found") {
+            setError(t("customSolution"));
+          } else {
+            setError(message || "Failed to create proposal");
+          }
         } finally {
           setLoading(false);
         }
@@ -279,9 +287,10 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
             {t("batteriesIndoors")}
           </label>
           <Select
-            defaultValue=""
+            value={loadTemplate}
             onChange={(event) => {
               const template = templates.find((row) => row.name === event.target.value);
+              setLoadTemplate("");
               if (!template) return;
               setLoads((current) => [
                 ...current,
@@ -289,6 +298,8 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
                   ...template,
                   quantity: 1,
                   workingHours: 4,
+                  morningHours: 2,
+                  eveningHours: 4,
                   isCustom: false,
                 },
               ]);
@@ -302,28 +313,91 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
             ))}
           </Select>
           {loads.map((load, index) => (
-            <div key={`${load.name}-${index}`} className="grid grid-cols-3 gap-2 text-sm">
-              <span className="col-span-1 self-center">{load.name}</span>
-              <Input
-                type="number"
-                min={1}
-                value={load.quantity}
-                onChange={(event) => {
-                  const quantity = Number(event.target.value);
-                  setLoads((current) =>
-                    current.map((row, rowIndex) =>
-                      rowIndex === index ? { ...row, quantity } : row
-                    )
-                  );
-                }}
-              />
-              <button
-                type="button"
-                className="text-(--destructive)"
-                onClick={() => setLoads((current) => current.filter((_, rowIndex) => rowIndex !== index))}
-              >
-                ×
-              </button>
+            <div
+              key={`${load.name}-${index}`}
+              className="grid gap-2 rounded-lg border border-[#015231]/15 bg-white p-3 text-sm sm:grid-cols-2"
+            >
+              <div className="flex items-center justify-between gap-2 sm:col-span-2">
+                <span className="font-medium">{load.name}</span>
+                <button
+                  type="button"
+                  className="text-(--destructive)"
+                  aria-label="Remove"
+                  onClick={() =>
+                    setLoads((current) => current.filter((_, rowIndex) => rowIndex !== index))
+                  }
+                >
+                  ×
+                </button>
+              </div>
+              <Field label={t("quantity")}>
+                <Input
+                  type="number"
+                  min={1}
+                  value={load.quantity}
+                  onChange={(event) => {
+                    const quantity = Number(event.target.value);
+                    setLoads((current) =>
+                      current.map((row, rowIndex) =>
+                        rowIndex === index ? { ...row, quantity } : row
+                      )
+                    );
+                  }}
+                />
+              </Field>
+              {isConnectedToGrid ? (
+                <Field label={t("workingHours")}>
+                  <Input
+                    type="number"
+                    min={0}
+                    step="any"
+                    value={load.workingHours ?? 4}
+                    onChange={(event) => {
+                      const workingHours = Number(event.target.value);
+                      setLoads((current) =>
+                        current.map((row, rowIndex) =>
+                          rowIndex === index ? { ...row, workingHours } : row
+                        )
+                      );
+                    }}
+                  />
+                </Field>
+              ) : (
+                <>
+                  <Field label={t("morningHours")}>
+                    <Input
+                      type="number"
+                      min={0}
+                      step="any"
+                      value={load.morningHours ?? 2}
+                      onChange={(event) => {
+                        const morningHours = Number(event.target.value);
+                        setLoads((current) =>
+                          current.map((row, rowIndex) =>
+                            rowIndex === index ? { ...row, morningHours } : row
+                          )
+                        );
+                      }}
+                    />
+                  </Field>
+                  <Field label={t("eveningHours")}>
+                    <Input
+                      type="number"
+                      min={0}
+                      step="any"
+                      value={load.eveningHours ?? 4}
+                      onChange={(event) => {
+                        const eveningHours = Number(event.target.value);
+                        setLoads((current) =>
+                          current.map((row, rowIndex) =>
+                            rowIndex === index ? { ...row, eveningHours } : row
+                          )
+                        );
+                      }}
+                    />
+                  </Field>
+                </>
+              )}
             </div>
           ))}
         </div>

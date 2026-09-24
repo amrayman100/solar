@@ -29,6 +29,17 @@ export type QuoteInput = {
   details: Record<string, unknown>;
 };
 
+/** Off-grid sizing uses working hours on-grid, and morning/evening hours off-grid. */
+function withOffGridLoadHours(load: DeviceLoad): DeviceLoad {
+  return {
+    ...load,
+    quantity: load.quantity > 0 ? load.quantity : 1,
+    workingHours: load.workingHours ?? 4,
+    morningHours: load.morningHours ?? 2,
+    eveningHours: load.eveningHours ?? 4,
+  };
+}
+
 function contact(input: QuoteInput) {
   return {
     name: input.name,
@@ -60,12 +71,18 @@ export function computeProposal(
     );
   }
   if (slug === "off-grid") {
+    const deviceLoads = ((details.deviceLoads as DeviceLoad[]) ?? []).map(
+      withOffGridLoadHours
+    );
+    if (deviceLoads.length === 0) {
+      throw new Error("Add at least one device load");
+    }
     const req: ProposalRequestInfo<OffGridConsumption> = {
       ...contact(input),
       consumptionDetails: {
         isConnectedToGrid: Boolean(details.isConnectedToGrid),
         placeBatteriesIndoors: Boolean(details.placeBatteriesIndoors),
-        deviceLoads: (details.deviceLoads as DeviceLoad[]) ?? [],
+        deviceLoads,
       },
     };
     const offGrid: OffGrid = {
