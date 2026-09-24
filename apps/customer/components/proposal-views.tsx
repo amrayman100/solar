@@ -280,11 +280,67 @@ export function ViewGridTiedProposal({ proposal }: { proposal: GridTiedProposal 
   );
 }
 
-function offGridInverterKw(capacity: number) {
-  if (!Number.isFinite(capacity)) return "—";
-  // Catalogue capacity is stored in watts (1000 = 1 kW).
-  const kw = capacity >= 100 ? capacity / 1000 : capacity;
-  return Number.isInteger(kw) ? String(kw) : kw.toFixed(1);
+function groupedAmount(value: number, locale: string) {
+  const rounded = Math.round(value);
+  if (!Number.isFinite(rounded)) return "—";
+  return rounded.toLocaleString(locale === "ar" ? "ar-EG" : "en", {
+    useGrouping: true,
+  });
+}
+
+/** Same card row the legacy off-grid proposal used: photo hero, white cards, grouped EGP amounts. */
+function LegacyProposalCard({
+  title,
+  titleSize = "lg",
+  children,
+}: {
+  title: string;
+  titleSize?: "lg" | "md";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mt-6 h-max rounded-xl border border-(--border) bg-white p-4 text-(--foreground) shadow lg:mt-10">
+      <h3
+        className={`font-semibold tracking-tight ${
+          titleSize === "lg" ? "text-2xl" : "text-xl"
+        }`}
+      >
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function LegacyAmountTable({
+  rows,
+  locale,
+  amountLabel,
+}: {
+  rows: Array<{ label: string; amount: number; bold?: boolean }>;
+  locale: string;
+  amountLabel: string;
+}) {
+  return (
+    <table className="w-full text-sm">
+      <thead>
+        <tr className="border-b border-(--border)">
+          <th className="py-2 text-start font-medium" />
+          <th className="py-2 text-end font-medium">{amountLabel}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.label} className="border-b border-(--border)/60 last:border-0">
+            <td className={`py-2 ${row.bold ? "font-bold" : "font-medium"}`}>{row.label}</td>
+            <td className={`py-2 text-end ${row.bold ? "font-bold" : ""}`}>
+              {groupedAmount(row.amount, locale)}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 export function ViewOffGridProposal({ proposal }: { proposal: OffGridProposal }) {
@@ -294,64 +350,73 @@ export function ViewOffGridProposal({ proposal }: { proposal: OffGridProposal })
   const inverter = details.inverter?.inverterInfo;
   const billing = details.billing;
 
-  if (!inverter || !billing) {
-    return (
-      <HeroShell backgroundImage="/drone-2.jpg" title={t("preliminarySolution")}>
-        <Card title={t("customSolution")}>
-          <p className="text-sm text-(--muted-foreground)">{t("contactSoonBody")}</p>
-        </Card>
-      </HeroShell>
-    );
-  }
-
   return (
-    <HeroShell backgroundImage="/drone-2.jpg" title={t("preliminarySolution")}>
-      <Card title={t("battery")}>
-        <p className="text-sm">
-          {t("numberOfBatteries")}:{" "}
-          <span className="font-bold">{details.numberOfBatteries}</span>
-        </p>
-      </Card>
-      {!details.isConnectedToGrid ? (
-        <Card title={t("panel")}>
-          <p className="font-bold">{details.panel?.brand}</p>
-          <p className="mt-2 text-sm">
-            {t("numberOfPanels")}: <span className="font-bold">{details.numberOfPanels}</span>
-          </p>
-        </Card>
-      ) : null}
-      <Card title={t("inverter")}>
-        <p className="font-bold">{inverter.brand}</p>
-        <p className="mt-2 text-sm">
-          <span className="font-bold">{offGridInverterKw(inverter.capacity)} kW </span>
-          {t("totalInverterRating")}
-        </p>
-      </Card>
-      <div className="space-y-4">
-        <Card title={t("quotation")}>
-          <AmountTable
-            locale={locale}
-            amountLabel={t("amountEgp")}
-            rows={[{ label: t("price"), amount: details.sellingCost, bold: true }]}
-          />
-        </Card>
-        <Card title={t("paymentMilestones")}>
-          <AmountTable
-            locale={locale}
-            amountLabel={t("amountEgp")}
-            rows={[
-              { label: t("downPayment"), amount: billing.downPaymentFee },
-              {
-                label: t("componentsSupply"),
-                amount: billing.componentsSupplyFee,
-              },
-              { label: t("installation"), amount: billing.installationFee },
-              { label: t("commissioning"), amount: billing.commissionFee },
-            ]}
-          />
-        </Card>
+    <section
+      className="relative w-full bg-cover bg-center pb-10"
+      style={{ backgroundImage: "url(/drone-2.jpg)" }}
+    >
+      <div className="flex flex-col pt-4">
+        <h1 className="mx-3 text-4xl font-extrabold tracking-tight text-white drop-shadow-md lg:text-5xl">
+          {t("preliminarySolution")}
+        </h1>
       </div>
-    </HeroShell>
+      <div className="flex h-full flex-col justify-center gap-6 lg:flex-row">
+        {!inverter || !billing ? (
+          <LegacyProposalCard title={t("customSolution")}>
+            <p className="mt-2 text-sm text-(--muted-foreground)">{t("contactSoonBody")}</p>
+          </LegacyProposalCard>
+        ) : (
+          <>
+            <LegacyProposalCard title={t("battery")}>
+              <p className="mt-2 text-center">
+                {t("numberOfBatteries")}:{" "}
+                <span className="font-bold">{details.numberOfBatteries}</span>
+              </p>
+            </LegacyProposalCard>
+            {!details.isConnectedToGrid ? (
+              <LegacyProposalCard title={t("panel")}>
+                <p className="mt-2 font-bold">{details.panel?.brand}</p>
+                <p className="mt-2 text-center">
+                  {t("numberOfPanels")}:{" "}
+                  <span className="font-bold">{details.numberOfPanels}</span>
+                </p>
+              </LegacyProposalCard>
+            ) : null}
+            <LegacyProposalCard title={t("inverter")}>
+              <p className="mt-2 font-bold">{inverter.brand}</p>
+              <p className="mt-2 text-center">
+                <span className="font-bold">{inverter.capacity} kw </span>
+                <span>{t("totalInverterRating")}</span>
+              </p>
+            </LegacyProposalCard>
+            <div>
+              <LegacyProposalCard title={t("quotation")} titleSize="md">
+                <LegacyAmountTable
+                  locale={locale}
+                  amountLabel={t("amountEgp")}
+                  rows={[{ label: t("price"), amount: details.sellingCost, bold: true }]}
+                />
+              </LegacyProposalCard>
+              <LegacyProposalCard title={t("paymentMilestones")} titleSize="md">
+                <LegacyAmountTable
+                  locale={locale}
+                  amountLabel={t("amountEgp")}
+                  rows={[
+                    { label: t("downPayment"), amount: billing.downPaymentFee },
+                    {
+                      label: t("componentsSupply"),
+                      amount: billing.componentsSupplyFee,
+                    },
+                    { label: t("installation"), amount: billing.installationFee },
+                    { label: t("commissioning"), amount: billing.commissionFee },
+                  ]}
+                />
+              </LegacyProposalCard>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
