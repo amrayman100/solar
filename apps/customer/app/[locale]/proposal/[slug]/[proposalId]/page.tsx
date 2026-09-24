@@ -8,6 +8,19 @@ import { api } from "@convex/_generated/api";
 import type { Id } from "@convex/_generated/dataModel";
 import { ProposalResultView } from "@/components/proposal-views";
 
+function parseStoredProposal(raw: string): unknown {
+  let value: unknown = raw;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    if (typeof value !== "string") return value;
+    try {
+      value = JSON.parse(value);
+    } catch {
+      return null;
+    }
+  }
+  return value;
+}
+
 export default function ProposalResultPage() {
   const params = useParams<{ slug: string; proposalId: string }>();
   const t = useTranslations("quote");
@@ -18,23 +31,11 @@ export default function ProposalResultPage() {
 
   useEffect(() => {
     const raw = sessionStorage.getItem(`proposal-${params.proposalId}`);
-    if (raw) {
-      try {
-        setCached(JSON.parse(raw));
-      } catch {
-        setCached(null);
-      }
-    }
+    if (raw) setCached(parseStoredProposal(raw));
   }, [params.proposalId]);
 
   const details = proposal
-    ? (() => {
-        try {
-          return JSON.parse(proposal.proposalDetailsJson);
-        } catch {
-          return null;
-        }
-      })()
+    ? parseStoredProposal(proposal.proposalDetailsJson)
     : cached;
 
   if (proposal === undefined && cached === null) {

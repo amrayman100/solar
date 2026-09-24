@@ -280,59 +280,143 @@ export function ViewGridTiedProposal({ proposal }: { proposal: GridTiedProposal 
   );
 }
 
+function groupedAmount(value: number, locale: string) {
+  const rounded = Math.round(value);
+  if (!Number.isFinite(rounded)) return "—";
+  return rounded.toLocaleString(locale === "ar" ? "ar-EG" : "en", {
+    useGrouping: true,
+  });
+}
+
+/** Same card row the legacy off-grid proposal used: photo hero, white cards, grouped EGP amounts. */
+function LegacyProposalCard({
+  title,
+  titleSize = "lg",
+  children,
+}: {
+  title: string;
+  titleSize?: "lg" | "md";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mt-6 h-max rounded-xl border border-(--border) bg-white p-4 text-(--foreground) shadow lg:mt-10">
+      <h3
+        className={`font-semibold tracking-tight ${
+          titleSize === "lg" ? "text-2xl" : "text-xl"
+        }`}
+      >
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function LegacyAmountTable({
+  rows,
+  locale,
+  amountLabel,
+}: {
+  rows: Array<{ label: string; amount: number; bold?: boolean }>;
+  locale: string;
+  amountLabel: string;
+}) {
+  return (
+    <table className="w-full text-sm">
+      <thead>
+        <tr className="border-b border-(--border)">
+          <th className="py-2 text-start font-medium" />
+          <th className="py-2 text-end font-medium">{amountLabel}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.label} className="border-b border-(--border)/60 last:border-0">
+            <td className={`py-2 ${row.bold ? "font-bold" : "font-medium"}`}>{row.label}</td>
+            <td className={`py-2 text-end ${row.bold ? "font-bold" : ""}`}>
+              {groupedAmount(row.amount, locale)}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 export function ViewOffGridProposal({ proposal }: { proposal: OffGridProposal }) {
   const t = useTranslations("quote");
   const locale = useLocale();
   const details = proposal.proposalDetails;
+  const inverter = details.inverter?.inverterInfo;
+  const billing = details.billing;
 
   return (
-    <HeroShell backgroundImage="/drone-2.jpg" title={t("preliminarySolution")}>
-      <Card title={t("battery")}>
-        <p className="text-sm">
-          {t("numberOfBatteries")}:{" "}
-          <span className="font-bold">{details.numberOfBatteries}</span>
-        </p>
-      </Card>
-      {!details.isConnectedToGrid ? (
-        <Card title={t("panel")}>
-          <p className="font-bold">{details.panel.brand}</p>
-          <p className="mt-2 text-sm">
-            {t("numberOfPanels")}: <span className="font-bold">{details.numberOfPanels}</span>
-          </p>
-        </Card>
-      ) : null}
-      <Card title={t("inverter")}>
-        <p className="font-bold">{details.inverter.inverterInfo.brand}</p>
-        <p className="mt-2 text-sm">
-          <span className="font-bold">{details.inverter.inverterInfo.capacity} kW </span>
-          {t("totalInverterRating")}
-        </p>
-      </Card>
-      <div className="space-y-4">
-        <Card title={t("quotation")}>
-          <AmountTable
-            locale={locale}
-            amountLabel={t("amountEgp")}
-            rows={[{ label: t("price"), amount: details.sellingCost, bold: true }]}
-          />
-        </Card>
-        <Card title={t("paymentMilestones")}>
-          <AmountTable
-            locale={locale}
-            amountLabel={t("amountEgp")}
-            rows={[
-              { label: t("downPayment"), amount: details.billing.downPaymentFee },
-              {
-                label: t("componentsSupply"),
-                amount: details.billing.componentsSupplyFee,
-              },
-              { label: t("installation"), amount: details.billing.installationFee },
-              { label: t("commissioning"), amount: details.billing.commissionFee },
-            ]}
-          />
-        </Card>
+    <section
+      className="relative w-full bg-cover bg-center pb-10"
+      style={{ backgroundImage: "url(/drone-2.jpg)" }}
+    >
+      <div className="flex flex-col pt-4">
+        <h1 className="mx-3 text-4xl font-extrabold tracking-tight text-white drop-shadow-md lg:text-5xl">
+          {t("preliminarySolution")}
+        </h1>
       </div>
-    </HeroShell>
+      <div className="flex h-full flex-col justify-center gap-6 lg:flex-row">
+        {!inverter || !billing ? (
+          <LegacyProposalCard title={t("customSolution")}>
+            <p className="mt-2 text-sm text-(--muted-foreground)">{t("contactSoonBody")}</p>
+          </LegacyProposalCard>
+        ) : (
+          <>
+            <LegacyProposalCard title={t("battery")}>
+              <p className="mt-2 text-center">
+                {t("numberOfBatteries")}:{" "}
+                <span className="font-bold">{details.numberOfBatteries}</span>
+              </p>
+            </LegacyProposalCard>
+            {!details.isConnectedToGrid ? (
+              <LegacyProposalCard title={t("panel")}>
+                <p className="mt-2 font-bold">{details.panel?.brand}</p>
+                <p className="mt-2 text-center">
+                  {t("numberOfPanels")}:{" "}
+                  <span className="font-bold">{details.numberOfPanels}</span>
+                </p>
+              </LegacyProposalCard>
+            ) : null}
+            <LegacyProposalCard title={t("inverter")}>
+              <p className="mt-2 font-bold">{inverter.brand}</p>
+              <p className="mt-2 text-center">
+                <span className="font-bold">{inverter.capacity} kw </span>
+                <span>{t("totalInverterRating")}</span>
+              </p>
+            </LegacyProposalCard>
+            <div>
+              <LegacyProposalCard title={t("quotation")} titleSize="md">
+                <LegacyAmountTable
+                  locale={locale}
+                  amountLabel={t("amountEgp")}
+                  rows={[{ label: t("price"), amount: details.sellingCost, bold: true }]}
+                />
+              </LegacyProposalCard>
+              <LegacyProposalCard title={t("paymentMilestones")} titleSize="md">
+                <LegacyAmountTable
+                  locale={locale}
+                  amountLabel={t("amountEgp")}
+                  rows={[
+                    { label: t("downPayment"), amount: billing.downPaymentFee },
+                    {
+                      label: t("componentsSupply"),
+                      amount: billing.componentsSupplyFee,
+                    },
+                    { label: t("installation"), amount: billing.installationFee },
+                    { label: t("commissioning"), amount: billing.commissionFee },
+                  ]}
+                />
+              </LegacyProposalCard>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -484,6 +568,27 @@ export function ViewWholeSaleProposal({ proposal: _proposal }: { proposal: Whole
   );
 }
 
+function asProposalRecord(proposal: unknown): { proposalDetails: unknown } | null {
+  if (!proposal || typeof proposal !== "object") return null;
+  const value = proposal as Record<string, unknown>;
+  if (value.proposalDetails && typeof value.proposalDetails === "object") {
+    return { proposalDetails: value.proposalDetails };
+  }
+  if (
+    "inverter" in value ||
+    "sellingCost" in value ||
+    "numberOfBatteries" in value ||
+    "pumpCapacity" in value ||
+    "heater" in value ||
+    "charger" in value ||
+    "order" in value ||
+    "type" in value
+  ) {
+    return { proposalDetails: value };
+  }
+  return null;
+}
+
 export function ProposalResultView({
   slug,
   proposal,
@@ -491,25 +596,26 @@ export function ProposalResultView({
   slug: string;
   proposal: unknown;
 }) {
-  if (!proposal || typeof proposal !== "object") return null;
-  const value = proposal as { proposalDetails?: unknown };
-  if (!value.proposalDetails) return null;
+  const normalized = asProposalRecord(proposal);
+  if (!normalized) return null;
 
   switch (slug) {
     case "grid-tied":
-      return <ViewGridTiedProposal proposal={proposal as GridTiedProposal} />;
+      return <ViewGridTiedProposal proposal={normalized as GridTiedProposal} />;
     case "off-grid":
-      return <ViewOffGridProposal proposal={proposal as OffGridProposal} />;
+      return <ViewOffGridProposal proposal={normalized as OffGridProposal} />;
     case "solar-irrigation":
-      return <ViewSolarIrrigationProposal proposal={proposal as SolarIrrigationProposal} />;
+      return (
+        <ViewSolarIrrigationProposal proposal={normalized as SolarIrrigationProposal} />
+      );
     case "solar-heating":
-      return <ViewSolarHeatingProposal proposal={proposal as SolarHeatingProposal} />;
+      return <ViewSolarHeatingProposal proposal={normalized as SolarHeatingProposal} />;
     case "ev":
-      return <ViewEvProposal proposal={proposal as EVProposal} />;
+      return <ViewEvProposal proposal={normalized as EVProposal} />;
     case "construction":
-      return <ViewConstructionProposal proposal={proposal as ConstructionProposal} />;
+      return <ViewConstructionProposal proposal={normalized as ConstructionProposal} />;
     case "whole-sale":
-      return <ViewWholeSaleProposal proposal={proposal as WholeSaleProposal} />;
+      return <ViewWholeSaleProposal proposal={normalized as WholeSaleProposal} />;
     default:
       return null;
   }
