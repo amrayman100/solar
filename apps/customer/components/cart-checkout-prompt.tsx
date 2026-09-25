@@ -30,8 +30,8 @@ export function CartCheckoutPrompt() {
   const [open, setOpen] = useState(false);
   const [lastName, setLastName] = useState("");
 
-  const onCartPage = pathname.startsWith("/shop/cart");
-  const showStickyBar = count > 0 && !onCartPage && !open;
+  const onShop = pathname === "/shop" || pathname.startsWith("/shop/");
+  const showStickyBar = count > 0 && !onShop && !open;
 
   useEffect(() => {
     const onAdded = (event: Event) => {
@@ -94,17 +94,17 @@ export function CartCheckoutPrompt() {
           <SheetFooter className="flex flex-col gap-2 border-t border-(--border) px-5 py-4 sm:flex-col">
             <button
               type="button"
-              onClick={goToCheckout}
-              className="inline-flex h-12 w-full items-center justify-center rounded-md bg-(--primary) px-4 text-base font-semibold text-(--primary-foreground) hover:opacity-90"
-            >
-              {t("goToCheckout")}
-            </button>
-            <button
-              type="button"
-              className="inline-flex h-11 w-full items-center justify-center rounded-md border border-(--border) bg-white px-4 text-sm font-medium text-(--foreground) hover:bg-(--secondary)"
+              className="inline-flex h-12 w-full items-center justify-center rounded-md bg-[#015231] px-4 text-base font-semibold text-white hover:bg-[#014028]"
               onClick={() => setOpen(false)}
             >
               {t("keepShopping")}
+            </button>
+            <button
+              type="button"
+              onClick={goToCheckout}
+              className="inline-flex h-11 w-full items-center justify-center rounded-md border border-[#123028] bg-white px-4 text-sm font-semibold text-[#123028] hover:bg-[#f7fbf9]"
+            >
+              {t("goToCheckout")}
             </button>
           </SheetFooter>
         </SheetContent>

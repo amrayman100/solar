@@ -5,9 +5,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api } from "@convex/_generated/api";
-import { Button } from "@bolt-energy/ui/components/button";
 import { useCart } from "@/lib/cart";
 import { formatEgp, unitSuffix } from "@/lib/money";
+import { Link } from "@/i18n/navigation";
 
 export default function ProductDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -43,13 +43,16 @@ export default function ProductDetailPage() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 lg:px-8">
-      <p className="text-sm text-(--muted-foreground)">{product.sku}</p>
-      <h1 className="mt-2 text-3xl font-bold text-(--primary)">{name}</h1>
-      <p className="mt-3 inline-flex rounded-md border border-(--border) bg-(--secondary)/50 px-2.5 py-1 text-xs font-medium">
+      <Link href="/shop" className="text-sm font-semibold text-[#015231] underline-offset-2 hover:underline">
+        {t("browseShop")}
+      </Link>
+      <p className="mt-4 text-sm font-medium tracking-wide text-[#3f4f48]">{product.sku}</p>
+      <h1 className="mt-2 text-3xl font-bold text-[#015231]">{name}</h1>
+      <p className="mt-3 inline-flex rounded-full bg-[#f3f7f5] px-2.5 py-1 text-xs font-semibold text-[#015231]">
         {availabilityLabel}
       </p>
-      <p className="mt-4 whitespace-pre-wrap text-(--muted-foreground)">{spec}</p>
-      <p className="mt-6 text-2xl font-semibold">
+      <p className="mt-4 whitespace-pre-wrap text-base leading-relaxed text-[#1f3d32]">{spec}</p>
+      <p className="mt-6 text-2xl font-semibold text-[#123028]">
         {product.priceEgp !== undefined
           ? `${formatEgp(product.priceEgp, locale)} ${t("exVat")}${unitSuffix(product.priceUnit, {
               perWatt: t("perWatt"),
@@ -58,9 +61,10 @@ export default function ProductDetailPage() {
             })}`
           : t("quoteOnly")}
       </p>
-      <p className="mt-2 text-sm">{t("noShipping")}</p>
-      <Button
-        className="mt-6"
+      <p className="mt-2 text-sm leading-relaxed text-[#1f3d32]">{t("noShipping")}</p>
+      <button
+        type="button"
+        className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#015231] px-4 text-base font-semibold text-white hover:bg-[#014028] sm:w-auto sm:min-w-56"
         onClick={() => {
           addItem({
             productId: product._id,
@@ -77,7 +81,7 @@ export default function ProductDetailPage() {
         }}
       >
         {added ? t("added") : t("addToCart")}
-      </Button>
+      </button>
     </main>
   );
 }

@@ -89,6 +89,12 @@ export function SiteHeader() {
             {t("langSwitch")}
           </Link>
           <Link
+            href="/shop"
+            className="inline-flex h-9 items-center justify-center rounded-md px-2.5 text-sm font-semibold text-emerald-950 hover:bg-emerald-50 lg:hidden"
+          >
+            {t("shop")}
+          </Link>
+          <Link
             href="/shop/cart"
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-emerald-950 transition-colors hover:bg-emerald-50"
             aria-label={t("cart")}

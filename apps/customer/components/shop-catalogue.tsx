@@ -62,18 +62,20 @@ export function ShopCatalogue({
       </p>
 
       {products === undefined ? (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="h-52 animate-pulse rounded-xl border border-(--border) bg-(--muted)/60"
+              className="h-64 animate-pulse rounded-2xl border border-[#015231]/10 bg-[#f3f7f5]"
             />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <p className="mt-10">{search.trim() ? t("emptySearch") : t("empty")}</p>
+        <p className="mt-10 rounded-2xl border border-[#015231]/15 bg-white px-4 py-8 text-center text-sm font-medium text-[#123028]">
+          {search.trim() ? t("emptySearch") : t("empty")}
+        </p>
       ) : (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}

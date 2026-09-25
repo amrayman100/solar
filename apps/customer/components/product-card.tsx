@@ -3,7 +3,6 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
-import { Button } from "@bolt-energy/ui/components/button";
 import { useCart } from "@/lib/cart";
 import { formatEgp, unitSuffix } from "@/lib/money";
 import type { Id } from "@convex/_generated/dataModel";
@@ -29,6 +28,12 @@ export function ProductCard({ product }: { product: ShopProduct }) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const name = locale === "ar" ? product.nameAr : product.nameEn;
   const spec = locale === "ar" ? product.specAr : product.specEn;
+  const availabilityLabel =
+    product.availability === "in_stock"
+      ? t("inStock")
+      : product.availability === "on_request"
+        ? t("onRequest")
+        : t("quoteOnly");
 
   useEffect(() => {
     return () => {
@@ -37,12 +42,19 @@ export function ProductCard({ product }: { product: ShopProduct }) {
   }, []);
 
   return (
-    <article className="flex flex-col rounded-xl border border-(--border) bg-white p-4 [content-visibility:auto] [contain-intrinsic-size:auto_220px]">
-      <Link href={`/shop/${product.slug}`} className="space-y-2">
-        <p className="text-xs text-(--muted-foreground)">{product.sku}</p>
-        <h3 className="text-base font-semibold text-(--primary)">{name}</h3>
-        <p className="line-clamp-3 text-sm text-(--muted-foreground)">{spec}</p>
-        <p className="text-sm font-medium">
+    <article className="flex h-full flex-col rounded-2xl border border-[#015231]/15 bg-white p-4 shadow-sm">
+      <Link href={`/shop/${product.slug}`} className="flex min-h-0 flex-1 flex-col gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <p className="truncate text-xs font-medium tracking-wide text-[#3f4f48]">{product.sku}</p>
+          <span className="shrink-0 rounded-full bg-[#f3f7f5] px-2 py-0.5 text-xs font-semibold text-[#015231]">
+            {availabilityLabel}
+          </span>
+        </div>
+        <h3 className="line-clamp-2 min-h-[2.75rem] text-base font-semibold leading-snug text-[#015231]">
+          {name}
+        </h3>
+        <p className="line-clamp-3 min-h-[3.75rem] text-sm leading-relaxed text-[#1f3d32]">{spec}</p>
+        <p className="mt-auto pt-2 text-lg font-semibold text-[#123028]">
           {product.priceEgp !== undefined
             ? `${formatEgp(product.priceEgp, locale)} ${t("exVat")}${unitSuffix(product.priceUnit, {
                 perWatt: t("perWatt"),
@@ -51,16 +63,10 @@ export function ProductCard({ product }: { product: ShopProduct }) {
               })}`
             : t("quoteOnly")}
         </p>
-        <p className="text-xs">
-          {product.availability === "in_stock"
-            ? t("inStock")
-            : product.availability === "on_request"
-              ? t("onRequest")
-              : t("quoteOnly")}
-        </p>
       </Link>
-      <Button
-        className="mt-4"
+      <button
+        type="button"
+        className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#015231] px-3 text-center text-sm font-semibold text-white hover:bg-[#014028]"
         onClick={() => {
           addItem({
             productId: product._id,
@@ -77,7 +83,7 @@ export function ProductCard({ product }: { product: ShopProduct }) {
         }}
       >
         {added ? t("added") : t("addToCart")}
-      </Button>
+      </button>
     </article>
   );
 }
