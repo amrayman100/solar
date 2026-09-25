@@ -28,19 +28,21 @@ export function ShopCategoryNav({
 
   return (
     <div className="sticky top-[4.25rem] z-[90] space-y-3 rounded-2xl border border-(--border) bg-white/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/90 sm:p-4 lg:top-[4.5rem]">
-      <label className="relative block">
-        <span className="sr-only">{t("searchLabel")}</span>
-        <Search
-          className="pointer-events-none absolute top-1/2 start-3 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)"
-          aria-hidden
-        />
-        <input
-          type="search"
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder={t("searchPlaceholder")}
-          className="w-full rounded-xl border border-(--border) bg-white py-2.5 pe-3 ps-10 text-sm outline-none ring-[#00bd70] placeholder:text-(--muted-foreground) focus:ring-2"
-        />
+      <label className="block space-y-1.5">
+        <span className="block text-sm font-semibold text-[#123028]">{t("searchLabel")}</span>
+        <span className="relative block">
+          <Search
+            className="pointer-events-none absolute top-1/2 start-3 h-4 w-4 -translate-y-1/2 text-[#3f4f48]"
+            aria-hidden
+          />
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="h-11 w-full rounded-xl border border-[#3f4f48] bg-white py-2.5 pe-3 ps-10 text-base text-[#123028] outline-none placeholder:text-[#3f4f48] focus:ring-2 focus:ring-[#015231]"
+          />
+        </span>
       </label>
 
       <nav aria-label={t("categoriesNav")}>
@@ -101,7 +103,7 @@ function CategoryChip({
       aria-current={active ? "page" : undefined}
       className={`inline-flex shrink-0 snap-start items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
         active
-          ? "bg-[#00bd70] text-white shadow-sm"
+          ? "bg-[#015231] text-white shadow-sm"
           : "border border-(--border) bg-white text-emerald-950 hover:border-[#00bd70]/40 hover:bg-emerald-50"
       }`}
     >

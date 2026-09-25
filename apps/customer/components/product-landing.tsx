@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -13,7 +13,22 @@ import { getServiceSchema } from "@/lib/structured-data";
 
 export function ProductLanding({ content }: { content: ProductPageContent }) {
   const [showQuote, setShowQuote] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("cta");
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("quote") === "1") {
+      setShowQuote(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!showQuote) return;
+    const node = panelRef.current;
+    if (!node) return;
+    node.scrollIntoView({ behavior: "smooth", block: "start" });
+    node.querySelector<HTMLElement>("[data-quote-heading]")?.focus({ preventScroll: true });
+  }, [showQuote]);
 
   return (
     <main className="w-full flex-1">
@@ -25,7 +40,10 @@ export function ProductLanding({ content }: { content: ProductPageContent }) {
       ) : null}
 
       <div className="flex justify-center px-4 py-8 lg:py-16">
-        <div className="flex w-full max-w-[1122px] flex-col items-center gap-6 overflow-hidden rounded-[39px] bg-[#f6f6f6] p-6 lg:flex-row lg:items-stretch lg:gap-[21px] lg:p-0">
+        <div
+          ref={panelRef}
+          className="flex w-full max-w-[1122px] scroll-mt-24 flex-col items-center gap-6 overflow-hidden rounded-[39px] bg-[#f6f6f6] p-6 lg:flex-row lg:items-stretch lg:gap-[21px] lg:p-0"
+        >
           {!showQuote ? (
             <>
               <div className="relative h-[300px] w-full shrink-0 lg:h-auto lg:min-h-[646px] lg:w-[363px]">
@@ -68,7 +86,7 @@ export function ProductLanding({ content }: { content: ProductPageContent }) {
                     {content.more.map((link, index) => (
                       <span key={link.href}>
                         {index > 0 ? " · " : null}
-                        <Link href={link.href} className="text-[#00bd70] hover:underline">
+                        <Link href={link.href} className="font-semibold text-[#015231] underline hover:text-[#014028]">
                           {link.label}
                         </Link>
                       </span>
@@ -83,7 +101,7 @@ export function ProductLanding({ content }: { content: ProductPageContent }) {
                   <button
                     type="button"
                     onClick={() => setShowQuote(true)}
-                    className="flex h-[39px] w-full items-center justify-center rounded-[8px] bg-[#00bd70] px-8 text-base font-bold text-white transition-colors hover:bg-[#00bd70]/90"
+                    className="flex h-12 w-full items-center justify-center rounded-[8px] bg-[#015231] px-8 text-base font-bold text-white transition-colors hover:bg-[#014028] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015231] focus-visible:ring-offset-2"
                   >
                     {t("calculateNow")}
                   </button>
@@ -95,7 +113,7 @@ export function ProductLanding({ content }: { content: ProductPageContent }) {
               <button
                 type="button"
                 onClick={() => setShowQuote(false)}
-                className="mb-6 inline-flex items-center gap-2 self-start text-sm font-medium text-[#015231] hover:text-[#00bd70] lg:absolute lg:start-8 lg:top-8 lg:mb-0"
+                className="mb-6 inline-flex min-h-11 items-center gap-2 self-start rounded-md px-1 text-sm font-semibold text-[#015231] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015231] lg:absolute lg:start-8 lg:top-8 lg:mb-0"
               >
                 <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
                 {t("backToProduct")}

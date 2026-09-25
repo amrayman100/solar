@@ -20,7 +20,7 @@ export function HomeProductCard({
   const t = useTranslations("cta");
 
   return (
-    <div className="flex h-[380px] w-[270px] flex-col items-center overflow-hidden rounded-[15px] bg-[#f1f1f1]">
+    <div className="flex h-auto min-h-[380px] w-[270px] flex-col items-center overflow-hidden rounded-[15px] bg-[#f1f1f1]">
       <div className="relative w-full flex-shrink-0 overflow-hidden aspect-[2276/1739]">
         <Image src={image} alt={imageAlt} fill className="object-cover" sizes="270px" />
       </div>
@@ -31,14 +31,14 @@ export function HomeProductCard({
         </div>
         <div className="mt-auto flex w-full flex-shrink-0 gap-[5px]">
           <Link
-            href={href}
-            className="flex h-[27px] flex-1 items-center justify-center rounded-lg bg-[#00bd70] px-2 text-xs font-medium text-white hover:bg-[#00bd70]/90"
+            href={`${href}?quote=1`}
+            className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-[#015231] px-2 text-sm font-semibold text-white hover:bg-[#014028]"
           >
             {t("calculateNow")}
           </Link>
           <Link
             href={href}
-            className="flex h-[27px] flex-1 items-center justify-center rounded-lg bg-[#e6e6e6] px-2.5 text-xs font-medium text-black hover:bg-[#e6e6e6]/90"
+            className="flex min-h-11 flex-1 items-center justify-center rounded-lg border border-[#123028] bg-white px-2.5 text-sm font-semibold text-[#123028] hover:bg-[#f7fbf9]"
           >
             {t("learnMore")}
           </Link>

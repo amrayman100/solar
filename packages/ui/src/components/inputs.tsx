@@ -12,8 +12,9 @@ export const Input = React.forwardRef<HTMLInputElement, BaseProps>(
     <input
       ref={ref}
       className={cn(
-        "h-11 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-base text-gray-900 shadow-sm",
-        "focus:border-(--ring) focus:ring-(--ring) focus:outline-none",
+        "h-11 w-full rounded-md border border-[#3f4f48] bg-white px-3 py-2 text-base text-[#123028] shadow-sm",
+        "placeholder:text-[#3f4f48]",
+        "focus:border-[#015231] focus:ring-2 focus:ring-[#015231] focus:outline-none",
         className
       )}
       {...props}
@@ -31,8 +32,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     <textarea
       ref={ref}
       className={cn(
-        "w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-base text-gray-900 shadow-sm",
-        "focus:border-(--ring) focus:ring-(--ring) focus:outline-none",
+        "w-full rounded-md border border-[#3f4f48] bg-white px-3 py-2 text-base text-[#123028] shadow-sm",
+        "placeholder:text-[#3f4f48]",
+        "focus:border-[#015231] focus:ring-2 focus:ring-[#015231] focus:outline-none",
         className
       )}
       {...props}
@@ -50,8 +52,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     <select
       ref={ref}
       className={cn(
-        "h-11 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-base text-gray-900 shadow-sm",
-        "focus:border-(--ring) focus:ring-(--ring) focus:outline-none",
+        "h-11 w-full rounded-md border border-[#3f4f48] bg-white px-3 py-2 text-base text-[#123028] shadow-sm",
+        "focus:border-[#015231] focus:ring-2 focus:ring-[#015231] focus:outline-none",
         className
       )}
       {...props}

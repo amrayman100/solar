@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { api } from "@convex/_generated/api";
 import { Button } from "@bolt-energy/ui/components/button";
 import { Input, Textarea } from "@bolt-energy/ui/components/inputs";
+import { FormField, FormStep } from "@/components/form-field";
 import { authClient } from "@/lib/auth-client";
 import { useCart } from "@/lib/cart";
 import { cartTotals, formatEgp, unitSuffix } from "@/lib/money";
@@ -164,60 +165,49 @@ export default function CartPage() {
               }
             }}
           >
-            <p className="rounded-md border border-(--border) bg-(--secondary)/50 px-3 py-2 text-sm text-(--muted-foreground)">
-              {t("noShipping")}
-            </p>
-            {error ? <p className="text-sm text-red-700">{error}</p> : null}
-            <div className="space-y-1">
-              <label htmlFor="checkout-name" className="text-sm font-medium">
-                {t("name")}
-              </label>
-              <Input
-                id="checkout-name"
-                required
-                autoComplete="name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="checkout-phone" className="text-sm font-medium">
-                {t("phone")}
-              </label>
-              <Input
-                id="checkout-phone"
-                required
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                placeholder="01xxxxxxxxx"
-                value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-              />
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="checkout-email" className="text-sm font-medium">
-                {t("email")}
-              </label>
-              <Input
-                id="checkout-email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="checkout-remarks" className="text-sm font-medium">
-                {t("remarks")}
-              </label>
-              <Textarea
-                id="checkout-remarks"
-                value={remarks}
-                onChange={(event) => setRemarks(event.target.value)}
-              />
-            </div>
-            <Button type="submit" disabled={loading} className="w-full">
+            {error ? (
+              <p role="alert" className="rounded-md border border-red-800 bg-red-50 px-3 py-2 text-sm font-medium text-red-900">
+                {error}
+              </p>
+            ) : null}
+            <FormStep step={1} title={t("checkoutTitle")} hint={t("checkoutHint")}>
+              <FormField label={t("name")} hint={t("nameHint")} required>
+                <Input
+                  autoComplete="name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </FormField>
+              <FormField label={t("phone")} hint={t("phoneHint")} required>
+                <Input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="01xxxxxxxxx"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </FormField>
+              <FormField label={t("email")} hint={t("emailHint")}>
+                <Input
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </FormField>
+              <FormField label={t("remarks")} hint={t("remarksHint")}>
+                <Textarea
+                  value={remarks}
+                  onChange={(event) => setRemarks(event.target.value)}
+                />
+              </FormField>
+            </FormStep>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="h-12 w-full bg-[#015231] text-base font-bold text-white hover:bg-[#014028]"
+            >
               {loading ? t("submitting") : t("placeOrder")}
             </Button>
           </form>
