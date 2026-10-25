@@ -403,6 +403,7 @@ export function QuoteForm({ slug, defaults, variant = "default" }: Props) {
                 type="number"
                 inputMode="decimal"
                 min={1}
+                step={0.01}
                 value={monthlyConsumption}
                 onChange={(event) => setMonthlyConsumption(event.target.value)}
               />

@@ -52,8 +52,9 @@ export function HomeQuoteForm() {
               id={usageId}
               type="number"
               min={1}
+              step="0.01"
               required
-              inputMode="numeric"
+              inputMode="decimal"
               placeholder={t("monthlyConsumption")}
               aria-describedby={`${usageId}-hint`}
               value={monthlyConsumption}
